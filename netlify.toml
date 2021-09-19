@@ -3,5 +3,9 @@
   publish = "build"
   functions = "functions"
 
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["src/routes/journal/posts/*.json"]
+
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"
