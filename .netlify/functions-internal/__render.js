@@ -4540,9 +4540,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-91432e72.js",
+      file: assets + "/_app/start-16d40f0a.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-91432e72.js", assets + "/_app/chunks/vendor-b7cc9fab.js"]
+      js: [assets + "/_app/start-16d40f0a.js", assets + "/_app/chunks/vendor-b7cc9fab.js"]
     },
     fetched: void 0,
     floc: false,
@@ -4588,12 +4588,12 @@ var manifest = {
       pattern: /^\/journal\/entries\.json$/,
       params: empty,
       load: () => Promise.resolve().then(function() {
-        return entries_json;
+        return entries_json$1;
       })
     },
     {
       type: "endpoint",
-      pattern: /^\/journal\/posts\/3-init-pt-3\/?$/,
+      pattern: /^\/journal\/entries\/3-init-pt-3\/?$/,
       params: empty,
       load: () => Promise.resolve().then(function() {
         return _3InitPt3$1;
@@ -4601,7 +4601,7 @@ var manifest = {
     },
     {
       type: "endpoint",
-      pattern: /^\/journal\/posts\/4-hugo-init\/?$/,
+      pattern: /^\/journal\/entries\/4-hugo-init\/?$/,
       params: empty,
       load: () => Promise.resolve().then(function() {
         return _4HugoInit$1;
@@ -4609,7 +4609,7 @@ var manifest = {
     },
     {
       type: "endpoint",
-      pattern: /^\/journal\/posts\/2-init-2\/?$/,
+      pattern: /^\/journal\/entries\/2-init-2\/?$/,
       params: empty,
       load: () => Promise.resolve().then(function() {
         return _2Init2$1;
@@ -4617,7 +4617,7 @@ var manifest = {
     },
     {
       type: "endpoint",
-      pattern: /^\/journal\/posts\/1-init\/?$/,
+      pattern: /^\/journal\/entries\/1-init\/?$/,
       params: empty,
       load: () => Promise.resolve().then(function() {
         return _1Init$1;
@@ -4625,7 +4625,7 @@ var manifest = {
     },
     {
       type: "endpoint",
-      pattern: /^\/journal\/posts\/5-test\/?$/,
+      pattern: /^\/journal\/entries\/5-test\/?$/,
       params: empty,
       load: () => Promise.resolve().then(function() {
         return _5Test$1;
@@ -4636,7 +4636,7 @@ var manifest = {
       pattern: /^\/journal\/([^/]+?)\.json$/,
       params: (m) => ({ slug: d(m[1]) }),
       load: () => Promise.resolve().then(function() {
-        return _slug__json;
+        return _slug__json$1;
       })
     },
     {
@@ -4645,6 +4645,78 @@ var manifest = {
       params: empty,
       a: [".svelte-kit/build/components/layout.svelte", "src/routes/test.svelte"],
       b: [".svelte-kit/build/components/error.svelte"]
+    },
+    {
+      type: "endpoint",
+      pattern: /^\/work\/entries\.json$/,
+      params: empty,
+      load: () => Promise.resolve().then(function() {
+        return entries_json;
+      })
+    },
+    {
+      type: "endpoint",
+      pattern: /^\/work\/entries\/1-a-softer-space\/?$/,
+      params: empty,
+      load: () => Promise.resolve().then(function() {
+        return _1ASofterSpace$1;
+      })
+    },
+    {
+      type: "endpoint",
+      pattern: /^\/work\/entries\/6-eagle-wetsuits\/?$/,
+      params: empty,
+      load: () => Promise.resolve().then(function() {
+        return _6EagleWetsuits$1;
+      })
+    },
+    {
+      type: "endpoint",
+      pattern: /^\/work\/entries\/2-polyreference\/?$/,
+      params: empty,
+      load: () => Promise.resolve().then(function() {
+        return _2Polyreference$1;
+      })
+    },
+    {
+      type: "endpoint",
+      pattern: /^\/work\/entries\/1-walkrates\/?$/,
+      params: empty,
+      load: () => Promise.resolve().then(function() {
+        return _1Walkrates$1;
+      })
+    },
+    {
+      type: "endpoint",
+      pattern: /^\/work\/entries\/3-walkrates\/?$/,
+      params: empty,
+      load: () => Promise.resolve().then(function() {
+        return _3Walkrates$1;
+      })
+    },
+    {
+      type: "endpoint",
+      pattern: /^\/work\/entries\/5-spoken\/?$/,
+      params: empty,
+      load: () => Promise.resolve().then(function() {
+        return _5Spoken$1;
+      })
+    },
+    {
+      type: "endpoint",
+      pattern: /^\/work\/entries\/4-tiltr\/?$/,
+      params: empty,
+      load: () => Promise.resolve().then(function() {
+        return _4Tiltr$1;
+      })
+    },
+    {
+      type: "endpoint",
+      pattern: /^\/work\/([^/]+?)\.json$/,
+      params: (m) => ({ slug: d(m[1]) }),
+      load: () => Promise.resolve().then(function() {
+        return _slug__json;
+      })
     },
     {
       type: "page",
@@ -4678,7 +4750,7 @@ var module_lookup = {
     return work;
   })
 };
-var metadata_lookup = { ".svelte-kit/build/components/layout.svelte": { "entry": "layout.svelte-139accd9.js", "css": [], "js": ["layout.svelte-139accd9.js", "chunks/vendor-b7cc9fab.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-4232ec95.js", "css": [], "js": ["error.svelte-4232ec95.js", "chunks/vendor-b7cc9fab.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-b7840404.js", "css": ["assets/pages/index.svelte-0f3f83b9.css", "assets/LogoStamp-f96d9af3.css"], "js": ["pages/index.svelte-b7840404.js", "chunks/vendor-b7cc9fab.js", "chunks/LogoStamp-ed79602f.js"], "styles": [] }, "src/routes/test.svelte": { "entry": "pages/test.svelte-452ebd7c.js", "css": [], "js": ["pages/test.svelte-452ebd7c.js", "chunks/vendor-b7cc9fab.js"], "styles": [] }, "src/routes/work.svelte": { "entry": "pages/work.svelte-b5472b98.js", "css": ["assets/pages/work.svelte-4c158f41.css", "assets/LogoStamp-f96d9af3.css"], "js": ["pages/work.svelte-b5472b98.js", "chunks/vendor-b7cc9fab.js", "chunks/LogoStamp-ed79602f.js"], "styles": [] } };
+var metadata_lookup = { ".svelte-kit/build/components/layout.svelte": { "entry": "layout.svelte-139accd9.js", "css": [], "js": ["layout.svelte-139accd9.js", "chunks/vendor-b7cc9fab.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-4232ec95.js", "css": [], "js": ["error.svelte-4232ec95.js", "chunks/vendor-b7cc9fab.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-b1f72b8e.js", "css": ["assets/pages/index.svelte-0f3f83b9.css", "assets/LogoStamp-f96d9af3.css"], "js": ["pages/index.svelte-b1f72b8e.js", "chunks/vendor-b7cc9fab.js", "chunks/LogoStamp-8fdbc475.js"], "styles": [] }, "src/routes/test.svelte": { "entry": "pages/test.svelte-452ebd7c.js", "css": [], "js": ["pages/test.svelte-452ebd7c.js", "chunks/vendor-b7cc9fab.js"], "styles": [] }, "src/routes/work.svelte": { "entry": "pages/work.svelte-6d6cdc01.js", "css": ["assets/pages/work.svelte-4c158f41.css", "assets/LogoStamp-f96d9af3.css"], "js": ["pages/work.svelte-6d6cdc01.js", "chunks/vendor-b7cc9fab.js", "chunks/LogoStamp-8fdbc475.js"], "styles": [] } };
 async function load_component(file) {
   const { entry, css: css2, js, styles } = metadata_lookup[file];
   return {
@@ -4695,11 +4767,151 @@ function render(request, {
   const host = request.headers["host"];
   return respond({ ...request, host }, options, { prerender });
 }
-async function get$1({ params }) {
-  const dirList = import_fs.default.readdirSync("src/routes/journal/posts");
+async function get$3({ params }) {
+  const dirList = import_fs.default.readdirSync("src/routes/journal/entries");
   return {
     body: {
       dirList
+    }
+  };
+}
+var entries_json$1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  get: get$3
+});
+var index$c = 3;
+var filename$b = "3-init-pt-3.json";
+var title$b = "Test Entry 3";
+var date$b = "2021.09.18";
+var body$4 = "This is the first journal entry that has some body. Again, it's not yet generated by Hugo, but I'm starting to solidify what an entry looks like.\n\nSo right now I'm writing Markdown directly into a JSON object. It makes sense, I think. At the end of this, I'll be able to push a new markdown file to a folder in Git, rebuild the site, and we're done. i think. We'll see.";
+var _3InitPt3 = {
+  index: index$c,
+  filename: filename$b,
+  title: title$b,
+  date: date$b,
+  body: body$4
+};
+var _3InitPt3$1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  index: index$c,
+  filename: filename$b,
+  title: title$b,
+  date: date$b,
+  body: body$4,
+  "default": _3InitPt3
+});
+var index$b = 4;
+var filename$a = "4-hugo-init.json";
+var title$a = "Init Hugo";
+var date$a = "Saturday, September 18, 2021";
+var body$3 = "\r\n# Test\r\n\r\nTrying to write a new post, via Hugo.\r\n\r\nOkay then.";
+var _4HugoInit = {
+  index: index$b,
+  filename: filename$a,
+  title: title$a,
+  date: date$a,
+  body: body$3
+};
+var _4HugoInit$1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  index: index$b,
+  filename: filename$a,
+  title: title$a,
+  date: date$a,
+  body: body$3,
+  "default": _4HugoInit
+});
+var index$a = 2;
+var filename$9 = "2-init-2.json";
+var title$9 = "This is the second test post";
+var date$9 = "2021.09.18";
+var body$2 = "Really just filler kk";
+var _2Init2 = {
+  index: index$a,
+  filename: filename$9,
+  title: title$9,
+  date: date$9,
+  body: body$2
+};
+var _2Init2$1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  index: index$a,
+  filename: filename$9,
+  title: title$9,
+  date: date$9,
+  body: body$2,
+  "default": _2Init2
+});
+var index$9 = 1;
+var filename$8 = "1-init.json";
+var title$8 = "Initial Post For Testing Stuff kk thnx";
+var date$8 = "2021.09.18";
+var body$1 = "# Did you know?\n\nWe haven't even gotten Hugo to generate JSON yet. This is still by hand. :0";
+var _1Init = {
+  index: index$9,
+  filename: filename$8,
+  title: title$8,
+  date: date$8,
+  body: body$1
+};
+var _1Init$1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  index: index$9,
+  filename: filename$8,
+  title: title$8,
+  date: date$8,
+  body: body$1,
+  "default": _1Init
+});
+var index$8 = 5;
+var filename$7 = "5-test.json";
+var title$7 = "Testing";
+var date$7 = "Saturday, September 18, 2021";
+var body = "\r\n# Test From Hugo\r\n\r\nHey. We worked it out. Now all posts will be written in Markdown, parsed by Hugo, and since SvelteKit uses a static adapter, rebuilt by SvelteKit. This means that writing a blog post will be as easy as ever \u2014 plus, these posts can go anywhere Markdown can. There's nothing locking them into my site. I'm really glad about that.";
+var _5Test = {
+  index: index$8,
+  filename: filename$7,
+  title: title$7,
+  date: date$7,
+  body
+};
+var _5Test$1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  index: index$8,
+  filename: filename$7,
+  title: title$7,
+  date: date$7,
+  body,
+  "default": _5Test
+});
+async function get$2({ params }) {
+  const { slug } = params;
+  const article = JSON.parse(import_fs.default.readFileSync(`src/routes/journal/entries/${slug}.json`, { encoding: "utf8" }));
+  return {
+    body: {
+      article
+    }
+  };
+}
+var _slug__json$1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  get: get$2
+});
+async function get$1({ params }) {
+  const dirList = import_fs.default.readdirSync("src/routes/work/entries");
+  const entries = dirList.map((filename2) => {
+    return JSON.parse(import_fs.default.readFileSync(`src/routes/work/entries/${filename2}`, { encoding: "utf8" }));
+  });
+  return {
+    body: {
+      entries
     }
   };
 }
@@ -4708,119 +4920,163 @@ var entries_json = /* @__PURE__ */ Object.freeze({
   [Symbol.toStringTag]: "Module",
   get: get$1
 });
-var index$5 = 3;
-var filename$4 = "3-init-pt-3.json";
-var title$4 = "Test Entry 3";
-var date$4 = "2021.09.18";
-var body$4 = "This is the first journal entry that has some body. Again, it's not yet generated by Hugo, but I'm starting to solidify what an entry looks like.\n\nSo right now I'm writing Markdown directly into a JSON object. It makes sense, I think. At the end of this, I'll be able to push a new markdown file to a folder in Git, rebuild the site, and we're done. i think. We'll see.";
-var _3InitPt3 = {
+var index$7 = 1;
+var filename$6 = "1-a-softer-space.json";
+var title$6 = "A Softer Space";
+var date$6 = "Sunday, September 19, 2021";
+var description$6 = "\r\n# A Softer Space\r\n\r\nA Softer Space is a calming area to vent your thoughts, as if texting a friend.\r\n\r\nIt uses a familiar, text-based UI, and allows you to download your chats (so that you could, for example, send them to a therapist), as well as login to save them, which allows you to access your chats from any device.\r\n\r\nIt's written with SvelteKit and hosted on Netlify. For some elements, p5.js is used.\r\n\r\nLive link: [A Softer Space](https://asofter.space/)\r\n\r\nGitHub: [justlilith/aSofterSpace](https://github.com/justlilith/ASofterSpace/)";
+var _1ASofterSpace = {
+  index: index$7,
+  filename: filename$6,
+  title: title$6,
+  date: date$6,
+  description: description$6
+};
+var _1ASofterSpace$1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  index: index$7,
+  filename: filename$6,
+  title: title$6,
+  date: date$6,
+  description: description$6,
+  "default": _1ASofterSpace
+});
+var index$6 = 6;
+var filename$5 = "6-eagle-wetsuits.json";
+var title$5 = "Eagle Wetsuits";
+var date$5 = "Sunday, September 19, 2021";
+var description$5 = "\r\n# Eagle Wetsuits\r\n\r\nCAD-driven apparel design, pattern research and development, branding and marketing, client-focused custom products, and a lot of fun.\r\n\r\nI loved my time as Eagle's art director, and love that I was able to touch the lives of so many of our clients.";
+var _6EagleWetsuits = {
+  index: index$6,
+  filename: filename$5,
+  title: title$5,
+  date: date$5,
+  description: description$5
+};
+var _6EagleWetsuits$1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  index: index$6,
+  filename: filename$5,
+  title: title$5,
+  date: date$5,
+  description: description$5,
+  "default": _6EagleWetsuits
+});
+var index$5 = 2;
+var filename$4 = "2-polyreference.json";
+var title$4 = "Polyreference";
+var date$4 = "Sunday, September 19, 2021";
+var description$4 = "\r\n# Polyref\r\n\r\nPolyref is a web-based art reference app. You can paste in some images (or their URLs) to display them across a pasteboard. Move, resize, scale, zoom and layer them freely, to create a nice moodboard for whatever you're working on.\r\n\r\nIt's written with SvelteKit and hosted on Netlify.\r\n\r\nLive link: [Polyref](https://www.polyref.cc/)\r\n\r\nGitHub: [justlilith/polyreference](https://github.com/justlilith/polyreference/)";
+var _2Polyreference = {
   index: index$5,
   filename: filename$4,
   title: title$4,
   date: date$4,
-  body: body$4
+  description: description$4
 };
-var _3InitPt3$1 = /* @__PURE__ */ Object.freeze({
+var _2Polyreference$1 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   index: index$5,
   filename: filename$4,
   title: title$4,
   date: date$4,
-  body: body$4,
-  "default": _3InitPt3
+  description: description$4,
+  "default": _2Polyreference
 });
-var index$4 = 4;
-var filename$3 = "4-hugo-init.json";
-var title$3 = "Init Hugo";
-var date$3 = "Saturday, September 18, 2021";
-var body$3 = "\r\n# Test\r\n\r\nTrying to write a new post, via Hugo.\r\n\r\nOkay then.";
-var _4HugoInit = {
+var index$4 = 1;
+var filename$3 = "1-walkrates.json";
+var title$3 = "Walkrates";
+var date$3 = "Sunday, September 19, 2021";
+var description$3 = "\r\n# Walk Rates: Answering a Fun Question\r\n\r\nHaven\u2019t we all bet our friends we could make a journey on the promise of tacos alone? What if you made it eating nothing but tacos? How many tacos would you need?\r\n\r\nWalk Rates answers those questions. It\u2019s a mobile app built with a combination of React, Node.js, and Heroku, but all the details are on GitHub.\r\n\r\nThe app is live! And I\u2019m still making changes, so check back often.\r\n\r\nLive link: [Walk Rates](https://href.li/?https://walkrates.com)\r\n\r\nGitHub: [justlilith/walkrates](https://href.li/?https://github.com/justlilith/walkrates)";
+var _1Walkrates = {
   index: index$4,
   filename: filename$3,
   title: title$3,
   date: date$3,
-  body: body$3
+  description: description$3
 };
-var _4HugoInit$1 = /* @__PURE__ */ Object.freeze({
+var _1Walkrates$1 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   index: index$4,
   filename: filename$3,
   title: title$3,
   date: date$3,
-  body: body$3,
-  "default": _4HugoInit
+  description: description$3,
+  "default": _1Walkrates
 });
-var index$3 = 2;
-var filename$2 = "2-init-2.json";
-var title$2 = "This is the second test post";
-var date$2 = "2021.09.18";
-var body$2 = "Really just filler kk";
-var _2Init2 = {
+var index$3 = 1;
+var filename$2 = "3-walkrates.json";
+var title$2 = "Walkrates";
+var date$2 = "Sunday, September 19, 2021";
+var description$2 = "\r\n# Walk Rates: Answering a Fun Question\r\n\r\nHaven\u2019t we all bet our friends we could make a journey on the promise of tacos alone? What if you made it eating nothing but tacos? How many tacos would you need?\r\n\r\nWalk Rates answers those questions. It\u2019s a mobile app built with a combination of React, Node.js, and Heroku, but all the details are on GitHub.\r\n\r\nThe app is live! And I\u2019m still making changes, so check back often.\r\n\r\nLive link: [Walk Rates](https://href.li/?https://walkrates.com)\r\n\r\nGitHub: [justlilith/walkrates](https://href.li/?https://github.com/justlilith/walkrates)";
+var _3Walkrates = {
   index: index$3,
   filename: filename$2,
   title: title$2,
   date: date$2,
-  body: body$2
+  description: description$2
 };
-var _2Init2$1 = /* @__PURE__ */ Object.freeze({
+var _3Walkrates$1 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   index: index$3,
   filename: filename$2,
   title: title$2,
   date: date$2,
-  body: body$2,
-  "default": _2Init2
+  description: description$2,
+  "default": _3Walkrates
 });
-var index$2 = 1;
-var filename$1 = "1-init.json";
-var title$1 = "Initial Post For Testing Stuff kk thnx";
-var date$1 = "2021.09.18";
-var body$1 = "# Did you know?\n\nWe haven't even gotten Hugo to generate JSON yet. This is still by hand. :0";
-var _1Init = {
+var index$2 = 5;
+var filename$1 = "5-spoken.json";
+var title$1 = "Spoken";
+var date$1 = "Sunday, September 19, 2021";
+var description$1 = "\r\n# Spoken: Application UI\r\n\r\nspkn (Spoken) connects people who simply need a listening ear. To this end, I designed the logo, brand identity, user experience, and user interface.\r\n\r\nPrototype link: [spkn](https://xd.adobe.com/view/98fbbff8-550b-4f88-b412-79a454103a0a/)";
+var _5Spoken = {
   index: index$2,
   filename: filename$1,
   title: title$1,
   date: date$1,
-  body: body$1
+  description: description$1
 };
-var _1Init$1 = /* @__PURE__ */ Object.freeze({
+var _5Spoken$1 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   index: index$2,
   filename: filename$1,
   title: title$1,
   date: date$1,
-  body: body$1,
-  "default": _1Init
+  description: description$1,
+  "default": _5Spoken
 });
-var index$1 = 5;
-var filename = "5-test.json";
-var title = "Testing";
-var date = "Saturday, September 18, 2021";
-var body = "\r\n# Test From Hugo\r\n\r\nHey. We worked it out. Now all posts will be written in Markdown, parsed by Hugo, and since SvelteKit uses a static adapter, rebuilt by SvelteKit. This means that writing a blog post will be as easy as ever \u2014 plus, these posts can go anywhere Markdown can. There's nothing locking them into my site. I'm really glad about that.";
-var _5Test = {
+var index$1 = 2;
+var filename = "4-tiltr.json";
+var title = "2 Tiltr";
+var date = "Sunday, September 19, 2021";
+var description = "\r\n# Tiltr: Alternative Twitter App\r\n\r\nTiltr is an alternative to Twitter\u2019s normal UI; the focus is on art discovery and exploration. I loved using Elm and Node.js to build this, and am happy to have set up a CI/CD pipeline through GitHub and Heroku!\r\n\r\nLive link: [tiltr.cc](https://href.li/?https://tiltr.cc)\r\n\r\nGitHub: [justlilith/tiltr](https://href.li/?https://github.com/justlilith/tiltr)";
+var _4Tiltr = {
   index: index$1,
   filename,
   title,
   date,
-  body
+  description
 };
-var _5Test$1 = /* @__PURE__ */ Object.freeze({
+var _4Tiltr$1 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   index: index$1,
   filename,
   title,
   date,
-  body,
-  "default": _5Test
+  description,
+  "default": _4Tiltr
 });
 async function get({ params }) {
   const { slug } = params;
-  const article = JSON.parse(import_fs.default.readFileSync(`src/routes/journal/posts/${slug}.json`, { encoding: "utf8" }));
+  const article = JSON.parse(import_fs.default.readFileSync(`src/routes/work/entries/${slug}.json`, { encoding: "utf8" }));
   return {
     body: {
       article
@@ -4840,7 +5096,7 @@ var layout = /* @__PURE__ */ Object.freeze({
   [Symbol.toStringTag]: "Module",
   "default": Layout
 });
-function load$1({ error: error2, status }) {
+function load$2({ error: error2, status }) {
   return { props: { error: error2, status } };
 }
 var Error$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -4863,17 +5119,18 @@ var error = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   "default": Error$1,
-  load: load$1
+  load: load$2
 });
 var css$5 = {
   code: "nav.svelte-5va8ho.svelte-5va8ho{margin-top:30vh;padding-top:5vh;padding-right:5vh;top:0vh;position:sticky;left:20vw;background-color:#000}ul.svelte-5va8ho.svelte-5va8ho{margin:0px;padding:0px;left:0px}nav.svelte-5va8ho li.svelte-5va8ho{padding-bottom:5px;padding-top:5px;list-style:none;text-align:right}nav.svelte-5va8ho a.svelte-5va8ho{color:white;text-decoration:none}",
-  map: `{"version":3,"file":"Menu.svelte","sources":["Menu.svelte"],"sourcesContent":["<script lang='ts'><\/script>\\n\\n<nav>\\n  <ul>\\n    <!-- <li>\\n      <a href='/'>Front Cover</a>\\n    </li> -->\\n    <li>\\n      <a href='/'>Journal</a>\\n    </li>\\n    <li>\\n      <a href='https://twitter.com/imjustlilith' target=_blank>Tweets \u{1F54A}\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='/work'>Prior Art</a>\\n    </li>\\n    <li>\\n      <a href='spells'>Spells</a>\\n    </li>\\n    <li>\\n      <a href='notes'>Things I wish they'd told me</a>\\n    </li>\\n    <li>\\n      <a href='back'>Back Cover</a>\\n    </li>\\n  </ul>\\n</nav>\\n<style lang='scss'>nav {\\n  margin-top: 30vh;\\n  padding-top: 5vh;\\n  padding-right: 5vh;\\n  top: 0vh;\\n  position: sticky;\\n  left: 20vw;\\n  background-color: #000;\\n}\\n\\nul {\\n  margin: 0px;\\n  padding: 0px;\\n  left: 0px;\\n}\\n\\nnav li {\\n  padding-bottom: 5px;\\n  padding-top: 5px;\\n  list-style: none;\\n  text-align: right;\\n}\\n\\nnav a {\\n  color: white;\\n  text-decoration: none;\\n}</style>"],"names":[],"mappings":"AA2BmB,GAAG,4BAAC,CAAC,AACtB,UAAU,CAAE,IAAI,CAChB,WAAW,CAAE,GAAG,CAChB,aAAa,CAAE,GAAG,CAClB,GAAG,CAAE,GAAG,CACR,QAAQ,CAAE,MAAM,CAChB,IAAI,CAAE,IAAI,CACV,gBAAgB,CAAE,IAAI,AACxB,CAAC,AAED,EAAE,4BAAC,CAAC,AACF,MAAM,CAAE,GAAG,CACX,OAAO,CAAE,GAAG,CACZ,IAAI,CAAE,GAAG,AACX,CAAC,AAED,iBAAG,CAAC,EAAE,cAAC,CAAC,AACN,cAAc,CAAE,GAAG,CACnB,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,IAAI,CAChB,UAAU,CAAE,KAAK,AACnB,CAAC,AAED,iBAAG,CAAC,CAAC,cAAC,CAAC,AACL,KAAK,CAAE,KAAK,CACZ,eAAe,CAAE,IAAI,AACvB,CAAC"}`
+  map: `{"version":3,"file":"Menu.svelte","sources":["Menu.svelte"],"sourcesContent":["<script lang='ts'><\/script>\\n\\n<nav>\\n  <ul>\\n    <!-- <li>\\n      <a href='/'>Front Cover</a>\\n    </li> -->\\n    <li>\\n      <a href='/'>Journal</a>\\n    </li>\\n    <li>\\n      <a href='https://twitter.com/imjustlilith' target=_blank>Tweets \u{1F54A}\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='https://tinyurl.com/LilithsResume'>Resume</a>\\n    </li>\\n    <li>\\n      <a href='/work'>Prior Art</a>\\n    </li>\\n    <li>\\n      <a href='spells'>Spells</a>\\n    </li>\\n    <li>\\n      <a href='notes'>Things I wish they'd told me</a>\\n    </li>\\n    <li>\\n      <a href='back'>Back Cover</a>\\n    </li>\\n  </ul>\\n</nav>\\n<style lang='scss'>nav {\\n  margin-top: 30vh;\\n  padding-top: 5vh;\\n  padding-right: 5vh;\\n  top: 0vh;\\n  position: sticky;\\n  left: 20vw;\\n  background-color: #000;\\n}\\n\\nul {\\n  margin: 0px;\\n  padding: 0px;\\n  left: 0px;\\n}\\n\\nnav li {\\n  padding-bottom: 5px;\\n  padding-top: 5px;\\n  list-style: none;\\n  text-align: right;\\n}\\n\\nnav a {\\n  color: white;\\n  text-decoration: none;\\n}</style>"],"names":[],"mappings":"AA8BmB,GAAG,4BAAC,CAAC,AACtB,UAAU,CAAE,IAAI,CAChB,WAAW,CAAE,GAAG,CAChB,aAAa,CAAE,GAAG,CAClB,GAAG,CAAE,GAAG,CACR,QAAQ,CAAE,MAAM,CAChB,IAAI,CAAE,IAAI,CACV,gBAAgB,CAAE,IAAI,AACxB,CAAC,AAED,EAAE,4BAAC,CAAC,AACF,MAAM,CAAE,GAAG,CACX,OAAO,CAAE,GAAG,CACZ,IAAI,CAAE,GAAG,AACX,CAAC,AAED,iBAAG,CAAC,EAAE,cAAC,CAAC,AACN,cAAc,CAAE,GAAG,CACnB,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,IAAI,CAChB,UAAU,CAAE,KAAK,AACnB,CAAC,AAED,iBAAG,CAAC,CAAC,cAAC,CAAC,AACL,KAAK,CAAE,KAAK,CACZ,eAAe,CAAE,IAAI,AACvB,CAAC"}`
 };
 var Menu = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css$5);
   return `<nav class="${"svelte-5va8ho"}"><ul class="${"svelte-5va8ho"}">
     <li class="${"svelte-5va8ho"}"><a href="${"/"}" class="${"svelte-5va8ho"}">Journal</a></li>
     <li class="${"svelte-5va8ho"}"><a href="${"https://twitter.com/imjustlilith"}" target="${"_blank"}" class="${"svelte-5va8ho"}">Tweets \u{1F54A}\uFE0F</a></li>
+    <li class="${"svelte-5va8ho"}"><a href="${"https://tinyurl.com/LilithsResume"}" class="${"svelte-5va8ho"}">Resume</a></li>
     <li class="${"svelte-5va8ho"}"><a href="${"/work"}" class="${"svelte-5va8ho"}">Prior Art</a></li>
     <li class="${"svelte-5va8ho"}"><a href="${"spells"}" class="${"svelte-5va8ho"}">Spells</a></li>
     <li class="${"svelte-5va8ho"}"><a href="${"notes"}" class="${"svelte-5va8ho"}">Things I wish they&#39;d told me</a></li>
@@ -4907,7 +5164,7 @@ var css$2 = {
   code: 'h2.svelte-qi2hdz{font-family:Garamond, "Times New Roman", Times, serif}',
   map: `{"version":3,"file":"index.svelte","sources":["index.svelte"],"sourcesContent":["<script lang='ts' context='module'>var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nexport function load({ fetch }) {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        let contentList = [];\\r\\n        let entries;\\r\\n        const entriesResponse = yield fetch('/journal/entries.json');\\r\\n        const entriesBodyJson = yield entriesResponse.json();\\r\\n        if (entriesResponse.ok) {\\r\\n            contentList = entriesBodyJson.dirList.map((entry) => __awaiter(this, void 0, void 0, function* () {\\r\\n                let res = yield fetch(\`/journal/\${entry}\`);\\r\\n                return yield res.json();\\r\\n            }));\\r\\n            return {\\r\\n                props: {\\r\\n                    entries: entriesBodyJson.dirList,\\r\\n                    contentList: (yield Promise.all(contentList)).map(x => x.article)\\r\\n                }\\r\\n            };\\r\\n        }\\r\\n    });\\r\\n}\\r\\n<\/script>\\n\\n<script lang='ts'>var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport Menu from \\"../../components/Menu.svelte\\";\\r\\nimport JournalEntry from \\"../../components/JournalEntry.svelte\\";\\r\\nimport LogoStamp from \\"../../components/LogoStamp.svelte\\";\\r\\nimport 'svelte';\\r\\n// export let entries = 'ok'\\r\\nexport let entries;\\r\\nexport let contentList;\\r\\n// onMount(()=> {\\r\\n//   contentList = [...contentList].sort()\\r\\n// })\\r\\n<\/script>\\n  \\n  <svelte:head>\\n</svelte:head>\\n\\n<main>\\n  <aside>\\n    <LogoStamp></LogoStamp>\\n    <Menu></Menu>\\n  </aside>\\n  <article id='main'>\\n    <h2>Journal</h2>\\n    <!-- <nav id='sidebar'>\\n      <ul>\\n        {#each entries as entry}\\n        <li><a href={\`#\${entry}\`}>{entry}</a></li>\\n        {/each}\\n      </ul>\\n    </nav> -->\\n    <article>\\n      {#each contentList.sort((x, y) => y.index - x.index) as content}\\n      <JournalEntry {content}></JournalEntry>\\n      {/each}\\n      \\n    </article>\\n  </article>\\n</main>\\n\\n<style lang='scss'>#sidebar {\\n  position: sticky;\\n  left: 30vw;\\n  top: 0vh;\\n  margin-top: 30vh;\\n}\\n\\nh2 {\\n  font-family: Garamond, \\"Times New Roman\\", Times, serif;\\n}\\n\\np {\\n  line-height: 175%;\\n  font-size: 1em;\\n}</style>"],"names":[],"mappings":"AAqFA,EAAE,cAAC,CAAC,AACF,WAAW,CAAE,QAAQ,CAAC,CAAC,iBAAiB,CAAC,CAAC,KAAK,CAAC,CAAC,KAAK,AACxD,CAAC"}`
 };
-var __awaiter = function(thisArg, _arguments, P, generator) {
+var __awaiter$1 = function(thisArg, _arguments, P, generator) {
   function adopt(value) {
     return value instanceof P ? value : new P(function(resolve2) {
       resolve2(value);
@@ -4934,13 +5191,13 @@ var __awaiter = function(thisArg, _arguments, P, generator) {
     step((generator = generator.apply(thisArg, _arguments || [])).next());
   });
 };
-function load({ fetch: fetch2 }) {
-  return __awaiter(this, void 0, void 0, function* () {
+function load$1({ fetch: fetch2 }) {
+  return __awaiter$1(this, void 0, void 0, function* () {
     let contentList = [];
     const entriesResponse = yield fetch2("/journal/entries.json");
     const entriesBodyJson = yield entriesResponse.json();
     if (entriesResponse.ok) {
-      contentList = entriesBodyJson.dirList.map((entry) => __awaiter(this, void 0, void 0, function* () {
+      contentList = entriesBodyJson.dirList.map((entry) => __awaiter$1(this, void 0, void 0, function* () {
         let res = yield fetch2(`/journal/${entry}`);
         return yield res.json();
       }));
@@ -5001,7 +5258,7 @@ var index = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   "default": Routes,
-  load
+  load: load$1
 });
 var Test = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   return ``;
@@ -5013,79 +5270,99 @@ var test = /* @__PURE__ */ Object.freeze({
 });
 var css$1 = {
   code: "img.svelte-dnryg5{height:90%;width:90%}",
-  map: `{"version":3,"file":"Work.svelte","sources":["Work.svelte"],"sourcesContent":["<script lang='ts'>export let work;\\r\\n<\/script>\\n  \\n  <div>\\n    <h3>{work.title}</h3>\\n    <p>{work.description}</p>\\n    <img src={work.imageSrc} alt={work.altText}/>\\n  </div>\\n\\n<style lang='scss'>img {\\n  height: 90%;\\n  width: 90%;\\n}</style>"],"names":[],"mappings":"AASmB,GAAG,cAAC,CAAC,AACtB,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,GAAG,AACZ,CAAC"}`
+  map: `{"version":3,"file":"Work.svelte","sources":["Work.svelte"],"sourcesContent":["<script lang='ts'>import marked from 'marked';\\r\\nexport let work;\\r\\n<\/script>\\n  \\n  <div>\\n    <!-- <h3>{work.title}</h3> -->\\n    <p>{@html marked(work.description)}</p>\\n    <img src={work.imageSrc} alt={work.altText}/>\\n  </div>\\n\\n<style lang='scss'>img {\\n  height: 90%;\\n  width: 90%;\\n}</style>"],"names":[],"mappings":"AAUmB,GAAG,cAAC,CAAC,AACtB,MAAM,CAAE,GAAG,CACX,KAAK,CAAE,GAAG,AACZ,CAAC"}`
 };
 var Work = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { work: work2 } = $$props;
   if ($$props.work === void 0 && $$bindings.work && work2 !== void 0)
     $$bindings.work(work2);
   $$result.css.add(css$1);
-  return `<div><h3>${escape(work2.title)}</h3>
-    <p>${escape(work2.description)}</p>
+  return `<div>
+    <p><!-- HTML_TAG_START -->${(0, import_marked.default)(work2.description)}<!-- HTML_TAG_END --></p>
     <img${add_attribute("src", work2.imageSrc, 0)}${add_attribute("alt", work2.altText, 0)} class="${"svelte-dnryg5"}">
   </div>`;
 });
 var css = {
   code: "h2.svelte-1bg19v8{margin:0px;padding:0px;margin-top:35px;color:#0FF}",
-  map: `{"version":3,"file":"work.svelte","sources":["work.svelte"],"sourcesContent":["<script lang='ts'>import Menu from \\"../../components/Menu.svelte\\";\\r\\nimport Work from \\"../../components/Work.svelte\\";\\r\\nimport LogoStamp from \\"../../components/LogoStamp.svelte\\";\\r\\nlet works = [\\r\\n    {\\r\\n        title: \\"Test\\",\\r\\n        description: \\"lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish\\",\\r\\n        imageSrc: \\"https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large\\",\\r\\n        altText: \\"Test post pls ignore\\"\\r\\n    },\\r\\n    {\\r\\n        title: \\"Test\\",\\r\\n        description: \\"lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish\\",\\r\\n        imageSrc: \\"https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large\\",\\r\\n        altText: \\"Test post pls ignore\\"\\r\\n    },\\r\\n    {\\r\\n        title: \\"Test\\",\\r\\n        description: \\"lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish\\",\\r\\n        imageSrc: \\"https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large\\",\\r\\n        altText: \\"Test post pls ignore\\"\\r\\n    },\\r\\n    {\\r\\n        title: \\"Test\\",\\r\\n        description: \\"lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish\\",\\r\\n        imageSrc: \\"https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large\\",\\r\\n        altText: \\"Test post pls ignore\\"\\r\\n    },\\r\\n    {\\r\\n        title: \\"Test\\",\\r\\n        description: \\"lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish\\",\\r\\n        imageSrc: \\"https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large\\",\\r\\n        altText: \\"Test post pls ignore\\"\\r\\n    },\\r\\n    {\\r\\n        title: \\"Test\\",\\r\\n        description: \\"lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish\\",\\r\\n        imageSrc: \\"https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large\\",\\r\\n        altText: \\"Test post pls ignore\\"\\r\\n    },\\r\\n    {\\r\\n        title: \\"Test\\",\\r\\n        description: \\"lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish\\",\\r\\n        imageSrc: \\"https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large\\",\\r\\n        altText: \\"Test post pls ignore\\"\\r\\n    },\\r\\n    {\\r\\n        title: \\"Test\\",\\r\\n        description: \\"lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish\\",\\r\\n        imageSrc: \\"https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large\\",\\r\\n        altText: \\"Test post pls ignore\\"\\r\\n    },\\r\\n    {\\r\\n        title: \\"Test\\",\\r\\n        description: \\"lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish\\",\\r\\n        imageSrc: \\"images/test.jpg\\",\\r\\n        altText: \\"Test post pls ignore\\"\\r\\n    }\\r\\n];\\r\\n<\/script>\\n\\n<main>\\n  <aside>\\n    <LogoStamp></LogoStamp>\\n    <Menu></Menu>\\n  </aside>\\n  <article id='main'>\\n    <h2>Prior Art</h2>\\n    {#each works as work}\\n    <Work {work}></Work>\\n    {/each}\\n  </article>\\n</main>\\n\\n<style lang='scss'>h2 {\\n  margin: 0px;\\n  padding: 0px;\\n  margin-top: 35px;\\n  color: #0FF;\\n}</style>"],"names":[],"mappings":"AA0EmB,EAAE,eAAC,CAAC,AACrB,MAAM,CAAE,GAAG,CACX,OAAO,CAAE,GAAG,CACZ,UAAU,CAAE,IAAI,CAChB,KAAK,CAAE,IAAI,AACb,CAAC"}`
+  map: `{"version":3,"file":"work.svelte","sources":["work.svelte"],"sourcesContent":["<script lang='ts' context='module'>var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nexport function load({ fetch }) {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        const entriesResponse = yield fetch('/work/entries.json');\\r\\n        const workEntries = yield entriesResponse.json();\\r\\n        if (entriesResponse.ok) {\\r\\n            return {\\r\\n                props: {\\r\\n                    workEntries: workEntries.entries\\r\\n                }\\r\\n            };\\r\\n        }\\r\\n    });\\r\\n}\\r\\n<\/script>\\n\\n<script lang='ts'>var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { onMount } from 'svelte';\\r\\nimport Menu from \\"../../components/Menu.svelte\\";\\r\\nimport Work from \\"../../components/Work.svelte\\";\\r\\nimport LogoStamp from \\"../../components/LogoStamp.svelte\\";\\r\\nexport let workEntries;\\r\\nonMount(() => {\\r\\n    console.log(workEntries);\\r\\n    works = workEntries;\\r\\n});\\r\\nlet works = [\\r\\n    {\\r\\n        title: \\"Loading. . .\\",\\r\\n        description: \\"lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish\\",\\r\\n        imageSrc: \\"https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large\\",\\r\\n        altText: \\"Test post pls ignore\\"\\r\\n    }\\r\\n];\\r\\n<\/script>\\n\\n<main>\\n  <aside>\\n    <LogoStamp></LogoStamp>\\n    <Menu></Menu>\\n  </aside>\\n  <article id='main'>\\n    <h2>Prior Art</h2>\\n    {#each works as work}\\n    <Work {work}></Work>\\n    {/each}\\n  </article>\\n</main>\\n\\n<style lang='scss'>h2 {\\n  margin: 0px;\\n  padding: 0px;\\n  margin-top: 35px;\\n  color: #0FF;\\n}</style>"],"names":[],"mappings":"AAiEmB,EAAE,eAAC,CAAC,AACrB,MAAM,CAAE,GAAG,CACX,OAAO,CAAE,GAAG,CACZ,UAAU,CAAE,IAAI,CAChB,KAAK,CAAE,IAAI,AACb,CAAC"}`
 };
+var __awaiter = function(thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function(resolve2) {
+      resolve2(value);
+    });
+  }
+  return new (P || (P = Promise))(function(resolve2, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function step(result) {
+      result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+function load({ fetch: fetch2 }) {
+  return __awaiter(this, void 0, void 0, function* () {
+    const entriesResponse = yield fetch2("/work/entries.json");
+    const workEntries = yield entriesResponse.json();
+    if (entriesResponse.ok) {
+      return {
+        props: { workEntries: workEntries.entries }
+      };
+    }
+  });
+}
 var Work_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  (function(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+      return value instanceof P ? value : new P(function(resolve2) {
+        resolve2(value);
+      });
+    }
+    return new (P || (P = Promise))(function(resolve2, reject) {
+      function fulfilled(value) {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function rejected(value) {
+        try {
+          step(generator["throw"](value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function step(result) {
+        result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+      }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+  });
+  let { workEntries } = $$props;
   let works = [
     {
-      title: "Test",
+      title: "Loading. . .",
       description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
       imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "images/test.jpg",
       altText: "Test post pls ignore"
     }
   ];
+  if ($$props.workEntries === void 0 && $$bindings.workEntries && workEntries !== void 0)
+    $$bindings.workEntries(workEntries);
   $$result.css.add(css);
   return `<main><aside>${validate_component(LogoStamp, "LogoStamp").$$render($$result, {}, {}, {})}
     ${validate_component(Menu, "Menu").$$render($$result, {}, {}, {})}</aside>
@@ -5096,7 +5373,8 @@ var Work_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 var work = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  "default": Work_1
+  "default": Work_1,
+  load
 });
 
 // .svelte-kit/netlify/entry.js
