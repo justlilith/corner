@@ -5,7 +5,7 @@
 
 [functions]
   node_bundler = "esbuild"
-  included_files = ["src/routes/journal/posts/*.json",
+  included_files = ["src/routes/journal/entries/*.json",
   "src/routes/work/entries/*.json"]
 
 [[plugins]]
