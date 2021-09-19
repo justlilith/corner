@@ -3,5 +3,9 @@
   "filename":"{{.File.BaseFileName}}.json",
   "title":"{{ .Title }}",
   "date":"{{ .Date.Format "Monday, January 2, 2006"}}",
-  "description":{{ .RawContent | jsonify }}
+  "description":{{ .RawContent | jsonify }},
+  "imageURLs":[{{range $elem_index, $elem_val := .Params.images}}
+  {{ if ($elem_index != len .Params.images) printf "\"images/work/%s\"," $elem_val}}
+  {{ end }}
+  ]
 }

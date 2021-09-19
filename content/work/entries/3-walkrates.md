@@ -4,6 +4,10 @@ date: 2021-09-19T01:25:44-05:00
 draft: false
 index: 1
 outputs: work
+images:
+- walkrates-1.jpg
+- walkrates-2.jpg
+- walkrates-3.jpg
 ---
 
 # Walk Rates: Answering a Fun Question
