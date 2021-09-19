@@ -14,7 +14,7 @@
       <a href='https://twitter.com/imjustlilith' target=_blank>Tweets 🕊️</a>
     </li>
     <li>
-      <a href='https://tinyurl.com/LilithsResume'>Resume</a>
+      <a href='https://tinyurl.com/LilithsResume' target=_blank>Resume</a>
     </li>
     <li>
       <a href='/work'>Prior Art</a>

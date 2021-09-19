@@ -5,8 +5,13 @@
   
   <div>
     <!-- <h3>{work.title}</h3> -->
-    <p>{@html marked(work.description)}</p>
-    <img src={work.imageSrc} alt={work.altText}/>
+    {@html marked(work.description)}
+    <div>
+      <!-- {#each work.imageURLs as url} -->
+      <!-- <img src={url} alt={work.altText || ""}/> -->
+      <!-- {/each} -->
+      <img src={work.imageURLs[0]} alt={work.altText || ""}/>
+    </div>
   </div>
 
 <style lang='scss'>
