@@ -3,5 +3,5 @@
   "filename":"{{.File.BaseFileName}}.json",
   "title":"{{ .Title }}",
   "date":"{{ .Date.Format "Monday, January 2, 2006"}}",
-  "body":{{ .RawContent | jsonify }}
+  "description":{{ .RawContent | jsonify }}
 }

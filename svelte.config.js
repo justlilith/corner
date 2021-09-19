@@ -13,16 +13,16 @@ const config = {
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
 		// ssr:false
-		vite: {
-			plugins: [
-				copy({
-					targets: [
-						{ src: 'src/routes/journal/posts', dest: 'functions/src'}
-					],
-					flatten:false
-				})
-			]
-		}
+		// vite: {
+		// 	plugins: [
+		// 		copy({
+		// 			targets: [
+		// 				{ src: 'src/routes/journal/posts', dest: 'functions/src'}
+		// 			],
+		// 			flatten:false
+		// 		})
+		// 	]
+		// }
 	}
 };
 

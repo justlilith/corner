@@ -1,63 +1,37 @@
+<script lang='ts' context='module'>
+  export async function load({ fetch }) {
+    const entriesResponse:Response = await fetch('/work/entries.json')
+    const workEntries = await entriesResponse.json()
+    if (entriesResponse.ok) {
+      return {
+        props: {
+          workEntries: workEntries.entries
+        }
+      }
+    }
+  }
+</script>
+
 <script lang='ts'>
+  import { onMount } from 'svelte'
   import Menu from "../../components/Menu.svelte";
   import Work from "../../components/Work.svelte";
   import LogoStamp from "../../components/LogoStamp.svelte";
   
+  export let workEntries
+
+  onMount(()=> {
+    console.log(workEntries)
+    works = workEntries
+  })
+
   let works = [
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-      altText: "Test post pls ignore"
-    },
-    {
-      title: "Test",
-      description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      imageSrc: "images/test.jpg",
-      altText: "Test post pls ignore"
-    }
+  {
+    title: "Loading. . .",
+    description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
+    imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
+    altText: "Test post pls ignore"
+  }
   ]
 </script>
 

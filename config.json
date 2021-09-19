@@ -1,10 +1,10 @@
 {
   "contentDir":"content"
   , "staticDir":false
-  , "publishDir":"src/routes/journal/posts"
+  , "publishDir":"src"
   , "mediaTypes": {
-    "application/json": {
-      "suffixes":"json"
+    "text/json": {
+      "suffixes": ["json"]
     }
   }
   , "disableKinds": [
@@ -17,15 +17,26 @@
     , "404"
   ]
   , "outputFormats": {
-    "jsonEntry": {
+    "journalEntry": {
+      "name": "journal"
+      , "isPlainText": true
+      , "isHTML": false
+      , "mediaType": "text/json"
+      , "notAlternative": true
+      , "path": "routes"
+    }
+    , "workEntry": {
       "isPlainText": true
-      , "mediaType": "application/json"
+      , "name": "work"
+      , "isHTML": false
+      , "mediaType": "text/json"
+      , "path": "routes"
+      , "notAlternative": true
     }
   }
   ,"uglyURLs": true
   , "outputs": {
     "page": [
-      "json"
     ]
   }
   , "markup": {

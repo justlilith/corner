@@ -1,0 +1,7 @@
+{
+  "index":2,
+  "filename":"2-polyreference.json",
+  "title":"Polyreference",
+  "date":"Sunday, September 19, 2021",
+  "description":"\r\n# Polyref\r\n\r\nPolyref is a web-based art reference app. You can paste in some images (or their URLs) to display them across a pasteboard. Move, resize, scale, zoom and layer them freely, to create a nice moodboard for whatever you're working on.\r\n\r\nIt's written with SvelteKit and hosted on Netlify.\r\n\r\nLive link: [Polyref](https://www.polyref.cc/)\r\n\r\nGitHub: [justlilith/polyreference](https://github.com/justlilith/polyreference/)"
+}

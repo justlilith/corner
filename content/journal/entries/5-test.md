@@ -3,6 +3,7 @@ title: "Testing"
 date: "2021-09-18"
 draft: false
 index: 5
+outputs: journal
 ---
 
 # Test From Hugo
