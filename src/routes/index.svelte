@@ -9,13 +9,13 @@
         let res:Response = await fetch(`/journal/${entry}`)
         return await res.json()
       })
-            
-        return {
-          props: {
+      
+      return {
+        props: {
           entries: entriesBodyJson.dirList,
           contentList: (await Promise.all(contentList)).map(x => x.article)
-          }
         }
+      }
     }
   }
 </script>
@@ -28,14 +28,14 @@
   // export let entries = 'ok'
   export let entries
   export let contentList
-
-  // onMount(()=> {
-  //   contentList = [...contentList].sort()
-  // })
   
-</script>
-
-<svelte:head>
+  // onMount(()=> {
+    //   contentList = [...contentList].sort()
+    // })
+    
+  </script>
+  
+  <svelte:head>
 </svelte:head>
 
 <main>
@@ -47,10 +47,10 @@
     <h2>Journal</h2>
     <!-- <nav id='sidebar'>
       <ul>
-      {#each entries as entry}
-      <li><a href={`#${entry}`}>{entry}</a></li>
-      {/each}
-    </ul>
+        {#each entries as entry}
+        <li><a href={`#${entry}`}>{entry}</a></li>
+        {/each}
+      </ul>
     </nav> -->
     <article>
       {#each contentList.sort((x, y) => y.index - x.index) as content}
@@ -68,6 +68,9 @@
     left: 30vw;
     top:0vh;
     margin-top:30vh
+  }
+  h2 {
+    font-family: Garamond, 'Times New Roman', Times, serif;
   }
   p {
     line-height: 175%;
