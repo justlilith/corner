@@ -1,3 +1,0 @@
-# Test
-
-Okay then.

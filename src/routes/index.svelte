@@ -21,9 +21,9 @@
 </script>
 
 <script lang='ts'>
-  import Menu from "../components/Menu.svelte";
-  import JournalEntry from "../components/JournalEntry.svelte";
-  import LogoStamp from "../components/LogoStamp.svelte";
+  import Menu from "../../components/Menu.svelte";
+  import JournalEntry from "../../components/JournalEntry.svelte";
+  import LogoStamp from "../../components/LogoStamp.svelte";
   import { onMount } from 'svelte'
   // export let entries = 'ok'
   export let entries

@@ -1,45 +1,57 @@
 {
   "contentDir":"content"
-  , "publishDir":"src/routes/journal/posts/test"
+  , "staticDir":false
+  , "publishDir":"src/routes/journal/posts"
   , "mediaTypes": {
     "application/json": {
       "suffixes":"json"
     }
   }
+  , "disableKinds": [
+    "home"
+    , "taxonomy"
+    , "term"
+    , "RSS"
+    , "sitemap"
+    , "robotsTXT"
+    , "404"
+  ]
   , "outputFormats": {
-    "isPlainText": true
-    , "name": "JSON"
-    , "mediaType": "application/json"
+    "jsonEntry": {
+      "isPlainText": true
+      , "mediaType": "application/json"
+    }
   }
+  ,"uglyURLs": true
   , "outputs": {
     "page": [
-      "JSON"
+      "json"
     ]
   }
   , "markup": {
     "goldmark": {
-       "extensions": {
-          "definitionList": true,
-          "footnote": true,
-          "linkify": true,
-          "strikethrough": true,
-          "table": true,
-          "taskList": true,
-          "typographer": true
-       },
-       "parser": {
-          "attribute": {
-             "block": false,
-             "title": true
-          },
-          "autoHeadingID": true,
-          "autoHeadingIDType": "github"
-       },
-       "renderer": {
-          "hardWraps": false,
-          "unsafe": false,
-          "xhtml": false
-       }
+      "extensions": {
+        "definitionList": true,
+        "footnote": true,
+        "linkify": true,
+        "strikethrough": true,
+        "table": true,
+        "taskList": true,
+        "typographer": true
+      },
+      "parser": {
+        "attribute": {
+          "block": false,
+          "title": true
+        },
+        "autoHeadingID": true,
+        "autoHeadingIDType": "github"
+      },
+      "renderer": {
+        "hardWraps": false,
+        "unsafe": true,
+        "xhtml": false
+      }
     }
- }
+  }
 }

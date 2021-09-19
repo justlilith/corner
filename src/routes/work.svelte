@@ -1,7 +1,7 @@
 <script lang='ts'>
-  import Menu from "../components/Menu.svelte";
-  import Work from "../components/Work.svelte";
-  import LogoStamp from "../components/LogoStamp.svelte";
+  import Menu from "../../components/Menu.svelte";
+  import Work from "../../components/Work.svelte";
+  import LogoStamp from "../../components/LogoStamp.svelte";
   
   let works = [
     {
