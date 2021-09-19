@@ -14,7 +14,8 @@
     color:#0FF;
     font-size: 4em;
     left:20vw;
-    width:20vw;
-    text-shadow: 0px 0px 10px #000, 0px 0px 10px #FFF;
+    width:13vw;
+    text-align:right;
+    // text-shadow: 0px 0px 10px #000, 0px 0px 10px #FFF;
   }
 </style>

@@ -1,0 +1,45 @@
+{
+  "contentDir":"content"
+  , "publishDir":"src/routes/journal/posts/test"
+  , "mediaTypes": {
+    "application/json": {
+      "suffixes":"json"
+    }
+  }
+  , "outputFormats": {
+    "isPlainText": true
+    , "name": "JSON"
+    , "mediaType": "application/json"
+  }
+  , "outputs": {
+    "page": [
+      "JSON"
+    ]
+  }
+  , "markup": {
+    "goldmark": {
+       "extensions": {
+          "definitionList": true,
+          "footnote": true,
+          "linkify": true,
+          "strikethrough": true,
+          "table": true,
+          "taskList": true,
+          "typographer": true
+       },
+       "parser": {
+          "attribute": {
+             "block": false,
+             "title": true
+          },
+          "autoHeadingID": true,
+          "autoHeadingIDType": "github"
+       },
+       "renderer": {
+          "hardWraps": false,
+          "unsafe": false,
+          "xhtml": false
+       }
+    }
+ }
+}

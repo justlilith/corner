@@ -8,13 +8,13 @@
       <a href='/'>Front Cover</a>
     </li> -->
     <li>
-      <a href='/'>Prior Art</a>
+      <a href='/'>Journal</a>
     </li>
     <li>
       <a href='https://twitter.com/imjustlilith' target=_blank>Tweets 🕊️</a>
     </li>
     <li>
-      <a href='journal'>Journal</a>
+      <a href='/work'>Prior Art</a>
     </li>
     <li>
       <a href='spells'>Spells</a>
@@ -31,6 +31,7 @@
   nav {
     margin-top:30vh;
     padding-top: 5vh;
+    padding-right: 5vh;
     top:0vh;
     position: sticky;
     left:20vw;
@@ -45,6 +46,7 @@
     padding-bottom:5px;
     padding-top:5px;
     list-style: none;
+    text-align:right;
   }
   nav a {
     color:white;
