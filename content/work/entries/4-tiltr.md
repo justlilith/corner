@@ -4,6 +4,10 @@ date: 2021-09-19T08:59:06-05:00
 draft: false
 index: 2
 outputs: work
+images:
+- tiltr-1.jpg
+- tiltr-2.jpg
+- tiltr-3.jpg
 ---
 
 # Tiltr: Alternative Twitter App

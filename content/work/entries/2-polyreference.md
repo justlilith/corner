@@ -4,6 +4,8 @@ date: 2021-09-19T09:01:22-05:00
 draft: false
 index: 2
 outputs: work
+images:
+- polyref-1.jpg
 ---
 
 # Polyref

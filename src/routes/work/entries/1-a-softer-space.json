@@ -5,5 +5,6 @@
   "date":"Sunday, September 19, 2021",
   "description":"\r\n# A Softer Space\r\n\r\nA Softer Space is a calming area to vent your thoughts, as if texting a friend.\r\n\r\nIt uses a familiar, text-based UI, and allows you to download your chats (so that you could, for example, send them to a therapist), as well as login to save them, which allows you to access your chats from any device.\r\n\r\nIt's written with SvelteKit and hosted on Netlify. For some elements, p5.js is used.\r\n\r\nLive link: [A Softer Space](https://asofter.space/)\r\n\r\nGitHub: [justlilith/aSofterSpace](https://github.com/justlilith/ASofterSpace/)",
   "imageURLs":[
+    "images/work/a-softer-space-1.jpg"
   ]
 }

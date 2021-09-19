@@ -4,6 +4,18 @@ date: 2021-09-19T09:01:02-05:00
 draft: false
 index: 6
 outputs: work
+images:
+- eagle-wetsuits-1.webp
+- eagle-wetsuits-2.jpg
+- eagle-wetsuits-3.jpg
+- eagle-wetsuits-4.jpg
+- eagle-wetsuits-5.jpg
+- eagle-wetsuits-6.webp
+- eagle-wetsuits-7.jpg
+- eagle-wetsuits-8.jpg
+- eagle-wetsuits-9.jpg
+- eagle-wetsuits-10.jpg
+- eagle-wetsuits-11.jpg
 ---
 
 # Eagle Wetsuits

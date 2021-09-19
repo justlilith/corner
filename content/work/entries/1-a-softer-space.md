@@ -4,6 +4,8 @@ date: 2021-09-19T09:01:12-05:00
 draft: false
 index: 1
 outputs: work
+images:
+- a-softer-space-1.jpg
 ---
 
 # A Softer Space
