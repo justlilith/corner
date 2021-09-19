@@ -5,8 +5,8 @@ draft: false
 index: 5
 outputs: work
 images:
-- spkn-1.jpg
-- spkn-2.jpg
+- spkn-1.png
+- spkn-2.png
 ---
 
 # Spoken: Application UI

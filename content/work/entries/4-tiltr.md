@@ -1,5 +1,5 @@
 ---
-title: "2 Tiltr"
+title: "Tiltr"
 date: 2021-09-19T08:59:06-05:00
 draft: false
 index: 2

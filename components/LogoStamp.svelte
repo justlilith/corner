@@ -1,8 +1,14 @@
 <script lang='ts'>
+  import { onMount } from 'svelte';
   
+  import * as Helpers from './ts/helpers'
+  
+  onMount(()=> {
+    Helpers.addRainbowBackground('logo')
+  })
 </script>
 
-<h1>Lilith's Grimoire</h1>
+<h1 class='logo'>Lilith's Grimoire</h1>
 
 <style lang='scss'>
   h1 {
@@ -17,5 +23,7 @@
     width:13vw;
     text-align:right;
     // text-shadow: 0px 0px 10px #000, 0px 0px 10px #FFF;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
   }
 </style>

@@ -1,10 +1,10 @@
-{{$imagesLength := (len .Params.images)}}{
+{{$imagesLength := (len .Params.images)}}{{$title := (replace .Title " " "-")}}{
   "index":{{ .Params.index }},
   "filename":"{{.File.BaseFileName}}.json",
   "title":"{{ .Title }}",
   "date":"{{ .Date.Format "Monday, January 2, 2006"}}",
   "description":{{ .RawContent | jsonify }},
   "imageURLs":[{{range $elem_index, $elem_val := .Params.images}}
-    {{ if eq (add $elem_index 1) $imagesLength}}{{printf "\"images/work/.Title/%s\"" $elem_val}}{{ else }}{{(printf "\"images/work/%s\"," $elem_val)}}{{ end }}{{ end }}
+    {{ if eq (add $elem_index 1) $imagesLength}}{{printf "\"images/work/%s/%s\"" (lower $title) $elem_val}}{{ else }}{{(printf "\"images/work/%s/%s\"," (lower $title) $elem_val)}}{{ end }}{{ end }}
   ]
 }

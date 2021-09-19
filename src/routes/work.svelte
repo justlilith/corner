@@ -18,21 +18,18 @@
   import Work from "../../components/Work.svelte";
   import LogoStamp from "../../components/LogoStamp.svelte";
   
-  export let workEntries
-
-  onMount(()=> {
-    console.log(workEntries)
-    works = workEntries
-  })
-
-  let works = [
+  export let workEntries = [
   {
     title: "Loading. . .",
     description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-    imageSrc: "https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large",
-    altText: "Test post pls ignore"
+    altText: "Test post pls ignore",
+    imageUrls: ["https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large"]
   }
   ]
+
+  onMount(()=> {
+    console.log(workEntries)
+  })
 </script>
 
 <main>
@@ -41,8 +38,8 @@
     <Menu></Menu>
   </aside>
   <article id='main'>
-    <h2>Prior Art</h2>
-    {#each works as work}
+    <h2>Current and Past Work</h2>
+    {#each workEntries as work}
     <Work {work}></Work>
     {/each}
   </article>

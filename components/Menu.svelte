@@ -17,7 +17,7 @@
       <a href='https://tinyurl.com/LilithsResume' target=_blank>Resume</a>
     </li>
     <li>
-      <a href='/work'>Prior Art</a>
+      <a href='/work'>Current and Past Work</a>
     </li>
     <li>
       <a href='spells'>Spells</a>
