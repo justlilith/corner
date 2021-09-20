@@ -34,10 +34,9 @@
   nav {
     margin-top:200px;
     padding-top: 5vh;
-    padding-right: 5vh;
+    padding-right: 30px;
     top:0vh;
     position: sticky;
-    left:20vw;
     background-color: #000;
   }
   ul {

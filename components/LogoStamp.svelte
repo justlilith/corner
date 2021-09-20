@@ -19,7 +19,7 @@
     position: fixed;
     color:#0FF;
     font-size: 4em;
-    left:20vw;
+    right:calc(70% + 30px);
     width:13vw;
     text-align:right;
     // text-shadow: 0px 0px 10px #000, 0px 0px 10px #FFF;
