@@ -1,7 +1,7 @@
 <script lang='ts'>
   import { onMount } from 'svelte';
   
-  import * as Helpers from './ts/helpers'
+  import * as Helpers from '$lib/ts/helpers'
   
   onMount(()=> {
     document.getElementById('logoStamp').setAttribute('id', '')

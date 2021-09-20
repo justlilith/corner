@@ -32,7 +32,8 @@ a:visited {
 
 main {
   display:grid;
-  grid-template-areas: 'top' 'bottom';
+  grid-template-areas: 'top' 'bottom' 'footer';
+  grid-template-rows: auto auto 108px;
   height:100vh;
 }
 
@@ -53,21 +54,18 @@ article#main {
 @media (min-width: 1000px) {
   
   main {
-    grid-template-areas: 'left right';
-    grid-template-columns: 30% 70%;
+    grid-template-areas: 'left right' 'footer footer';
+  /* grid-template-rows: auto 10%; */
+  grid-template-columns: 30% 70%;
   }
+
   aside {
     grid-area: left;
   }
+  
   article#main {
     grid-area: right;
     padding-left: 32px;
     padding-right: 20vw;
   }
-  
-  
-  
-  
-  
-  
 }

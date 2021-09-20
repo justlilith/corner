@@ -1,13 +1,13 @@
 <script lang='ts'>
   import marked from 'marked'
   import { onMount } from 'svelte';
-  import * as Helpers from './ts/helpers'
+  import * as Helpers from '$lib/ts/helpers'
   
   onMount(()=> {
     Helpers.addRainbowBackground('work-images')
   })
   
-  export let work
+  export let work:WorkEntryT
 </script>
 
 <div class='work'>
@@ -16,11 +16,11 @@
   {#if work["imageURLs"].length > 1}
   <div class='work-images'>
     {#each work["imageURLs"] as url}
-    <img src={url} alt={work.altText || ""}/>
+    <img src={url} alt={work.title}/>
     {/each}
   </div>
   {:else}
-  <img class='work-image' src={work["imageURLs"][0]} alt=""/>
+  <img class='work-image' src={work["imageURLs"][0]} alt={work.title}/>
   {/if}
 </div>
 

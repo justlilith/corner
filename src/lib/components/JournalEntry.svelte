@@ -1,6 +1,6 @@
 <script lang='ts'>
   import marked from 'marked'
-  export let content
+  export let content:JournalEntryT
 </script>
   
   <div class='journalEntry'>
@@ -15,7 +15,7 @@
     font-size:1.5em;
     // color:hsl(180,100%,80%)
   }
-  h4 .date {
+  h4.date {
     font-size:1em;
     text-align: right;
   }

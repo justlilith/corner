@@ -33,7 +33,7 @@ function addRainbowBackground(className:string):void {    // Defining some varia
   }, rotSpd);
 }
 
-const elementList = [...document.getElementsByClassName(className)]
+const elementList = Array.from(document.getElementsByClassName(className))
 .filter(element => element.getAttribute('gradientified') != 'yes')
 
 manipGradient(elementList)

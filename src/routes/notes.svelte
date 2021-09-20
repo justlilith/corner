@@ -44,6 +44,8 @@ Also, these are in no particular order. Eventually, they will be tagged and cate
 
 - **C# is discount Java.** Kidding 😜. They're pretty similar, though.
 
+- **Try that thing you don't think you like.** You might learn something, or perhaps fall in love.
+
 - **Code explains the comments to the computer, rather than comments explaining code to the human.**
   - Comment-driven development is [not a myth](https://channel9.msdn.com/Blogs/MSDNSweden/Comment-Driven-Development-the-art-of-removal), but [a real thing that's quite powerful](https://mayaposch.wordpress.com/2017/04/09/on-the-merits-of-comment-driven-development/).
 
@@ -71,6 +73,8 @@ Also, these are in no particular order. Eventually, they will be tagged and cate
 
 - **Stay mindful of the cost of context-switching.**
   - [We are single-threaded, context-switching animals](https://en.wikipedia.org/wiki/Continuous_partial_attention). We're great at throwing all of our brainpower at one thing at a time — but we're not so great at [juggling multiple things](https://en.wikipedia.org/wiki/Human_multitasking#The_brain's_role).
+
+- **[Always become a better asset to everyone around you](https://www.cracked.com/blog/6-harsh-truths-that-will-make-you-better-person).**
 
 `)}
 

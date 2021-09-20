@@ -14,14 +14,16 @@
 
 <script lang='ts'>
   import { onMount } from 'svelte'
-  import Work from "../../components/Work.svelte";
+  import Work from "$lib/components/Work.svelte";
   
-  export let workEntries = [
+  export let workEntries:WorkEntryT[] = [
   {
+    index: 0,
+    filename:null,
+    date:null,
     title: "Loading. . .",
     description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-    altText: "Test post pls ignore",
-    imageUrls: ["https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large"]
+    imageURLs: ["https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large"]
   }
   ]
   

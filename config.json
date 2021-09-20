@@ -23,14 +23,14 @@
       , "isHTML": false
       , "mediaType": "text/json"
       , "notAlternative": true
-      , "path": "routes"
+      , "path": "lib"
     }
     , "workEntry": {
       "isPlainText": true
       , "name": "work"
       , "isHTML": false
       , "mediaType": "text/json"
-      , "path": "routes"
+      , "path": "lib"
       , "notAlternative": true
     }
   }

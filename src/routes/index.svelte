@@ -1,7 +1,7 @@
 <script lang='ts' context='module'>
   export async function load({fetch}){
     let contentList = []
-    let entries
+    let entryList:DirListT = []
     const entriesResponse:Response = await fetch('/journal/entries.json')
     const entriesBodyJson = await entriesResponse.json()
     if (entriesResponse.ok) {
@@ -12,7 +12,7 @@
       
       return {
         props: {
-          entries: entriesBodyJson.dirList,
+          entryList: entriesBodyJson.dirList,
           contentList: (await Promise.all(contentList)).map(x => x.article)
         }
       }
@@ -21,11 +21,11 @@
 </script>
 
 <script lang='ts'>
-  import JournalEntry from "../../components/JournalEntry.svelte";
+  import JournalEntry from "$lib/components/JournalEntry.svelte";
   import { onMount } from 'svelte'
   // export let entries = 'ok'
-  export let entries
-  export let contentList
+  export let entryList:DirListT
+  export let contentList:JournalEntryT[]
   
   // onMount(()=> {
     //   contentList = [...contentList].sort()

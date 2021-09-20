@@ -5,8 +5,8 @@
 
 [functions]
   node_bundler = "esbuild"
-  included_files = ["src/routes/journal/entries/*.json",
-  "src/routes/work/entries/*.json"]
+  included_files = ["src/lib/journal/entries/*.json",
+  "src/lib/work/entries/*.json"]
 
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"

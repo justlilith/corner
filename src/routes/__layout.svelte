@@ -1,9 +1,9 @@
 <script lang='ts'>
   import { onMount } from 'svelte'
-  import Menu from "../../components/Menu.svelte";
-  import LogoStamp from "../../components/LogoStamp.svelte";
-  import * as Helpers from '../../components/ts/helpers'
-
+  import Menu from "$lib/components/Menu.svelte";
+  import LogoStamp from "$lib/components/LogoStamp.svelte";
+  import * as Helpers from '$lib/ts/helpers'
+  import Footer from '$lib/components/Footer.svelte';
   
 </script>
 
@@ -15,4 +15,5 @@
   <article id='main'>
     <slot></slot>
   </article>
+  <Footer></Footer>
 </main>

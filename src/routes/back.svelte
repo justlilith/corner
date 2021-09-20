@@ -21,7 +21,7 @@
   <p>{@html marked(`
 ### Software
 
-This site is built with a mix of SvelteKit, Hugo, Markdown, and too many npm packages to list; check out and browse the [src on my GitHub](https://github.com/justlilith/grimoire/blob/main/package.json) to find everything.
+This site is built with a mix of SvelteKit, Hugo, Markdown, and too many npm packages to list; check out the [source code over at GitHub](https://github.com/justlilith/grimoire/blob/main/package.json) to browse everything.
 `)}</p>
 </div>
 
