@@ -16,7 +16,7 @@
 </script>
 
 <h2>Notes 📝</h2>
-<div>
+<div id='notes'>
   
 {@html marked(`
 Here are some things I wish I knew before I started... well, anything! ^_^ These range from tribal knowledge around programming paradigms to behavioral management (with regards to ADHD). Plus, whatever else comes to mind.
@@ -27,32 +27,57 @@ Also, these are in no particular order. Eventually, they will be tagged and cate
 
 ### Let's go! 🚀🚀
 
-- **Everything is a work in progress.** It's okay if something isn't done; few things truly are. Be kind to yourself.
+- **Clarity matters more than cleverness.**
+  - [Code golf](https://en.wikipedia.org/wiki/Code_golf) in prod is an [anti-pattern](https://www.bmc.com/blogs/anti-patterns-vs-patterns/).
+  - Speed of code matters more than compactness of code.
+  - Expeditiously written, yet elegant code is a good goal.
 
-- **Perfection isn't real.** Get as close as you want. Don't do so to your detriment.
+- **[TDD](https://en.wikipedia.org/wiki/Code_golf), [REPLs](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop), and [short dev cycles](https://en.wikipedia.org/wiki/Rapid_application_development) are dope. 🔥🔥🔥**
 
-- **C# is discount Java.** Kidding. They're pretty similar, though.
+- **[You aren't gonna need it](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it).** Refactor when necessary. Don't [prematurely over-optimize](https://en.wikipedia.org/wiki/Program_optimization#When_to_optimize).
 
-- **There's really no perfect paradigm — just the right tool at the right moment.**
-  - **There can be more than one 'right tool.'**
+- **Everything is a work in progress.** It's okay if something isn't done; few things truly are, and you probably aren't getting shot at, so... why stress so much? Be kinder to yourself.
 
-- **Functional programming is just pipelining things and ETL on a small scale.**
+- **Perfection isn't real.** Get as close as you want, but don't do so to your detriment.
 
-- **You do not need to be a wizard to code. Just persistent.** Maybe a little stubborn. Masochistic, even.
+- **[Execute](https://ask.metafilter.com/255091/Help-me-overcome-analysis-paralysis-and-be-more-process-based).**
 
-- **Object-oriented programming is really about passing messages around.**
+- **C# is discount Java.** Kidding 😜. They're pretty similar, though.
 
-- **A factory pattern is a real thing.**
+- **Code explains the comments to the computer, rather than comments explaining code to the human.**
+  - Comment-driven development is [not a myth](https://channel9.msdn.com/Blogs/MSDNSweden/Comment-Driven-Development-the-art-of-removal), but [a real thing that's quite powerful](https://mayaposch.wordpress.com/2017/04/09/on-the-merits-of-comment-driven-development/).
 
-- **You know those square brace things in C#? Those are attributes.** And they're kinda neat. Don't think about it too much.
+- **There's really [no perfect paradigm](https://en.wikipedia.org/wiki/Comparison_of_multi-paradigm_programming_languages#Paradigm_summaries) — just the right tool at the right moment.**
+  - **There can be [more than one 'right tool.'](https://www.rosettacode.org/wiki/Rosetta_Code)**
 
-- **Impostor syndrome does not go away; it just gets easier to deal with.** In 5 years, hopefully I feel differently (I haven't in 20, though).
+- **[Functional programming](https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming) is just pipelining things and ETL on a small scale.**
 
-- **It can wait.** Take some notes, save your place, and go do the other thing. But be mindful of the cost of task-switching.
+- **Avoid returning nulls and voids if you can. Be clear about errors. [Handle your errors](https://go.dev/blog/error-handling-and-go), Lilith.**
+
+- **You do not need to be a brilliant wizard to code. Just persistent! And voraciously, continually learning.**
+  - You may need to be a little stubborn. Masochistic, even. (Just kidding! But only slightly. It's a labor of love. 💙)
+
+- **[Object-oriented programming](https://en.wikipedia.org/wiki/Smalltalk#Object-oriented_programming) is really about [sending messages around](https://en.wikipedia.org/wiki/Smalltalk#Object-oriented_programming).**
+  - Object methods are things you *request*, not functions you apply. 🤯
+
+- **[A factory pattern is a real thing](https://en.wikipedia.org/wiki/Factory_method_pattern), and surprisingly, not a joke.**
+  - I'll stop riffing on OOP one day; it's powerful. (FP is still the future tho no cap)
+
+- **You know those square brace things in C#? [Those are attributes](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/attributes/).** And they're kinda neat. Don't think about it too much.
+
+- **[Impostor syndrome](https://en.wikipedia.org/wiki/Impostor_syndrome) does not go away; it just gets easier to deal with. 😩** In 5 years, I'll hopefully feel differently (I haven't in 20, though; sorry to report that).
+
+- **Whatever it is, it can probably wait.** Take some notes, save your place, and go do the other, more important thing.
+
+- **Stay mindful of the cost of context-switching.**
+  - [We are single-threaded, context-switching animals](https://en.wikipedia.org/wiki/Continuous_partial_attention). We're great at throwing all of our brainpower at one thing at a time — but we're not so great at [juggling multiple things](https://en.wikipedia.org/wiki/Human_multitasking#The_brain's_role).
 
 `)}
 
   </div>
   
   <style lang='scss'>
+    :global(#notes strong) {
+      color: hsl(200,100%,75%);
+    }
   </style>
