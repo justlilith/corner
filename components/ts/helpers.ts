@@ -3,7 +3,7 @@ function addRainbowBackground(className:string) {    // Defining some variables 
   let stop1val = 150; // Color hue!
   let stop2val = 200;
   let stop3val = 100;
-  const inc = 2; // How fast does the color change?
+  const inc = 1; // How fast does the color change?
   
   let rotGrad = 180; // Initial value, which is cyan.
   const rotInc = .5;

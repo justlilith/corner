@@ -27,7 +27,7 @@
 <style lang='scss'>
   .work-images {
     height:50vh;
-    overflow: scroll;
+    overflow-y: scroll;
     scrollbar-width: none;
   }
   
