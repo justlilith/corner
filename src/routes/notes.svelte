@@ -15,7 +15,7 @@
   })
 </script>
 
-<h2>Notes</h2>
+<h2>Notes 📝</h2>
 <div>
   
 {@html marked(`
@@ -25,6 +25,8 @@ These are not maxims; they're things I remind myself of. I'm presenting them her
 
 Also, these are in no particular order. Eventually, they will be tagged and categorized. Everything is a work in progress. Oh! That reminds me!
 
+### Let's go! 🚀🚀
+
 - **Everything is a work in progress.** It's okay if something isn't done; few things truly are. Be kind to yourself.
 
 - **Perfection isn't real.** Get as close as you want. Don't do so to your detriment.
@@ -32,7 +34,7 @@ Also, these are in no particular order. Eventually, they will be tagged and cate
 - **C# is discount Java.** Kidding. They're pretty similar, though.
 
 - **There's really no perfect paradigm — just the right tool at the right moment.**
-- - **There can be more than one 'right tool.'**
+  - **There can be more than one 'right tool.'**
 
 - **Functional programming is just pipelining things and ETL on a small scale.**
 

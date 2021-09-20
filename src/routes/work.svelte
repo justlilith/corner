@@ -30,7 +30,7 @@
   })
 </script>
 
-<h2>Current and Past Work</h2>
+<h2>Current and Past Work 💼</h2>
 {#each workEntries as work}
 <Work {work}></Work>
 {/each}

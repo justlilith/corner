@@ -36,7 +36,7 @@
   <svelte:head>
 </svelte:head>
 
-<h2>Journal</h2>
+<h2>Journal 📜</h2>
 <!-- <nav id='sidebar'>
   <ul>
     {#each entries as entry}
