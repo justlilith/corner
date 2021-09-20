@@ -13,13 +13,19 @@
 <style lang='scss'>
   h3 {
     font-size:1.5em;
-    color:hsl(180,100%,80%)
+    // color:hsl(180,100%,80%)
   }
   h4 .date {
     font-size:1em;
     text-align: right;
   }
   .journalEntry {
-    margin-bottom: 10vh;
+    padding-bottom: 100px;
+    border-bottom: thin solid #666;
+  }
+
+  .journalEntry:last-of-type {
+    padding-bottom: 100px;
+    border-bottom: none;
   }
 </style>

@@ -32,7 +32,7 @@
 </nav>
 <style lang='scss'>
   nav {
-    margin-top:30vh;
+    margin-top:200px;
     padding-top: 5vh;
     padding-right: 5vh;
     top:0vh;

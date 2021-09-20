@@ -10,15 +10,18 @@
   export let work
 </script>
 
-<div>
+<div class='work'>
   <!-- <h3>{work.title}</h3> -->
   {@html marked(work.description)}
+  {#if work["imageURLs"].length > 1}
   <div class='work-images'>
     {#each work["imageURLs"] as url}
     <img src={url} alt={work.altText || ""}/>
     {/each}
-    <!-- <img src={work["imageURLs"]} alt=""/> -->
   </div>
+  {:else}
+  <img class='work-image' src={work["imageURLs"][0]} alt=""/>
+  {/if}
 </div>
 
 <style lang='scss'>
@@ -32,6 +35,16 @@
     // object-fit: cover;
     // height: 90%;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
+  }
+
+  .work {
+    padding-bottom: 100px;
+    border-bottom: thin solid #666;
+  }
+
+  .work:last-of-type {
+    padding-bottom: 100px;
+    border-bottom: none;
   }
 </style>

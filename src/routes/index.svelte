@@ -21,9 +21,7 @@
 </script>
 
 <script lang='ts'>
-  import Menu from "../../components/Menu.svelte";
   import JournalEntry from "../../components/JournalEntry.svelte";
-  import LogoStamp from "../../components/LogoStamp.svelte";
   import { onMount } from 'svelte'
   // export let entries = 'ok'
   export let entries
@@ -38,28 +36,20 @@
   <svelte:head>
 </svelte:head>
 
-<main>
-  <aside>
-    <LogoStamp></LogoStamp>
-    <Menu></Menu>
-  </aside>
-  <article id='main'>
-    <h2>Journal</h2>
-    <!-- <nav id='sidebar'>
-      <ul>
-        {#each entries as entry}
-        <li><a href={`#${entry}`}>{entry}</a></li>
-        {/each}
-      </ul>
-    </nav> -->
-    <article>
-      {#each contentList.sort((x, y) => y.index - x.index) as content}
-      <JournalEntry {content}></JournalEntry>
-      {/each}
-      
-    </article>
-  </article>
-</main>
+<h2>Journal</h2>
+<!-- <nav id='sidebar'>
+  <ul>
+    {#each entries as entry}
+    <li><a href={`#${entry}`}>{entry}</a></li>
+    {/each}
+  </ul>
+</nav> -->
+<article>
+  {#each contentList.sort((x, y) => y.index - x.index) as content}
+  <JournalEntry {content}></JournalEntry>
+  {/each}
+  
+</article>
 
 <style lang='scss'>
   #sidebar {
@@ -69,9 +59,7 @@
     top:0vh;
     margin-top:30vh
   }
-  h2 {
-    font-family: Garamond, 'Times New Roman', Times, serif;
-  }
+  
   p {
     line-height: 175%;
     font-size: 1em;
