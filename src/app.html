@@ -1,13 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="/favicon.png" />
-		<link rel="stylesheet" href="/global.css" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		%svelte.head%
-	</head>
-	<body>
-		<div id="svelte">%svelte.body%</div>
-	</body>
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="/favicon.png" />
+	<link rel="stylesheet" href="/global.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>Lilith's Grimoire</title>
+
+	%svelte.head%
+	
+	
+	<link rel="alternate" type="application/json+oembed"
+	href="http://justlilith.com/oembed.json"
+	title="oEmbed Profile for Lilith's Grimoire" />
+	
+	<meta name="twitter:card" content="summary_large_image"></meta>
+	<meta name="twitter:site" content="@imjustlilith"></meta>
+	<meta name="twitter:creator" content="@imjustlilith"></meta>
+	<meta name="twitter:title" content="Lilith's Grimoire"></meta>
+	<meta name="twitter:image" content="https://justlilith.com/preview.jpg"></meta>
+	<meta name="og:image" content="https://justlilith.com/preview.jpg"></meta>
+	<meta property="twitter:image:alt" content="A photo of Lilith herself,"></meta>
+	<meta property="og:image:alt" content="A photo of Lilith herself,"></meta>
+	<meta property="twitter:description" content="Lilith's Grimoire is home to her thoughts, work, resume, links, and more."></meta>
+	<meta property="og:description" content="Lilith's Grimoire is home to her thoughts, work, resume, links, and more."></meta>
+	
+</head>
+<body>
+	<div id="svelte">%svelte.body%</div>
+</body>
 </html>

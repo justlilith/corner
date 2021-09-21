@@ -124,26 +124,26 @@ async function consumeBody(data) {
   if (data[INTERNALS$2].error) {
     throw data[INTERNALS$2].error;
   }
-  let { body: body2 } = data;
-  if (body2 === null) {
+  let { body } = data;
+  if (body === null) {
     return Buffer.alloc(0);
   }
-  if (isBlob(body2)) {
-    body2 = body2.stream();
+  if (isBlob(body)) {
+    body = body.stream();
   }
-  if (Buffer.isBuffer(body2)) {
-    return body2;
+  if (Buffer.isBuffer(body)) {
+    return body;
   }
-  if (!(body2 instanceof import_stream.default)) {
+  if (!(body instanceof import_stream.default)) {
     return Buffer.alloc(0);
   }
   const accum = [];
   let accumBytes = 0;
   try {
-    for await (const chunk of body2) {
+    for await (const chunk of body) {
       if (data.size > 0 && accumBytes + chunk.length > data.size) {
         const err = new FetchError(`content size at ${data.url} over limit: ${data.size}`, "max-size");
-        body2.destroy(err);
+        body.destroy(err);
         throw err;
       }
       accumBytes += chunk.length;
@@ -156,7 +156,7 @@ async function consumeBody(data) {
       throw new FetchError(`Invalid response body while trying to fetch ${data.url}: ${error2.message}`, "system", error2);
     }
   }
-  if (body2.readableEnded === true || body2._readableState.ended === true) {
+  if (body.readableEnded === true || body._readableState.ended === true) {
     try {
       if (accum.every((c) => typeof c === "string")) {
         return Buffer.from(accum.join(""));
@@ -295,7 +295,7 @@ async function fetch(url, options_) {
           signal.removeEventListener("abort", abortAndFinalize);
         }
       });
-      let body2 = (0, import_stream.pipeline)(response_, new import_stream.PassThrough(), (error2) => {
+      let body = (0, import_stream.pipeline)(response_, new import_stream.PassThrough(), (error2) => {
         reject(error2);
       });
       if (process.version < "v12.10") {
@@ -312,7 +312,7 @@ async function fetch(url, options_) {
       };
       const codings = headers.get("Content-Encoding");
       if (!request.compress || request.method === "HEAD" || codings === null || response_.statusCode === 204 || response_.statusCode === 304) {
-        response = new Response(body2, responseOptions);
+        response = new Response(body, responseOptions);
         resolve2(response);
         return;
       }
@@ -321,10 +321,10 @@ async function fetch(url, options_) {
         finishFlush: import_zlib.default.Z_SYNC_FLUSH
       };
       if (codings === "gzip" || codings === "x-gzip") {
-        body2 = (0, import_stream.pipeline)(body2, import_zlib.default.createGunzip(zlibOptions), (error2) => {
+        body = (0, import_stream.pipeline)(body, import_zlib.default.createGunzip(zlibOptions), (error2) => {
           reject(error2);
         });
-        response = new Response(body2, responseOptions);
+        response = new Response(body, responseOptions);
         resolve2(response);
         return;
       }
@@ -334,28 +334,28 @@ async function fetch(url, options_) {
         });
         raw.once("data", (chunk) => {
           if ((chunk[0] & 15) === 8) {
-            body2 = (0, import_stream.pipeline)(body2, import_zlib.default.createInflate(), (error2) => {
+            body = (0, import_stream.pipeline)(body, import_zlib.default.createInflate(), (error2) => {
               reject(error2);
             });
           } else {
-            body2 = (0, import_stream.pipeline)(body2, import_zlib.default.createInflateRaw(), (error2) => {
+            body = (0, import_stream.pipeline)(body, import_zlib.default.createInflateRaw(), (error2) => {
               reject(error2);
             });
           }
-          response = new Response(body2, responseOptions);
+          response = new Response(body, responseOptions);
           resolve2(response);
         });
         return;
       }
       if (codings === "br") {
-        body2 = (0, import_stream.pipeline)(body2, import_zlib.default.createBrotliDecompress(), (error2) => {
+        body = (0, import_stream.pipeline)(body, import_zlib.default.createBrotliDecompress(), (error2) => {
           reject(error2);
         });
-        response = new Response(body2, responseOptions);
+        response = new Response(body, responseOptions);
         resolve2(response);
         return;
       }
-      response = new Response(body2, responseOptions);
+      response = new Response(body, responseOptions);
       resolve2(response);
     });
     writeToStream(request_, request);
@@ -503,39 +503,39 @@ var init_install_fetch = __esm({
     getBoundary = () => (0, import_crypto.randomBytes)(8).toString("hex");
     INTERNALS$2 = Symbol("Body internals");
     Body = class {
-      constructor(body2, {
+      constructor(body, {
         size = 0
       } = {}) {
         let boundary = null;
-        if (body2 === null) {
-          body2 = null;
-        } else if (isURLSearchParameters(body2)) {
-          body2 = Buffer.from(body2.toString());
-        } else if (isBlob(body2))
+        if (body === null) {
+          body = null;
+        } else if (isURLSearchParameters(body)) {
+          body = Buffer.from(body.toString());
+        } else if (isBlob(body))
           ;
-        else if (Buffer.isBuffer(body2))
+        else if (Buffer.isBuffer(body))
           ;
-        else if (import_util.types.isAnyArrayBuffer(body2)) {
-          body2 = Buffer.from(body2);
-        } else if (ArrayBuffer.isView(body2)) {
-          body2 = Buffer.from(body2.buffer, body2.byteOffset, body2.byteLength);
-        } else if (body2 instanceof import_stream.default)
+        else if (import_util.types.isAnyArrayBuffer(body)) {
+          body = Buffer.from(body);
+        } else if (ArrayBuffer.isView(body)) {
+          body = Buffer.from(body.buffer, body.byteOffset, body.byteLength);
+        } else if (body instanceof import_stream.default)
           ;
-        else if (isFormData(body2)) {
+        else if (isFormData(body)) {
           boundary = `NodeFetchFormDataBoundary${getBoundary()}`;
-          body2 = import_stream.default.Readable.from(formDataIterator(body2, boundary));
+          body = import_stream.default.Readable.from(formDataIterator(body, boundary));
         } else {
-          body2 = Buffer.from(String(body2));
+          body = Buffer.from(String(body));
         }
         this[INTERNALS$2] = {
-          body: body2,
+          body,
           boundary,
           disturbed: false,
           error: null
         };
         this.size = size;
-        if (body2 instanceof import_stream.default) {
-          body2.on("error", (err) => {
+        if (body instanceof import_stream.default) {
+          body.on("error", (err) => {
             const error2 = err instanceof FetchBaseError ? err : new FetchError(`Invalid response body while trying to fetch ${this.url}: ${err.message}`, "system", err);
             this[INTERNALS$2].error = error2;
           });
@@ -581,76 +581,76 @@ var init_install_fetch = __esm({
     clone = (instance, highWaterMark) => {
       let p1;
       let p2;
-      let { body: body2 } = instance;
+      let { body } = instance;
       if (instance.bodyUsed) {
         throw new Error("cannot clone body after it is used");
       }
-      if (body2 instanceof import_stream.default && typeof body2.getBoundary !== "function") {
+      if (body instanceof import_stream.default && typeof body.getBoundary !== "function") {
         p1 = new import_stream.PassThrough({ highWaterMark });
         p2 = new import_stream.PassThrough({ highWaterMark });
-        body2.pipe(p1);
-        body2.pipe(p2);
+        body.pipe(p1);
+        body.pipe(p2);
         instance[INTERNALS$2].body = p1;
-        body2 = p2;
+        body = p2;
       }
-      return body2;
+      return body;
     };
-    extractContentType = (body2, request) => {
-      if (body2 === null) {
+    extractContentType = (body, request) => {
+      if (body === null) {
         return null;
       }
-      if (typeof body2 === "string") {
+      if (typeof body === "string") {
         return "text/plain;charset=UTF-8";
       }
-      if (isURLSearchParameters(body2)) {
+      if (isURLSearchParameters(body)) {
         return "application/x-www-form-urlencoded;charset=UTF-8";
       }
-      if (isBlob(body2)) {
-        return body2.type || null;
+      if (isBlob(body)) {
+        return body.type || null;
       }
-      if (Buffer.isBuffer(body2) || import_util.types.isAnyArrayBuffer(body2) || ArrayBuffer.isView(body2)) {
+      if (Buffer.isBuffer(body) || import_util.types.isAnyArrayBuffer(body) || ArrayBuffer.isView(body)) {
         return null;
       }
-      if (body2 && typeof body2.getBoundary === "function") {
-        return `multipart/form-data;boundary=${body2.getBoundary()}`;
+      if (body && typeof body.getBoundary === "function") {
+        return `multipart/form-data;boundary=${body.getBoundary()}`;
       }
-      if (isFormData(body2)) {
+      if (isFormData(body)) {
         return `multipart/form-data; boundary=${request[INTERNALS$2].boundary}`;
       }
-      if (body2 instanceof import_stream.default) {
+      if (body instanceof import_stream.default) {
         return null;
       }
       return "text/plain;charset=UTF-8";
     };
     getTotalBytes = (request) => {
-      const { body: body2 } = request;
-      if (body2 === null) {
+      const { body } = request;
+      if (body === null) {
         return 0;
       }
-      if (isBlob(body2)) {
-        return body2.size;
+      if (isBlob(body)) {
+        return body.size;
       }
-      if (Buffer.isBuffer(body2)) {
-        return body2.length;
+      if (Buffer.isBuffer(body)) {
+        return body.length;
       }
-      if (body2 && typeof body2.getLengthSync === "function") {
-        return body2.hasKnownLength && body2.hasKnownLength() ? body2.getLengthSync() : null;
+      if (body && typeof body.getLengthSync === "function") {
+        return body.hasKnownLength && body.hasKnownLength() ? body.getLengthSync() : null;
       }
-      if (isFormData(body2)) {
+      if (isFormData(body)) {
         return getFormDataLength(request[INTERNALS$2].boundary);
       }
       return null;
     };
-    writeToStream = (dest, { body: body2 }) => {
-      if (body2 === null) {
+    writeToStream = (dest, { body }) => {
+      if (body === null) {
         dest.end();
-      } else if (isBlob(body2)) {
-        body2.stream().pipe(dest);
-      } else if (Buffer.isBuffer(body2)) {
-        dest.write(body2);
+      } else if (isBlob(body)) {
+        body.stream().pipe(dest);
+      } else if (Buffer.isBuffer(body)) {
+        dest.write(body);
         dest.end();
       } else {
-        body2.pipe(dest);
+        body.pipe(dest);
       }
     };
     validateHeaderName = typeof import_http.default.validateHeaderName === "function" ? import_http.default.validateHeaderName : (name) => {
@@ -797,12 +797,12 @@ var init_install_fetch = __esm({
     };
     INTERNALS$1 = Symbol("Response internals");
     Response = class extends Body {
-      constructor(body2 = null, options2 = {}) {
-        super(body2, options2);
+      constructor(body = null, options2 = {}) {
+        super(body, options2);
         const status = options2.status || 200;
         const headers = new Headers(options2.headers);
-        if (body2 !== null && !headers.has("Content-Type")) {
-          const contentType = extractContentType(body2);
+        if (body !== null && !headers.has("Content-Type")) {
+          const contentType = extractContentType(body);
           if (contentType) {
             headers.append("Content-Type", contentType);
           }
@@ -1303,7 +1303,7 @@ var require_Tokenizer = __commonJS({
     } = require_helpers();
     function outputLink(cap, link, raw, lexer) {
       const href = link.href;
-      const title2 = link.title ? escape2(link.title) : null;
+      const title = link.title ? escape2(link.title) : null;
       const text = cap[1].replace(/\\([\[\]])/g, "$1");
       if (cap[0].charAt(0) !== "!") {
         lexer.state.inLink = true;
@@ -1311,7 +1311,7 @@ var require_Tokenizer = __commonJS({
           type: "link",
           raw,
           href,
-          title: title2,
+          title,
           text,
           tokens: lexer.inlineTokens(text, [])
         };
@@ -1322,7 +1322,7 @@ var require_Tokenizer = __commonJS({
           type: "image",
           raw,
           href,
-          title: title2,
+          title,
           text: escape2(text)
         };
       }
@@ -1718,15 +1718,15 @@ var require_Tokenizer = __commonJS({
             }
           }
           let href = cap[2];
-          let title2 = "";
+          let title = "";
           if (this.options.pedantic) {
             const link = /^([^'"]*[^\s])\s+(['"])(.*)\2/.exec(href);
             if (link) {
               href = link[1];
-              title2 = link[3];
+              title = link[3];
             }
           } else {
-            title2 = cap[3] ? cap[3].slice(1, -1) : "";
+            title = cap[3] ? cap[3].slice(1, -1) : "";
           }
           href = href.trim();
           if (/^</.test(href)) {
@@ -1738,7 +1738,7 @@ var require_Tokenizer = __commonJS({
           }
           return outputLink(cap, {
             href: href ? href.replace(this.rules.inline._escapes, "$1") : href,
-            title: title2 ? title2.replace(this.rules.inline._escapes, "$1") : title2
+            title: title ? title.replace(this.rules.inline._escapes, "$1") : title
           }, cap[0], this.lexer);
         }
       }
@@ -2463,9 +2463,9 @@ var require_Renderer = __commonJS({
       hr() {
         return this.options.xhtml ? "<hr/>\n" : "<hr>\n";
       }
-      list(body2, ordered, start) {
+      list(body, ordered, start) {
         const type = ordered ? "ol" : "ul", startatt = ordered && start !== 1 ? ' start="' + start + '"' : "";
-        return "<" + type + startatt + ">\n" + body2 + "</" + type + ">\n";
+        return "<" + type + startatt + ">\n" + body + "</" + type + ">\n";
       }
       listitem(text) {
         return "<li>" + text + "</li>\n";
@@ -2476,10 +2476,10 @@ var require_Renderer = __commonJS({
       paragraph(text) {
         return "<p>" + text + "</p>\n";
       }
-      table(header, body2) {
-        if (body2)
-          body2 = "<tbody>" + body2 + "</tbody>";
-        return "<table>\n<thead>\n" + header + "</thead>\n" + body2 + "</table>\n";
+      table(header, body) {
+        if (body)
+          body = "<tbody>" + body + "</tbody>";
+        return "<table>\n<thead>\n" + header + "</thead>\n" + body + "</table>\n";
       }
       tablerow(content) {
         return "<tr>\n" + content + "</tr>\n";
@@ -2504,26 +2504,26 @@ var require_Renderer = __commonJS({
       del(text) {
         return "<del>" + text + "</del>";
       }
-      link(href, title2, text) {
+      link(href, title, text) {
         href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
         if (href === null) {
           return text;
         }
         let out = '<a href="' + escape2(href) + '"';
-        if (title2) {
-          out += ' title="' + title2 + '"';
+        if (title) {
+          out += ' title="' + title + '"';
         }
         out += ">" + text + "</a>";
         return out;
       }
-      image(href, title2, text) {
+      image(href, title, text) {
         href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
         if (href === null) {
           return text;
         }
         let out = '<img src="' + href + '" alt="' + text + '"';
-        if (title2) {
-          out += ' title="' + title2 + '"';
+        if (title) {
+          out += ' title="' + title + '"';
         }
         out += this.options.xhtml ? "/>" : ">";
         return out;
@@ -2558,10 +2558,10 @@ var require_TextRenderer = __commonJS({
       text(text) {
         return text;
       }
-      link(href, title2, text) {
+      link(href, title, text) {
         return "" + text;
       }
-      image(href, title2, text) {
+      image(href, title, text) {
         return "" + text;
       }
       br() {
@@ -2635,7 +2635,7 @@ var require_Parser = __commonJS({
         return parser.parseInline(tokens);
       }
       parse(tokens, top = true) {
-        let out = "", i, j, k, l2, l3, row, cell, header, body2, token, ordered, start, loose, itemBody, item, checked, task, checkbox, ret;
+        let out = "", i, j, k, l2, l3, row, cell, header, body, token, ordered, start, loose, itemBody, item, checked, task, checkbox, ret;
         const l = tokens.length;
         for (i = 0; i < l; i++) {
           token = tokens[i];
@@ -2670,7 +2670,7 @@ var require_Parser = __commonJS({
                 cell += this.renderer.tablecell(this.parseInline(token.header[j].tokens), { header: true, align: token.align[j] });
               }
               header += this.renderer.tablerow(cell);
-              body2 = "";
+              body = "";
               l2 = token.rows.length;
               for (j = 0; j < l2; j++) {
                 row = token.rows[j];
@@ -2679,14 +2679,14 @@ var require_Parser = __commonJS({
                 for (k = 0; k < l3; k++) {
                   cell += this.renderer.tablecell(this.parseInline(row[k].tokens), { header: false, align: token.align[k] });
                 }
-                body2 += this.renderer.tablerow(cell);
+                body += this.renderer.tablerow(cell);
               }
-              out += this.renderer.table(header, body2);
+              out += this.renderer.table(header, body);
               continue;
             }
             case "blockquote": {
-              body2 = this.parse(token.tokens);
-              out += this.renderer.blockquote(body2);
+              body = this.parse(token.tokens);
+              out += this.renderer.blockquote(body);
               continue;
             }
             case "list": {
@@ -2694,7 +2694,7 @@ var require_Parser = __commonJS({
               start = token.start;
               loose = token.loose;
               l2 = token.items.length;
-              body2 = "";
+              body = "";
               for (j = 0; j < l2; j++) {
                 item = token.items[j];
                 checked = item.checked;
@@ -2719,9 +2719,9 @@ var require_Parser = __commonJS({
                   }
                 }
                 itemBody += this.parse(item.tokens, loose);
-                body2 += this.renderer.listitem(itemBody, task, checked);
+                body += this.renderer.listitem(itemBody, task, checked);
               }
-              out += this.renderer.list(body2, ordered, start);
+              out += this.renderer.list(body, ordered, start);
               continue;
             }
             case "html": {
@@ -2733,12 +2733,12 @@ var require_Parser = __commonJS({
               continue;
             }
             case "text": {
-              body2 = token.tokens ? this.parseInline(token.tokens) : token.text;
+              body = token.tokens ? this.parseInline(token.tokens) : token.text;
               while (i + 1 < l && tokens[i + 1].type === "text") {
                 token = tokens[++i];
-                body2 += "\n" + (token.tokens ? this.parseInline(token.tokens) : token.text);
+                body += "\n" + (token.tokens ? this.parseInline(token.tokens) : token.text);
               }
-              out += top ? this.renderer.paragraph(body2) : body2;
+              out += top ? this.renderer.paragraph(body) : body;
               continue;
             }
             default: {
@@ -3154,10 +3154,10 @@ function lowercase_keys(obj) {
   }
   return clone2;
 }
-function error$1(body2) {
+function error$1(body) {
   return {
     status: 500,
-    body: body2,
+    body,
     headers: {}
   };
 }
@@ -3185,19 +3185,19 @@ async function render_endpoint(request, route, match) {
   if (typeof response !== "object") {
     return error$1(`${preface}: expected an object, got ${typeof response}`);
   }
-  let { status = 200, body: body2, headers = {} } = response;
+  let { status = 200, body, headers = {} } = response;
   headers = lowercase_keys(headers);
   const type = get_single_valued_header(headers, "content-type");
   const is_type_textual = is_content_type_textual(type);
-  if (!is_type_textual && !(body2 instanceof Uint8Array || is_string(body2))) {
+  if (!is_type_textual && !(body instanceof Uint8Array || is_string(body))) {
     return error$1(`${preface}: body must be an instance of string or Uint8Array if content-type is not a supported textual content-type`);
   }
   let normalized_body;
-  if ((typeof body2 === "object" || typeof body2 === "undefined") && !(body2 instanceof Uint8Array) && (!type || type.startsWith("application/json"))) {
+  if ((typeof body === "object" || typeof body === "undefined") && !(body instanceof Uint8Array) && (!type || type.startsWith("application/json"))) {
     headers = { ...headers, "content-type": "application/json; charset=utf-8" };
-    normalized_body = JSON.stringify(typeof body2 === "undefined" ? {} : body2);
+    normalized_body = JSON.stringify(typeof body === "undefined" ? {} : body);
   } else {
-    normalized_body = body2;
+    normalized_body = body;
   }
   return { status, body: normalized_body, headers };
 }
@@ -3599,12 +3599,12 @@ async function render_response({
     links,
     init2
   ].join("\n\n		");
-  const body2 = options2.amp ? rendered.html : `${rendered.html}
+  const body = options2.amp ? rendered.html : `${rendered.html}
 
-			${serialized_data.map(({ url, body: body3, json }) => {
+			${serialized_data.map(({ url, body: body2, json }) => {
     let attributes = `type="application/json" data-type="svelte-data" data-url="${url}"`;
-    if (body3)
-      attributes += ` data-body="${hash(body3)}"`;
+    if (body2)
+      attributes += ` data-body="${hash(body2)}"`;
     return `<script ${attributes}>${json}<\/script>`;
   }).join("\n\n	")}
 		`;
@@ -3620,7 +3620,7 @@ async function render_response({
   return {
     status,
     headers,
-    body: options2.template({ head, body: body2 })
+    body: options2.template({ head, body })
   };
 }
 function try_serialize(data, fail) {
@@ -3741,9 +3741,9 @@ async function load_node({
         }
         const resolved = resolve(request.path, url.split("?")[0]);
         let response;
-        const filename2 = resolved.replace(options2.paths.assets, "").slice(1);
-        const filename_html = `${filename2}/index.html`;
-        const asset = options2.manifest.assets.find((d2) => d2.file === filename2 || d2.file === filename_html);
+        const filename = resolved.replace(options2.paths.assets, "").slice(1);
+        const filename_html = `${filename}/index.html`;
+        const asset = options2.manifest.assets.find((d2) => d2.file === filename || d2.file === filename_html);
         if (asset) {
           response = options2.read ? new Response(options2.read(asset.file), {
             headers: asset.type ? { "content-type": asset.type } : {}
@@ -3806,7 +3806,7 @@ async function load_node({
           const proxy = new Proxy(response, {
             get(response2, key, receiver) {
               async function text() {
-                const body2 = await response2.text();
+                const body = await response2.text();
                 const headers = {};
                 for (const [key2, value] of response2.headers) {
                   if (key2 === "set-cookie") {
@@ -3819,10 +3819,10 @@ async function load_node({
                   fetched.push({
                     url,
                     body: opts.body,
-                    json: `{"status":${response2.status},"statusText":${s(response2.statusText)},"headers":${s(headers)},"body":${escape$1(body2)}}`
+                    json: `{"status":${response2.status},"statusText":${s(response2.statusText)},"headers":${s(headers)},"body":${escape$1(body)}}`
                   });
                 }
-                return body2;
+                return body;
               }
               if (key === "text") {
                 return text;
@@ -4275,7 +4275,7 @@ function get_multipart(text, boundary) {
       throw new Error("Malformed form data");
     }
     const raw_headers = match[1];
-    const body2 = match[2].trim();
+    const body = match[2].trim();
     let key;
     const headers = {};
     raw_headers.split("\r\n").forEach((str) => {
@@ -4301,7 +4301,7 @@ function get_multipart(text, boundary) {
     });
     if (!key)
       throw new Error("Malformed form data");
-    append(key, body2);
+    append(key, body);
   });
   return data;
 }
@@ -4529,7 +4529,37 @@ var user_hooks = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module"
 });
-var template = ({ head, body: body2 }) => '<!DOCTYPE html>\n<html lang="en">\n	<head>\n		<meta charset="utf-8" />\n		<link rel="icon" href="/favicon.png" />\n		<link rel="stylesheet" href="/global.css" />\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\n		' + head + '\n	</head>\n	<body>\n		<div id="svelte">' + body2 + "</div>\n	</body>\n</html>\n";
+var template$1 = ({ head, body }) => `<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="/favicon.png" />
+	<link rel="stylesheet" href="/global.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>Lilith's Grimoire</title>
+
+	` + head + `
+	
+	
+	<link rel="alternate" type="application/json+oembed"
+	href="http://justlilith.com/oembed.json"
+	title="oEmbed Profile for Lilith's Grimoire" />
+	
+	<meta name="twitter:card" content="summary_large_image"></meta>
+	<meta name="twitter:site" content="@imjustlilith"></meta>
+	<meta name="twitter:creator" content="@imjustlilith"></meta>
+	<meta name="twitter:title" content="Lilith's Grimoire"></meta>
+	<meta name="twitter:image" content="https://justlilith.com/preview.jpg"></meta>
+	<meta name="og:image" content="https://justlilith.com/preview.jpg"></meta>
+	<meta property="twitter:image:alt" content="A photo of Lilith herself,"></meta>
+	<meta property="og:image:alt" content="A photo of Lilith herself,"></meta>
+	<meta property="twitter:description" content="Lilith's Grimoire is home to her thoughts, work, resume, links, and more."></meta>
+	<meta property="og:description" content="Lilith's Grimoire is home to her thoughts, work, resume, links, and more."></meta>
+	
+</head>
+<body>
+	<div id="svelte">` + body + "</div>\n</body>\n</html>\n";
 var options = null;
 var default_settings = { paths: { "base": "", "assets": "" } };
 function init(settings = default_settings) {
@@ -4540,9 +4570,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-9e049967.js",
+      file: assets + "/_app/start-8db04004.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-9e049967.js", assets + "/_app/chunks/vendor-b7cc9fab.js"]
+      js: [assets + "/_app/start-8db04004.js", assets + "/_app/chunks/vendor-7de1e3e2.js"]
     },
     fetched: void 0,
     floc: false,
@@ -4565,22 +4595,29 @@ function init(settings = default_settings) {
     router: true,
     ssr: true,
     target: "#svelte",
-    template,
+    template: template$1,
     trailing_slash: "never"
   };
 }
 var d = (s2) => s2.replace(/%23/g, "#").replace(/%3[Bb]/g, ";").replace(/%2[Cc]/g, ",").replace(/%2[Ff]/g, "/").replace(/%3[Ff]/g, "?").replace(/%3[Aa]/g, ":").replace(/%40/g, "@").replace(/%26/g, "&").replace(/%3[Dd]/g, "=").replace(/%2[Bb]/g, "+").replace(/%24/g, "$");
 var empty = () => ({});
 var manifest = {
-  assets: [{ "file": "favicon.png", "size": 1571, "type": "image/png" }, { "file": "global.css", "size": 801, "type": "text/css" }, { "file": "images/work/a-softer-space/a-softer-space-1.jpg", "size": 39794, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-1.webp", "size": 1565154, "type": "image/webp" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-10.jpg", "size": 266734, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-11.jpg", "size": 251670, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-2.jpg", "size": 191512, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-3.jpg", "size": 185178, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-4.jpg", "size": 142523, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-6.webp", "size": 218174, "type": "image/webp" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-7.jpg", "size": 50068, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-8.jpg", "size": 87575, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-9.jpg", "size": 271254, "type": "image/jpeg" }, { "file": "images/work/polyref/polyref-1.jpg", "size": 165137, "type": "image/jpeg" }, { "file": "images/work/spkn/spkn-1.png", "size": 310718, "type": "image/png" }, { "file": "images/work/spkn/spkn-2.png", "size": 887009, "type": "image/png" }, { "file": "images/work/tiltr/tiltr-1.jpg", "size": 139519, "type": "image/jpeg" }, { "file": "images/work/tiltr/tiltr-2.jpg", "size": 83091, "type": "image/jpeg" }, { "file": "images/work/tiltr/titlr-3.jpg", "size": 177571, "type": "image/jpeg" }, { "file": "images/work/walkrates/walkrates-1.jpg", "size": 157242, "type": "image/jpeg" }, { "file": "images/work/walkrates/walkrates-2.jpg", "size": 345001, "type": "image/jpeg" }, { "file": "images/work/walkrates/walkrates-3.jpg", "size": 38866, "type": "image/jpeg" }, { "file": "test.json", "size": 38, "type": "application/json" }],
-  layout: ".svelte-kit/build/components/layout.svelte",
+  assets: [{ "file": "favicon.png", "size": 1571, "type": "image/png" }, { "file": "global.css", "size": 1413, "type": "text/css" }, { "file": "images/journal/6-all-set!/6-splash.jpg", "size": 86095, "type": "image/jpeg" }, { "file": "images/work/a-softer-space/a-softer-space-1.jpg", "size": 39794, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-1.webp", "size": 1565154, "type": "image/webp" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-10.jpg", "size": 266734, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-11.jpg", "size": 251670, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-2.jpg", "size": 191512, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-3.jpg", "size": 185178, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-4.jpg", "size": 142523, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-6.webp", "size": 218174, "type": "image/webp" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-7.jpg", "size": 50068, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-8.jpg", "size": 87575, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-9.jpg", "size": 271254, "type": "image/jpeg" }, { "file": "images/work/polyref/polyref-1.jpg", "size": 165137, "type": "image/jpeg" }, { "file": "images/work/spkn/spkn-1.png", "size": 310718, "type": "image/png" }, { "file": "images/work/spkn/spkn-2.png", "size": 887009, "type": "image/png" }, { "file": "images/work/tiltr/tiltr-1.jpg", "size": 139519, "type": "image/jpeg" }, { "file": "images/work/tiltr/tiltr-2.jpg", "size": 83091, "type": "image/jpeg" }, { "file": "images/work/tiltr/tiltr-3.jpg", "size": 177571, "type": "image/jpeg" }, { "file": "images/work/walkrates/walkrates-1.jpg", "size": 157242, "type": "image/jpeg" }, { "file": "images/work/walkrates/walkrates-2.jpg", "size": 345001, "type": "image/jpeg" }, { "file": "images/work/walkrates/walkrates-3.jpg", "size": 38866, "type": "image/jpeg" }, { "file": "oembed.json", "size": 260, "type": "application/json" }, { "file": "preview.jpg", "size": 62045, "type": "image/jpeg" }, { "file": "test.json", "size": 38, "type": "application/json" }],
+  layout: "src/routes/__layout.svelte",
   error: ".svelte-kit/build/components/error.svelte",
   routes: [
     {
       type: "page",
       pattern: /^\/$/,
       params: empty,
-      a: [".svelte-kit/build/components/layout.svelte", "src/routes/index.svelte"],
+      a: ["src/routes/__layout.svelte", "src/routes/index.svelte"],
+      b: [".svelte-kit/build/components/error.svelte"]
+    },
+    {
+      type: "page",
+      pattern: /^\/template\/?$/,
+      params: empty,
+      a: ["src/routes/__layout.svelte", "src/routes/template.svelte"],
       b: [".svelte-kit/build/components/error.svelte"]
     },
     {
@@ -4593,46 +4630,6 @@ var manifest = {
     },
     {
       type: "endpoint",
-      pattern: /^\/journal\/entries\/3-init-pt-3\/?$/,
-      params: empty,
-      load: () => Promise.resolve().then(function() {
-        return _3InitPt3$1;
-      })
-    },
-    {
-      type: "endpoint",
-      pattern: /^\/journal\/entries\/4-hugo-init\/?$/,
-      params: empty,
-      load: () => Promise.resolve().then(function() {
-        return _4HugoInit$1;
-      })
-    },
-    {
-      type: "endpoint",
-      pattern: /^\/journal\/entries\/2-init-2\/?$/,
-      params: empty,
-      load: () => Promise.resolve().then(function() {
-        return _2Init2$1;
-      })
-    },
-    {
-      type: "endpoint",
-      pattern: /^\/journal\/entries\/1-init\/?$/,
-      params: empty,
-      load: () => Promise.resolve().then(function() {
-        return _1Init$1;
-      })
-    },
-    {
-      type: "endpoint",
-      pattern: /^\/journal\/entries\/5-test\/?$/,
-      params: empty,
-      load: () => Promise.resolve().then(function() {
-        return _5Test$1;
-      })
-    },
-    {
-      type: "endpoint",
       pattern: /^\/journal\/([^/]+?)\.json$/,
       params: (m) => ({ slug: d(m[1]) }),
       load: () => Promise.resolve().then(function() {
@@ -4641,9 +4638,30 @@ var manifest = {
     },
     {
       type: "page",
+      pattern: /^\/spells\/?$/,
+      params: empty,
+      a: ["src/routes/__layout.svelte", "src/routes/spells.svelte"],
+      b: [".svelte-kit/build/components/error.svelte"]
+    },
+    {
+      type: "page",
+      pattern: /^\/notes\/?$/,
+      params: empty,
+      a: ["src/routes/__layout.svelte", "src/routes/notes.svelte"],
+      b: [".svelte-kit/build/components/error.svelte"]
+    },
+    {
+      type: "page",
+      pattern: /^\/back\/?$/,
+      params: empty,
+      a: ["src/routes/__layout.svelte", "src/routes/back.svelte"],
+      b: [".svelte-kit/build/components/error.svelte"]
+    },
+    {
+      type: "page",
       pattern: /^\/test\/?$/,
       params: empty,
-      a: [".svelte-kit/build/components/layout.svelte", "src/routes/test.svelte"],
+      a: ["src/routes/__layout.svelte", "src/routes/test.svelte"],
       b: [".svelte-kit/build/components/error.svelte"]
     },
     {
@@ -4652,54 +4670,6 @@ var manifest = {
       params: empty,
       load: () => Promise.resolve().then(function() {
         return entries_json;
-      })
-    },
-    {
-      type: "endpoint",
-      pattern: /^\/work\/entries\/1-a-softer-space\/?$/,
-      params: empty,
-      load: () => Promise.resolve().then(function() {
-        return _1ASofterSpace$1;
-      })
-    },
-    {
-      type: "endpoint",
-      pattern: /^\/work\/entries\/6-eagle-wetsuits\/?$/,
-      params: empty,
-      load: () => Promise.resolve().then(function() {
-        return _6EagleWetsuits$1;
-      })
-    },
-    {
-      type: "endpoint",
-      pattern: /^\/work\/entries\/2-polyreference\/?$/,
-      params: empty,
-      load: () => Promise.resolve().then(function() {
-        return _2Polyreference$1;
-      })
-    },
-    {
-      type: "endpoint",
-      pattern: /^\/work\/entries\/3-walkrates\/?$/,
-      params: empty,
-      load: () => Promise.resolve().then(function() {
-        return _3Walkrates$1;
-      })
-    },
-    {
-      type: "endpoint",
-      pattern: /^\/work\/entries\/5-spoken\/?$/,
-      params: empty,
-      load: () => Promise.resolve().then(function() {
-        return _5Spoken$1;
-      })
-    },
-    {
-      type: "endpoint",
-      pattern: /^\/work\/entries\/4-tiltr\/?$/,
-      params: empty,
-      load: () => Promise.resolve().then(function() {
-        return _4Tiltr$1;
       })
     },
     {
@@ -4714,7 +4684,7 @@ var manifest = {
       type: "page",
       pattern: /^\/work\/?$/,
       params: empty,
-      a: [".svelte-kit/build/components/layout.svelte", "src/routes/work.svelte"],
+      a: ["src/routes/__layout.svelte", "src/routes/work.svelte"],
       b: [".svelte-kit/build/components/error.svelte"]
     }
   ]
@@ -4726,14 +4696,26 @@ var get_hooks = (hooks) => ({
   externalFetch: hooks.externalFetch || fetch
 });
 var module_lookup = {
-  ".svelte-kit/build/components/layout.svelte": () => Promise.resolve().then(function() {
-    return layout;
+  "src/routes/__layout.svelte": () => Promise.resolve().then(function() {
+    return __layout;
   }),
   ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(function() {
     return error;
   }),
   "src/routes/index.svelte": () => Promise.resolve().then(function() {
     return index;
+  }),
+  "src/routes/template.svelte": () => Promise.resolve().then(function() {
+    return template;
+  }),
+  "src/routes/spells.svelte": () => Promise.resolve().then(function() {
+    return spells;
+  }),
+  "src/routes/notes.svelte": () => Promise.resolve().then(function() {
+    return notes;
+  }),
+  "src/routes/back.svelte": () => Promise.resolve().then(function() {
+    return back;
   }),
   "src/routes/test.svelte": () => Promise.resolve().then(function() {
     return test;
@@ -4742,7 +4724,7 @@ var module_lookup = {
     return work;
   })
 };
-var metadata_lookup = { ".svelte-kit/build/components/layout.svelte": { "entry": "layout.svelte-139accd9.js", "css": [], "js": ["layout.svelte-139accd9.js", "chunks/vendor-b7cc9fab.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-4232ec95.js", "css": [], "js": ["error.svelte-4232ec95.js", "chunks/vendor-b7cc9fab.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-2c00b2d4.js", "css": ["assets/pages/index.svelte-0f3f83b9.css", "assets/LogoStamp-e2408dbf.css"], "js": ["pages/index.svelte-2c00b2d4.js", "chunks/vendor-b7cc9fab.js", "chunks/LogoStamp-70f70609.js"], "styles": [] }, "src/routes/test.svelte": { "entry": "pages/test.svelte-452ebd7c.js", "css": [], "js": ["pages/test.svelte-452ebd7c.js", "chunks/vendor-b7cc9fab.js"], "styles": [] }, "src/routes/work.svelte": { "entry": "pages/work.svelte-8ab7d2fb.js", "css": ["assets/pages/work.svelte-c8ec6903.css", "assets/LogoStamp-e2408dbf.css"], "js": ["pages/work.svelte-8ab7d2fb.js", "chunks/vendor-b7cc9fab.js", "chunks/LogoStamp-70f70609.js"], "styles": [] } };
+var metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-2bf3720c.js", "css": ["assets/pages/__layout.svelte-94b80772.css"], "js": ["pages/__layout.svelte-2bf3720c.js", "chunks/vendor-7de1e3e2.js", "chunks/helpers-edd2a2c9.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-be43ccc5.js", "css": [], "js": ["error.svelte-be43ccc5.js", "chunks/vendor-7de1e3e2.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-0b58206d.js", "css": ["assets/pages/index.svelte-eb8661f6.css"], "js": ["pages/index.svelte-0b58206d.js", "chunks/vendor-7de1e3e2.js"], "styles": [] }, "src/routes/template.svelte": { "entry": "pages/template.svelte-261c15d7.js", "css": [], "js": ["pages/template.svelte-261c15d7.js", "chunks/vendor-7de1e3e2.js"], "styles": [] }, "src/routes/spells.svelte": { "entry": "pages/spells.svelte-6ea2d8ba.js", "css": [], "js": ["pages/spells.svelte-6ea2d8ba.js", "chunks/vendor-7de1e3e2.js"], "styles": [] }, "src/routes/notes.svelte": { "entry": "pages/notes.svelte-ae0ee343.js", "css": ["assets/pages/notes.svelte-4e26c676.css"], "js": ["pages/notes.svelte-ae0ee343.js", "chunks/vendor-7de1e3e2.js"], "styles": [] }, "src/routes/back.svelte": { "entry": "pages/back.svelte-9c9a3e1d.js", "css": [], "js": ["pages/back.svelte-9c9a3e1d.js", "chunks/vendor-7de1e3e2.js"], "styles": [] }, "src/routes/test.svelte": { "entry": "pages/test.svelte-a77fa583.js", "css": [], "js": ["pages/test.svelte-a77fa583.js", "chunks/vendor-7de1e3e2.js"], "styles": [] }, "src/routes/work.svelte": { "entry": "pages/work.svelte-27bbe1e1.js", "css": ["assets/pages/work.svelte-e7541bee.css"], "js": ["pages/work.svelte-27bbe1e1.js", "chunks/vendor-7de1e3e2.js", "chunks/helpers-edd2a2c9.js"], "styles": [] } };
 async function load_component(file) {
   const { entry, css: css2, js, styles } = metadata_lookup[file];
   return {
@@ -4760,7 +4742,7 @@ function render(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 async function get$3({ params }) {
-  const dirList = import_fs.default.readdirSync("src/routes/journal/entries");
+  const dirList = import_fs.default.readdirSync("src/lib/journal/entries");
   return {
     body: {
       dirList
@@ -4772,119 +4754,9 @@ var entries_json$1 = /* @__PURE__ */ Object.freeze({
   [Symbol.toStringTag]: "Module",
   get: get$3
 });
-var index$b = 3;
-var filename$a = "3-init-pt-3.json";
-var title$a = "Test Entry 3";
-var date$a = "2021.09.18";
-var body$4 = "This is the first journal entry that has some body. Again, it's not yet generated by Hugo, but I'm starting to solidify what an entry looks like.\n\nSo right now I'm writing Markdown directly into a JSON object. It makes sense, I think. At the end of this, I'll be able to push a new markdown file to a folder in Git, rebuild the site, and we're done. i think. We'll see.";
-var _3InitPt3 = {
-  index: index$b,
-  filename: filename$a,
-  title: title$a,
-  date: date$a,
-  body: body$4
-};
-var _3InitPt3$1 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  index: index$b,
-  filename: filename$a,
-  title: title$a,
-  date: date$a,
-  body: body$4,
-  "default": _3InitPt3
-});
-var index$a = 4;
-var filename$9 = "4-hugo-init.json";
-var title$9 = "Init Hugo";
-var date$9 = "Saturday, September 18, 2021";
-var body$3 = "\r\n# Test\r\n\r\nTrying to write a new post, via Hugo.\r\n\r\nOkay then.";
-var _4HugoInit = {
-  index: index$a,
-  filename: filename$9,
-  title: title$9,
-  date: date$9,
-  body: body$3
-};
-var _4HugoInit$1 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  index: index$a,
-  filename: filename$9,
-  title: title$9,
-  date: date$9,
-  body: body$3,
-  "default": _4HugoInit
-});
-var index$9 = 2;
-var filename$8 = "2-init-2.json";
-var title$8 = "This is the second test post";
-var date$8 = "2021.09.18";
-var body$2 = "Really just filler kk";
-var _2Init2 = {
-  index: index$9,
-  filename: filename$8,
-  title: title$8,
-  date: date$8,
-  body: body$2
-};
-var _2Init2$1 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  index: index$9,
-  filename: filename$8,
-  title: title$8,
-  date: date$8,
-  body: body$2,
-  "default": _2Init2
-});
-var index$8 = 1;
-var filename$7 = "1-init.json";
-var title$7 = "Initial Post For Testing Stuff kk thnx";
-var date$7 = "2021.09.18";
-var body$1 = "# Did you know?\n\nWe haven't even gotten Hugo to generate JSON yet. This is still by hand. :0";
-var _1Init = {
-  index: index$8,
-  filename: filename$7,
-  title: title$7,
-  date: date$7,
-  body: body$1
-};
-var _1Init$1 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  index: index$8,
-  filename: filename$7,
-  title: title$7,
-  date: date$7,
-  body: body$1,
-  "default": _1Init
-});
-var index$7 = 5;
-var filename$6 = "5-test.json";
-var title$6 = "Testing";
-var date$6 = "Saturday, September 18, 2021";
-var body = "\r\n# Test From Hugo\r\n\r\nHey. We worked it out. Now all posts will be written in Markdown, parsed by Hugo, and since SvelteKit uses a static adapter, rebuilt by SvelteKit. This means that writing a blog post will be as easy as ever \u2014 plus, these posts can go anywhere Markdown can. There's nothing locking them into my site. I'm really glad about that.";
-var _5Test = {
-  index: index$7,
-  filename: filename$6,
-  title: title$6,
-  date: date$6,
-  body
-};
-var _5Test$1 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  index: index$7,
-  filename: filename$6,
-  title: title$6,
-  date: date$6,
-  body,
-  "default": _5Test
-});
 async function get$2({ params }) {
   const { slug } = params;
-  const article = JSON.parse(import_fs.default.readFileSync(`src/routes/journal/entries/${slug}.json`, { encoding: "utf8" }));
+  const article = JSON.parse(import_fs.default.readFileSync(`src/lib/journal/entries/${slug}.json`, { encoding: "utf8" }));
   return {
     body: {
       article
@@ -4897,9 +4769,9 @@ var _slug__json$1 = /* @__PURE__ */ Object.freeze({
   get: get$2
 });
 async function get$1({ params }) {
-  const dirList = import_fs.default.readdirSync("src/routes/work/entries");
-  const entries = dirList.map((filename2) => {
-    return JSON.parse(import_fs.default.readFileSync(`src/routes/work/entries/${filename2}`, { encoding: "utf8" }));
+  const dirList = import_fs.default.readdirSync("src/lib/work/entries");
+  const entries = dirList.map((filename) => {
+    return JSON.parse(import_fs.default.readFileSync(`src/lib/work/entries/${filename}`, { encoding: "utf8" }));
   });
   return {
     body: {
@@ -4911,183 +4783,6 @@ var entries_json = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   get: get$1
-});
-var index$6 = 1;
-var filename$5 = "1-a-softer-space.json";
-var title$5 = "A Softer Space";
-var date$5 = "Sunday, September 19, 2021";
-var description$5 = "\r\n# A Softer Space\r\n\r\nA Softer Space is a calming area to vent your thoughts, as if texting a friend.\r\n\r\nIt uses a familiar, text-based UI, and allows you to download your chats (so that you could, for example, send them to a therapist), as well as login to save them, which allows you to access your chats from any device.\r\n\r\nIt's written with SvelteKit and hosted on Netlify. For some elements, p5.js is used.\r\n\r\nLive link: [A Softer Space](https://asofter.space/)\r\n\r\nGitHub: [justlilith/aSofterSpace](https://github.com/justlilith/ASofterSpace/)";
-var imageURLs$5 = [
-  "images/work/a-softer-space/a-softer-space-1.jpg"
-];
-var _1ASofterSpace = {
-  index: index$6,
-  filename: filename$5,
-  title: title$5,
-  date: date$5,
-  description: description$5,
-  imageURLs: imageURLs$5
-};
-var _1ASofterSpace$1 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  index: index$6,
-  filename: filename$5,
-  title: title$5,
-  date: date$5,
-  description: description$5,
-  imageURLs: imageURLs$5,
-  "default": _1ASofterSpace
-});
-var index$5 = 6;
-var filename$4 = "6-eagle-wetsuits.json";
-var title$4 = "Eagle Wetsuits";
-var date$4 = "Sunday, September 19, 2021";
-var description$4 = "\r\n# Eagle Wetsuits\r\n\r\nCAD-driven apparel design, pattern research and development, branding and marketing, client-focused custom products, and a lot of fun.\r\n\r\nI loved my time as Eagle's art director, and love that I was able to touch the lives of so many of our clients.";
-var imageURLs$4 = [
-  "images/work/eagle-wetsuits/eagle-wetsuits-1.webp",
-  "images/work/eagle-wetsuits/eagle-wetsuits-2.jpg",
-  "images/work/eagle-wetsuits/eagle-wetsuits-3.jpg",
-  "images/work/eagle-wetsuits/eagle-wetsuits-4.jpg",
-  "images/work/eagle-wetsuits/eagle-wetsuits-5.jpg",
-  "images/work/eagle-wetsuits/eagle-wetsuits-6.webp",
-  "images/work/eagle-wetsuits/eagle-wetsuits-7.jpg",
-  "images/work/eagle-wetsuits/eagle-wetsuits-8.jpg",
-  "images/work/eagle-wetsuits/eagle-wetsuits-9.jpg",
-  "images/work/eagle-wetsuits/eagle-wetsuits-10.jpg",
-  "images/work/eagle-wetsuits/eagle-wetsuits-11.jpg"
-];
-var _6EagleWetsuits = {
-  index: index$5,
-  filename: filename$4,
-  title: title$4,
-  date: date$4,
-  description: description$4,
-  imageURLs: imageURLs$4
-};
-var _6EagleWetsuits$1 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  index: index$5,
-  filename: filename$4,
-  title: title$4,
-  date: date$4,
-  description: description$4,
-  imageURLs: imageURLs$4,
-  "default": _6EagleWetsuits
-});
-var index$4 = 2;
-var filename$3 = "2-polyreference.json";
-var title$3 = "Polyref";
-var date$3 = "Sunday, September 19, 2021";
-var description$3 = "\r\n# Polyref\r\n\r\nPolyref is a web-based art reference app. You can paste in some images (or their URLs) to display them across a pasteboard. Move, resize, scale, zoom and layer them freely, to create a nice moodboard for whatever you're working on.\r\n\r\nIt's written with SvelteKit and hosted on Netlify.\r\n\r\nLive link: [Polyref](https://www.polyref.cc/)\r\n\r\nGitHub: [justlilith/polyreference](https://github.com/justlilith/polyreference/)";
-var imageURLs$3 = [
-  "images/work/polyref/polyref-1.jpg"
-];
-var _2Polyreference = {
-  index: index$4,
-  filename: filename$3,
-  title: title$3,
-  date: date$3,
-  description: description$3,
-  imageURLs: imageURLs$3
-};
-var _2Polyreference$1 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  index: index$4,
-  filename: filename$3,
-  title: title$3,
-  date: date$3,
-  description: description$3,
-  imageURLs: imageURLs$3,
-  "default": _2Polyreference
-});
-var index$3 = 1;
-var filename$2 = "3-walkrates.json";
-var title$2 = "Walkrates";
-var date$2 = "Sunday, September 19, 2021";
-var description$2 = "\r\n# Walk Rates: Answering a Fun Question\r\n\r\nHaven\u2019t we all bet our friends we could make a journey on the promise of tacos alone? What if you made it eating nothing but tacos? How many tacos would you need?\r\n\r\nWalk Rates answers those questions. It\u2019s a mobile app built with a combination of React, Node.js, and Heroku, but all the details are on GitHub.\r\n\r\nThe app is live! And I\u2019m still making changes, so check back often.\r\n\r\nLive link: [Walk Rates](https://href.li/?https://walkrates.com)\r\n\r\nGitHub: [justlilith/walkrates](https://href.li/?https://github.com/justlilith/walkrates)";
-var imageURLs$2 = [
-  "images/work/walkrates/walkrates-1.jpg",
-  "images/work/walkrates/walkrates-2.jpg",
-  "images/work/walkrates/walkrates-3.jpg"
-];
-var _3Walkrates = {
-  index: index$3,
-  filename: filename$2,
-  title: title$2,
-  date: date$2,
-  description: description$2,
-  imageURLs: imageURLs$2
-};
-var _3Walkrates$1 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  index: index$3,
-  filename: filename$2,
-  title: title$2,
-  date: date$2,
-  description: description$2,
-  imageURLs: imageURLs$2,
-  "default": _3Walkrates
-});
-var index$2 = 5;
-var filename$1 = "5-spoken.json";
-var title$1 = "Spkn";
-var date$1 = "Sunday, September 19, 2021";
-var description$1 = "\r\n# Spoken: Application UI\r\n\r\nspkn (Spoken) connects people who simply need a listening ear. To this end, I designed the logo, brand identity, user experience, and user interface.\r\n\r\nPrototype link: [spkn](https://xd.adobe.com/view/98fbbff8-550b-4f88-b412-79a454103a0a/)";
-var imageURLs$1 = [
-  "images/work/spkn/spkn-1.png",
-  "images/work/spkn/spkn-2.png"
-];
-var _5Spoken = {
-  index: index$2,
-  filename: filename$1,
-  title: title$1,
-  date: date$1,
-  description: description$1,
-  imageURLs: imageURLs$1
-};
-var _5Spoken$1 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  index: index$2,
-  filename: filename$1,
-  title: title$1,
-  date: date$1,
-  description: description$1,
-  imageURLs: imageURLs$1,
-  "default": _5Spoken
-});
-var index$1 = 2;
-var filename = "4-tiltr.json";
-var title = "Tiltr";
-var date = "Sunday, September 19, 2021";
-var description = "\r\n# Tiltr: Alternative Twitter App\r\n\r\nTiltr is an alternative to Twitter\u2019s normal UI; the focus is on art discovery and exploration. I loved using Elm and Node.js to build this, and am happy to have set up a CI/CD pipeline through GitHub and Heroku!\r\n\r\nLive link: [tiltr.cc](https://href.li/?https://tiltr.cc)\r\n\r\nGitHub: [justlilith/tiltr](https://href.li/?https://github.com/justlilith/tiltr)";
-var imageURLs = [
-  "images/work/tiltr/tiltr-1.jpg",
-  "images/work/tiltr/tiltr-2.jpg",
-  "images/work/tiltr/tiltr-3.jpg"
-];
-var _4Tiltr = {
-  index: index$1,
-  filename,
-  title,
-  date,
-  description,
-  imageURLs
-};
-var _4Tiltr$1 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  index: index$1,
-  filename,
-  title,
-  date,
-  description,
-  imageURLs,
-  "default": _4Tiltr
 });
 async function get({ params }) {
   const { slug } = params;
@@ -5103,15 +4798,55 @@ var _slug__json = /* @__PURE__ */ Object.freeze({
   [Symbol.toStringTag]: "Module",
   get
 });
-var Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  return `${slots.default ? slots.default({}) : ``}`;
+var css$5 = {
+  code: "nav.svelte-1qmmk9t.svelte-1qmmk9t{margin-top:180px;padding-top:24px;padding-bottom:24px;padding-right:6vw;top:0vh;position:sticky;background-color:#000}ul.svelte-1qmmk9t.svelte-1qmmk9t{margin:0px;padding:0px;left:0px}nav.svelte-1qmmk9t li.svelte-1qmmk9t{padding-bottom:5px;padding-top:5px;list-style:none;text-align:right}nav.svelte-1qmmk9t a.svelte-1qmmk9t{color:white;text-decoration:none}@media(min-width: 666px){nav.svelte-1qmmk9t.svelte-1qmmk9t{margin-top:120px}}@media(min-width: 1000px){nav.svelte-1qmmk9t.svelte-1qmmk9t{margin-top:180px;padding-top:6vh;background-color:#000;padding-right:32px}}@media(min-width: 1800px){nav.svelte-1qmmk9t.svelte-1qmmk9t{margin-top:120px}}",
+  map: `{"version":3,"file":"Menu.svelte","sources":["Menu.svelte"],"sourcesContent":["<script lang='ts'><\/script>\\n\\n<nav>\\n  <ul>\\n    <!-- <li>\\n      <a href='/'>Front Cover</a>\\n    </li> -->\\n    <li>\\n      <a href='/'>Journal \u{1F4DC}</a>\\n    </li>\\n    <li>\\n      <a href='/work'>Current and Past Work \u{1F4BC}</a>\\n    </li>\\n    <li>\\n      <a href='https://twitter.com/imjustlilith' target=_blank>Tweets \u{1F54A}\uFE0F :: \u2197\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='https://tinyurl.com/LilithsResume' target=_blank>Resume :: \u2197\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='https://github.com/justlilith' target=_blank>GitHub :: \u2197\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='https://www.polywork.com/lilith' target=_blank>Polywork :: \u2197\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='https://www.linkedin.com/in/lilith-dev' target=_blank>LinkedIn :: \u2197\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='spells'>Spells \u{1FA84}</a>\\n    </li>\\n    <li>\\n      <a href='notes'>Things I wish they'd told me \u{1F97A}</a>\\n    </li>\\n    <li>\\n      <a href='back'>Back Cover \u{1F4D5}</a>\\n    </li>\\n  </ul>\\n</nav>\\n<style lang='scss'>nav {\\n  margin-top: 180px;\\n  padding-top: 24px;\\n  padding-bottom: 24px;\\n  padding-right: 6vw;\\n  top: 0vh;\\n  position: sticky;\\n  background-color: #000;\\n}\\n\\nul {\\n  margin: 0px;\\n  padding: 0px;\\n  left: 0px;\\n}\\n\\nnav li {\\n  padding-bottom: 5px;\\n  padding-top: 5px;\\n  list-style: none;\\n  text-align: right;\\n}\\n\\nnav a {\\n  color: white;\\n  text-decoration: none;\\n}\\n\\n@media (min-width: 666px) {\\n  nav {\\n    margin-top: 120px;\\n  }\\n}\\n@media (min-width: 1000px) {\\n  nav {\\n    margin-top: 180px;\\n    padding-top: 6vh;\\n    background-color: #000;\\n    padding-right: 32px;\\n  }\\n}\\n@media (min-width: 1800px) {\\n  nav {\\n    margin-top: 120px;\\n  }\\n}</style>"],"names":[],"mappings":"AAuCmB,GAAG,8BAAC,CAAC,AACtB,UAAU,CAAE,KAAK,CACjB,WAAW,CAAE,IAAI,CACjB,cAAc,CAAE,IAAI,CACpB,aAAa,CAAE,GAAG,CAClB,GAAG,CAAE,GAAG,CACR,QAAQ,CAAE,MAAM,CAChB,gBAAgB,CAAE,IAAI,AACxB,CAAC,AAED,EAAE,8BAAC,CAAC,AACF,MAAM,CAAE,GAAG,CACX,OAAO,CAAE,GAAG,CACZ,IAAI,CAAE,GAAG,AACX,CAAC,AAED,kBAAG,CAAC,EAAE,eAAC,CAAC,AACN,cAAc,CAAE,GAAG,CACnB,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,IAAI,CAChB,UAAU,CAAE,KAAK,AACnB,CAAC,AAED,kBAAG,CAAC,CAAC,eAAC,CAAC,AACL,KAAK,CAAE,KAAK,CACZ,eAAe,CAAE,IAAI,AACvB,CAAC,AAED,MAAM,AAAC,YAAY,KAAK,CAAC,AAAC,CAAC,AACzB,GAAG,8BAAC,CAAC,AACH,UAAU,CAAE,KAAK,AACnB,CAAC,AACH,CAAC,AACD,MAAM,AAAC,YAAY,MAAM,CAAC,AAAC,CAAC,AAC1B,GAAG,8BAAC,CAAC,AACH,UAAU,CAAE,KAAK,CACjB,WAAW,CAAE,GAAG,CAChB,gBAAgB,CAAE,IAAI,CACtB,aAAa,CAAE,IAAI,AACrB,CAAC,AACH,CAAC,AACD,MAAM,AAAC,YAAY,MAAM,CAAC,AAAC,CAAC,AAC1B,GAAG,8BAAC,CAAC,AACH,UAAU,CAAE,KAAK,AACnB,CAAC,AACH,CAAC"}`
+};
+var Menu = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  $$result.css.add(css$5);
+  return `<nav class="${"svelte-1qmmk9t"}"><ul class="${"svelte-1qmmk9t"}">
+    <li class="${"svelte-1qmmk9t"}"><a href="${"/"}" class="${"svelte-1qmmk9t"}">Journal \u{1F4DC}</a></li>
+    <li class="${"svelte-1qmmk9t"}"><a href="${"/work"}" class="${"svelte-1qmmk9t"}">Current and Past Work \u{1F4BC}</a></li>
+    <li class="${"svelte-1qmmk9t"}"><a href="${"https://twitter.com/imjustlilith"}" target="${"_blank"}" class="${"svelte-1qmmk9t"}">Tweets \u{1F54A}\uFE0F :: \u2197\uFE0F</a></li>
+    <li class="${"svelte-1qmmk9t"}"><a href="${"https://tinyurl.com/LilithsResume"}" target="${"_blank"}" class="${"svelte-1qmmk9t"}">Resume :: \u2197\uFE0F</a></li>
+    <li class="${"svelte-1qmmk9t"}"><a href="${"https://github.com/justlilith"}" target="${"_blank"}" class="${"svelte-1qmmk9t"}">GitHub :: \u2197\uFE0F</a></li>
+    <li class="${"svelte-1qmmk9t"}"><a href="${"https://www.polywork.com/lilith"}" target="${"_blank"}" class="${"svelte-1qmmk9t"}">Polywork :: \u2197\uFE0F</a></li>
+    <li class="${"svelte-1qmmk9t"}"><a href="${"https://www.linkedin.com/in/lilith-dev"}" target="${"_blank"}" class="${"svelte-1qmmk9t"}">LinkedIn :: \u2197\uFE0F</a></li>
+    <li class="${"svelte-1qmmk9t"}"><a href="${"spells"}" class="${"svelte-1qmmk9t"}">Spells \u{1FA84}</a></li>
+    <li class="${"svelte-1qmmk9t"}"><a href="${"notes"}" class="${"svelte-1qmmk9t"}">Things I wish they&#39;d told me \u{1F97A}</a></li>
+    <li class="${"svelte-1qmmk9t"}"><a href="${"back"}" class="${"svelte-1qmmk9t"}">Back Cover \u{1F4D5}</a></li></ul>
+</nav>`;
 });
-var layout = /* @__PURE__ */ Object.freeze({
+var css$4 = {
+  code: 'h1.svelte-andzdl{color:#0FF;font-family:Garamond, "Times New Roman", Times, serif;font-size:4em;line-break:strict;max-width:333px;margin:0px;position:fixed;right:6vw;text-align:right;top:24px}h1.logo.svelte-andzdl{-webkit-text-fill-color:transparent;-webkit-background-clip:text}h1#logoStamp.svelte-andzdl{color:#0FF;-webkit-text-fill-color:#0FF}@media(min-width: 666px){h1.svelte-andzdl{max-width:100%}}@media(min-width: 1000px){h1.svelte-andzdl{margin:0px;max-width:333px;right:calc(70% + 32px);top:32px}}@media(min-width: 1800px){h1.svelte-andzdl{max-width:100%}}',
+  map: `{"version":3,"file":"LogoStamp.svelte","sources":["LogoStamp.svelte"],"sourcesContent":["<script lang='ts'>import { onMount } from 'svelte';\\r\\nimport * as Helpers from '$lib/ts/helpers';\\r\\nonMount(() => {\\r\\n    document.getElementById('logoStamp').setAttribute('id', '');\\r\\n    Helpers.addRainbowBackground('logo');\\r\\n});\\r\\n<\/script>\\n\\n<h1 class='logo' id='logoStamp'>Lilith's Grimoire</h1>\\n\\n<style lang='scss'>h1 {\\n  color: #0FF;\\n  font-family: Garamond, \\"Times New Roman\\", Times, serif;\\n  font-size: 4em;\\n  line-break: strict;\\n  max-width: 333px;\\n  margin: 0px;\\n  position: fixed;\\n  right: 6vw;\\n  text-align: right;\\n  top: 24px;\\n}\\n\\nh1.logo {\\n  -webkit-text-fill-color: transparent;\\n  -webkit-background-clip: text;\\n}\\n\\nh1#logoStamp {\\n  color: #0FF;\\n  -webkit-text-fill-color: #0FF;\\n}\\n\\n@media (min-width: 666px) {\\n  h1 {\\n    max-width: 100%;\\n  }\\n}\\n@media (min-width: 1000px) {\\n  h1 {\\n    margin: 0px;\\n    max-width: 333px;\\n    right: calc(70% + 32px);\\n    top: 32px;\\n  }\\n}\\n@media (min-width: 1800px) {\\n  h1 {\\n    max-width: 100%;\\n  }\\n}</style>"],"names":[],"mappings":"AAUmB,EAAE,cAAC,CAAC,AACrB,KAAK,CAAE,IAAI,CACX,WAAW,CAAE,QAAQ,CAAC,CAAC,iBAAiB,CAAC,CAAC,KAAK,CAAC,CAAC,KAAK,CACtD,SAAS,CAAE,GAAG,CACd,UAAU,CAAE,MAAM,CAClB,SAAS,CAAE,KAAK,CAChB,MAAM,CAAE,GAAG,CACX,QAAQ,CAAE,KAAK,CACf,KAAK,CAAE,GAAG,CACV,UAAU,CAAE,KAAK,CACjB,GAAG,CAAE,IAAI,AACX,CAAC,AAED,EAAE,KAAK,cAAC,CAAC,AACP,uBAAuB,CAAE,WAAW,CACpC,uBAAuB,CAAE,IAAI,AAC/B,CAAC,AAED,EAAE,UAAU,cAAC,CAAC,AACZ,KAAK,CAAE,IAAI,CACX,uBAAuB,CAAE,IAAI,AAC/B,CAAC,AAED,MAAM,AAAC,YAAY,KAAK,CAAC,AAAC,CAAC,AACzB,EAAE,cAAC,CAAC,AACF,SAAS,CAAE,IAAI,AACjB,CAAC,AACH,CAAC,AACD,MAAM,AAAC,YAAY,MAAM,CAAC,AAAC,CAAC,AAC1B,EAAE,cAAC,CAAC,AACF,MAAM,CAAE,GAAG,CACX,SAAS,CAAE,KAAK,CAChB,KAAK,CAAE,KAAK,GAAG,CAAC,CAAC,CAAC,IAAI,CAAC,CACvB,GAAG,CAAE,IAAI,AACX,CAAC,AACH,CAAC,AACD,MAAM,AAAC,YAAY,MAAM,CAAC,AAAC,CAAC,AAC1B,EAAE,cAAC,CAAC,AACF,SAAS,CAAE,IAAI,AACjB,CAAC,AACH,CAAC"}`
+};
+var LogoStamp = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  $$result.css.add(css$4);
+  return `<h1 class="${"logo svelte-andzdl"}" id="${"logoStamp"}">Lilith&#39;s Grimoire</h1>`;
+});
+var css$3 = {
+  code: "footer.svelte-p1waf9{z-index:66;background-color:#000;color:white;grid-area:footer}",
+  map: `{"version":3,"file":"Footer.svelte","sources":["Footer.svelte"],"sourcesContent":["<script lang='ts'>import { onMount } from 'svelte';\\r\\nimport '$lib/ts/helpers';\\r\\nonMount(() => {\\r\\n});\\r\\n<\/script>\\n\\n<footer>\\n  <p>Copyleft 2021 Lilith, but ask for details.</p>\\n  <p>\\n    Wanna email me? <a href=\\"mailto:hello@justlilith.com\\">hello\u{1F4CE}justlilith\u25FC\uFE0Fcom</a>. How about a phone call? <a href=\\"tel:+18329009040\\">832.900.9040</a>\\n  </p>\\n</footer>\\n\\n  \\n  <style lang='scss'>footer {\\n  z-index: 66;\\n  background-color: #000;\\n  color: white;\\n  grid-area: footer;\\n}</style>"],"names":[],"mappings":"AAcqB,MAAM,cAAC,CAAC,AAC3B,OAAO,CAAE,EAAE,CACX,gBAAgB,CAAE,IAAI,CACtB,KAAK,CAAE,KAAK,CACZ,SAAS,CAAE,MAAM,AACnB,CAAC"}`
+};
+var Footer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  $$result.css.add(css$3);
+  return `<footer class="${"svelte-p1waf9"}"><p>Copyleft 2021 Lilith, but ask for details.</p>
+  <p>Wanna email me? <a href="${"mailto:hello@justlilith.com"}">hello\u{1F4CE}justlilith\u25FC\uFE0Fcom</a>. How about a phone call? <a href="${"tel:+18329009040"}">832.900.9040</a></p>
+</footer>`;
+});
+var _layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  return `<main><aside>${validate_component(LogoStamp, "LogoStamp").$$render($$result, {}, {}, {})}
+    ${validate_component(Menu, "Menu").$$render($$result, {}, {}, {})}</aside>
+  <article id="${"main"}">${slots.default ? slots.default({}) : ``}</article>
+  ${validate_component(Footer, "Footer").$$render($$result, {}, {}, {})}</main>`;
+});
+var __layout = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  "default": Layout
+  "default": _layout
 });
-function load$2({ error: error2, status }) {
+function load$6({ error: error2, status }) {
   return { props: { error: error2, status } };
 }
 var Error$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -5134,52 +4869,24 @@ var error = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   "default": Error$1,
-  load: load$2
+  load: load$6
 });
-var css$5 = {
-  code: "nav.svelte-5va8ho.svelte-5va8ho{margin-top:30vh;padding-top:5vh;padding-right:5vh;top:0vh;position:sticky;left:20vw;background-color:#000}ul.svelte-5va8ho.svelte-5va8ho{margin:0px;padding:0px;left:0px}nav.svelte-5va8ho li.svelte-5va8ho{padding-bottom:5px;padding-top:5px;list-style:none;text-align:right}nav.svelte-5va8ho a.svelte-5va8ho{color:white;text-decoration:none}",
-  map: `{"version":3,"file":"Menu.svelte","sources":["Menu.svelte"],"sourcesContent":["<script lang='ts'><\/script>\\n\\n<nav>\\n  <ul>\\n    <!-- <li>\\n      <a href='/'>Front Cover</a>\\n    </li> -->\\n    <li>\\n      <a href='/'>Journal</a>\\n    </li>\\n    <li>\\n      <a href='https://twitter.com/imjustlilith' target=_blank>Tweets \u{1F54A}\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='https://tinyurl.com/LilithsResume' target=_blank>Resume</a>\\n    </li>\\n    <li>\\n      <a href='/work'>Current and Past Work</a>\\n    </li>\\n    <li>\\n      <a href='spells'>Spells</a>\\n    </li>\\n    <li>\\n      <a href='notes'>Things I wish they'd told me</a>\\n    </li>\\n    <li>\\n      <a href='back'>Back Cover</a>\\n    </li>\\n  </ul>\\n</nav>\\n<style lang='scss'>nav {\\n  margin-top: 30vh;\\n  padding-top: 5vh;\\n  padding-right: 5vh;\\n  top: 0vh;\\n  position: sticky;\\n  left: 20vw;\\n  background-color: #000;\\n}\\n\\nul {\\n  margin: 0px;\\n  padding: 0px;\\n  left: 0px;\\n}\\n\\nnav li {\\n  padding-bottom: 5px;\\n  padding-top: 5px;\\n  list-style: none;\\n  text-align: right;\\n}\\n\\nnav a {\\n  color: white;\\n  text-decoration: none;\\n}</style>"],"names":[],"mappings":"AA8BmB,GAAG,4BAAC,CAAC,AACtB,UAAU,CAAE,IAAI,CAChB,WAAW,CAAE,GAAG,CAChB,aAAa,CAAE,GAAG,CAClB,GAAG,CAAE,GAAG,CACR,QAAQ,CAAE,MAAM,CAChB,IAAI,CAAE,IAAI,CACV,gBAAgB,CAAE,IAAI,AACxB,CAAC,AAED,EAAE,4BAAC,CAAC,AACF,MAAM,CAAE,GAAG,CACX,OAAO,CAAE,GAAG,CACZ,IAAI,CAAE,GAAG,AACX,CAAC,AAED,iBAAG,CAAC,EAAE,cAAC,CAAC,AACN,cAAc,CAAE,GAAG,CACnB,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,IAAI,CAChB,UAAU,CAAE,KAAK,AACnB,CAAC,AAED,iBAAG,CAAC,CAAC,cAAC,CAAC,AACL,KAAK,CAAE,KAAK,CACZ,eAAe,CAAE,IAAI,AACvB,CAAC"}`
-};
-var Menu = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$5);
-  return `<nav class="${"svelte-5va8ho"}"><ul class="${"svelte-5va8ho"}">
-    <li class="${"svelte-5va8ho"}"><a href="${"/"}" class="${"svelte-5va8ho"}">Journal</a></li>
-    <li class="${"svelte-5va8ho"}"><a href="${"https://twitter.com/imjustlilith"}" target="${"_blank"}" class="${"svelte-5va8ho"}">Tweets \u{1F54A}\uFE0F</a></li>
-    <li class="${"svelte-5va8ho"}"><a href="${"https://tinyurl.com/LilithsResume"}" target="${"_blank"}" class="${"svelte-5va8ho"}">Resume</a></li>
-    <li class="${"svelte-5va8ho"}"><a href="${"/work"}" class="${"svelte-5va8ho"}">Current and Past Work</a></li>
-    <li class="${"svelte-5va8ho"}"><a href="${"spells"}" class="${"svelte-5va8ho"}">Spells</a></li>
-    <li class="${"svelte-5va8ho"}"><a href="${"notes"}" class="${"svelte-5va8ho"}">Things I wish they&#39;d told me</a></li>
-    <li class="${"svelte-5va8ho"}"><a href="${"back"}" class="${"svelte-5va8ho"}">Back Cover</a></li></ul>
-</nav>`;
-});
-var css$4 = {
-  code: "h3.svelte-1wuxsjh{font-size:1.5em;color:#99ffff}.journalEntry.svelte-1wuxsjh{margin-bottom:10vh}",
-  map: `{"version":3,"file":"JournalEntry.svelte","sources":["JournalEntry.svelte"],"sourcesContent":["<script lang='ts'>import marked from 'marked';\\r\\nexport let content;\\r\\n<\/script>\\n  \\n  <div class='journalEntry'>\\n    <h3>{\`Entry \${content.index} :: \${content.title}\`}</h3>\\n    <h4 class='date'>{content.date}</h4>\\n    {@html marked(content.body)}\\n    <p>Kindest,<br/>Lilith</p>\\n  </div>\\n\\n<style lang='scss'>h3 {\\n  font-size: 1.5em;\\n  color: #99ffff;\\n}\\n\\nh4 .date {\\n  font-size: 1em;\\n  text-align: right;\\n}\\n\\n.journalEntry {\\n  margin-bottom: 10vh;\\n}</style>"],"names":[],"mappings":"AAWmB,EAAE,eAAC,CAAC,AACrB,SAAS,CAAE,KAAK,CAChB,KAAK,CAAE,OAAO,AAChB,CAAC,AAOD,aAAa,eAAC,CAAC,AACb,aAAa,CAAE,IAAI,AACrB,CAAC"}`
+var css$2 = {
+  code: "h3.svelte-1nkk3bx{font-size:1.5em}h4.date.svelte-1nkk3bx{font-size:1em;text-align:right}.journal-entry.svelte-1nkk3bx{padding-bottom:100px;border-bottom:thin solid #666}.journal-entry.svelte-1nkk3bx:last-of-type{padding-bottom:100px;border-bottom:none}",
+  map: `{"version":3,"file":"JournalEntry.svelte","sources":["JournalEntry.svelte"],"sourcesContent":["<script lang='ts'>import marked from 'marked';\\r\\nexport let content;\\r\\n<\/script>\\n  \\n  <div class='journal-entry'>\\n    <h3>{\`Entry \${content.index} :: \${content.title}\`}</h3>\\n    <h4 class='date'>{content.date}</h4>\\n    {@html marked(content.body)}\\n    <p>Kindest,<br/>Lilith</p>\\n  </div>\\n\\n<style lang='scss'>h3 {\\n  font-size: 1.5em;\\n}\\n\\nh4.date {\\n  font-size: 1em;\\n  text-align: right;\\n}\\n\\n.journal-entry {\\n  padding-bottom: 100px;\\n  border-bottom: thin solid #666;\\n}\\n\\n.journal-entry:last-of-type {\\n  padding-bottom: 100px;\\n  border-bottom: none;\\n}</style>"],"names":[],"mappings":"AAWmB,EAAE,eAAC,CAAC,AACrB,SAAS,CAAE,KAAK,AAClB,CAAC,AAED,EAAE,KAAK,eAAC,CAAC,AACP,SAAS,CAAE,GAAG,CACd,UAAU,CAAE,KAAK,AACnB,CAAC,AAED,cAAc,eAAC,CAAC,AACd,cAAc,CAAE,KAAK,CACrB,aAAa,CAAE,IAAI,CAAC,KAAK,CAAC,IAAI,AAChC,CAAC,AAED,6BAAc,aAAa,AAAC,CAAC,AAC3B,cAAc,CAAE,KAAK,CACrB,aAAa,CAAE,IAAI,AACrB,CAAC"}`
 };
 var JournalEntry = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { content } = $$props;
   if ($$props.content === void 0 && $$bindings.content && content !== void 0)
     $$bindings.content(content);
-  $$result.css.add(css$4);
-  return `<div class="${"journalEntry svelte-1wuxsjh"}"><h3 class="${"svelte-1wuxsjh"}">${escape(`Entry ${content.index} :: ${content.title}`)}</h3>
-    <h4 class="${"date"}">${escape(content.date)}</h4>
+  $$result.css.add(css$2);
+  return `<div class="${"journal-entry svelte-1nkk3bx"}"><h3 class="${"svelte-1nkk3bx"}">${escape(`Entry ${content.index} :: ${content.title}`)}</h3>
+    <h4 class="${"date svelte-1nkk3bx"}">${escape(content.date)}</h4>
     <!-- HTML_TAG_START -->${(0, import_marked.default)(content.body)}<!-- HTML_TAG_END -->
     <p>Kindest,<br>Lilith</p>
   </div>`;
 });
-var css$3 = {
-  code: 'h1.svelte-kkcwpj{line-break:strict;margin:0px;top:30px;font-family:Garamond, "Times New Roman", Times, serif;position:fixed;color:#0FF;font-size:4em;left:20vw;width:13vw;text-align:right;-webkit-text-fill-color:transparent;-webkit-background-clip:text}',
-  map: `{"version":3,"file":"LogoStamp.svelte","sources":["LogoStamp.svelte"],"sourcesContent":["<script lang='ts'>import { onMount } from 'svelte';\\r\\nimport * as Helpers from './ts/helpers';\\r\\nonMount(() => {\\r\\n    Helpers.addRainbowBackground('logo');\\r\\n});\\r\\n<\/script>\\n\\n<h1 class='logo'>Lilith's Grimoire</h1>\\n\\n<style lang='scss'>h1 {\\n  line-break: strict;\\n  margin: 0px;\\n  top: 30px;\\n  font-family: Garamond, \\"Times New Roman\\", Times, serif;\\n  position: fixed;\\n  color: #0FF;\\n  font-size: 4em;\\n  left: 20vw;\\n  width: 13vw;\\n  text-align: right;\\n  -webkit-text-fill-color: transparent;\\n  -webkit-background-clip: text;\\n}</style>"],"names":[],"mappings":"AASmB,EAAE,cAAC,CAAC,AACrB,UAAU,CAAE,MAAM,CAClB,MAAM,CAAE,GAAG,CACX,GAAG,CAAE,IAAI,CACT,WAAW,CAAE,QAAQ,CAAC,CAAC,iBAAiB,CAAC,CAAC,KAAK,CAAC,CAAC,KAAK,CACtD,QAAQ,CAAE,KAAK,CACf,KAAK,CAAE,IAAI,CACX,SAAS,CAAE,GAAG,CACd,IAAI,CAAE,IAAI,CACV,KAAK,CAAE,IAAI,CACX,UAAU,CAAE,KAAK,CACjB,uBAAuB,CAAE,WAAW,CACpC,uBAAuB,CAAE,IAAI,AAC/B,CAAC"}`
-};
-var LogoStamp = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$3);
-  return `<h1 class="${"logo svelte-kkcwpj"}">Lilith&#39;s Grimoire</h1>`;
-});
-var css$2 = {
-  code: 'h2.svelte-qi2hdz{font-family:Garamond, "Times New Roman", Times, serif}',
-  map: `{"version":3,"file":"index.svelte","sources":["index.svelte"],"sourcesContent":["<script lang='ts' context='module'>var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nexport function load({ fetch }) {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        let contentList = [];\\r\\n        let entries;\\r\\n        const entriesResponse = yield fetch('/journal/entries.json');\\r\\n        const entriesBodyJson = yield entriesResponse.json();\\r\\n        if (entriesResponse.ok) {\\r\\n            contentList = entriesBodyJson.dirList.map((entry) => __awaiter(this, void 0, void 0, function* () {\\r\\n                let res = yield fetch(\`/journal/\${entry}\`);\\r\\n                return yield res.json();\\r\\n            }));\\r\\n            return {\\r\\n                props: {\\r\\n                    entries: entriesBodyJson.dirList,\\r\\n                    contentList: (yield Promise.all(contentList)).map(x => x.article)\\r\\n                }\\r\\n            };\\r\\n        }\\r\\n    });\\r\\n}\\r\\n<\/script>\\n\\n<script lang='ts'>var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport Menu from \\"../../components/Menu.svelte\\";\\r\\nimport JournalEntry from \\"../../components/JournalEntry.svelte\\";\\r\\nimport LogoStamp from \\"../../components/LogoStamp.svelte\\";\\r\\nimport 'svelte';\\r\\n// export let entries = 'ok'\\r\\nexport let entries;\\r\\nexport let contentList;\\r\\n// onMount(()=> {\\r\\n//   contentList = [...contentList].sort()\\r\\n// })\\r\\n<\/script>\\n  \\n  <svelte:head>\\n</svelte:head>\\n\\n<main>\\n  <aside>\\n    <LogoStamp></LogoStamp>\\n    <Menu></Menu>\\n  </aside>\\n  <article id='main'>\\n    <h2>Journal</h2>\\n    <!-- <nav id='sidebar'>\\n      <ul>\\n        {#each entries as entry}\\n        <li><a href={\`#\${entry}\`}>{entry}</a></li>\\n        {/each}\\n      </ul>\\n    </nav> -->\\n    <article>\\n      {#each contentList.sort((x, y) => y.index - x.index) as content}\\n      <JournalEntry {content}></JournalEntry>\\n      {/each}\\n      \\n    </article>\\n  </article>\\n</main>\\n\\n<style lang='scss'>#sidebar {\\n  position: sticky;\\n  left: 30vw;\\n  top: 0vh;\\n  margin-top: 30vh;\\n}\\n\\nh2 {\\n  font-family: Garamond, \\"Times New Roman\\", Times, serif;\\n}\\n\\np {\\n  line-height: 175%;\\n  font-size: 1em;\\n}</style>"],"names":[],"mappings":"AAqFA,EAAE,cAAC,CAAC,AACF,WAAW,CAAE,QAAQ,CAAC,CAAC,iBAAiB,CAAC,CAAC,KAAK,CAAC,CAAC,KAAK,AACxD,CAAC"}`
-};
-var __awaiter$1 = function(thisArg, _arguments, P, generator) {
+var __awaiter$5 = function(thisArg, _arguments, P, generator) {
   function adopt(value) {
     return value instanceof P ? value : new P(function(resolve2) {
       resolve2(value);
@@ -5206,19 +4913,19 @@ var __awaiter$1 = function(thisArg, _arguments, P, generator) {
     step((generator = generator.apply(thisArg, _arguments || [])).next());
   });
 };
-function load$1({ fetch: fetch2 }) {
-  return __awaiter$1(this, void 0, void 0, function* () {
+function load$5({ fetch: fetch2 }) {
+  return __awaiter$5(this, void 0, void 0, function* () {
     let contentList = [];
     const entriesResponse = yield fetch2("/journal/entries.json");
     const entriesBodyJson = yield entriesResponse.json();
     if (entriesResponse.ok) {
-      contentList = entriesBodyJson.dirList.map((entry) => __awaiter$1(this, void 0, void 0, function* () {
+      contentList = entriesBodyJson.dirList.map((entry) => __awaiter$5(this, void 0, void 0, function* () {
         let res = yield fetch2(`/journal/${entry}`);
         return yield res.json();
       }));
       return {
         props: {
-          entries: entriesBodyJson.dirList,
+          entryList: entriesBodyJson.dirList,
           contentList: (yield Promise.all(contentList)).map((x) => x.article)
         }
       };
@@ -5253,26 +4960,377 @@ var Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
   });
-  let { entries } = $$props;
+  let { entryList } = $$props;
   let { contentList } = $$props;
-  if ($$props.entries === void 0 && $$bindings.entries && entries !== void 0)
-    $$bindings.entries(entries);
+  if ($$props.entryList === void 0 && $$bindings.entryList && entryList !== void 0)
+    $$bindings.entryList(entryList);
   if ($$props.contentList === void 0 && $$bindings.contentList && contentList !== void 0)
     $$bindings.contentList(contentList);
-  $$result.css.add(css$2);
   return `${$$result.head += ``, ""}
 
-<main><aside>${validate_component(LogoStamp, "LogoStamp").$$render($$result, {}, {}, {})}
-    ${validate_component(Menu, "Menu").$$render($$result, {}, {}, {})}</aside>
-  <article id="${"main"}"><h2 class="${"svelte-qi2hdz"}">Journal</h2>
-    
-    <article>${each(contentList.sort((x, y) => y.index - x.index), (content) => `${validate_component(JournalEntry, "JournalEntry").$$render($$result, { content }, {}, {})}`)}</article></article>
-</main>`;
+<h2>Journal \u{1F4DC}</h2>
+
+<article>${each(contentList.sort((x, y) => y.index - x.index), (content) => `${validate_component(JournalEntry, "JournalEntry").$$render($$result, { content }, {}, {})}`)}
+  
+</article>`;
 });
 var index = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   "default": Routes,
+  load: load$5
+});
+var __awaiter$4 = function(thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function(resolve2) {
+      resolve2(value);
+    });
+  }
+  return new (P || (P = Promise))(function(resolve2, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function step(result) {
+      result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+function load$4({ fetch: fetch2 }) {
+  return __awaiter$4(this, void 0, void 0, function* () {
+    return { props: {} };
+  });
+}
+var Template = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  (function(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+      return value instanceof P ? value : new P(function(resolve2) {
+        resolve2(value);
+      });
+    }
+    return new (P || (P = Promise))(function(resolve2, reject) {
+      function fulfilled(value) {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function rejected(value) {
+        try {
+          step(generator["throw"](value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function step(result) {
+        result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+      }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+  });
+  return `<div></div>`;
+});
+var template = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": Template,
+  load: load$4
+});
+var __awaiter$3 = function(thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function(resolve2) {
+      resolve2(value);
+    });
+  }
+  return new (P || (P = Promise))(function(resolve2, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function step(result) {
+      result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+function load$3({ fetch: fetch2 }) {
+  return __awaiter$3(this, void 0, void 0, function* () {
+    return { props: {} };
+  });
+}
+var Spells = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  (function(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+      return value instanceof P ? value : new P(function(resolve2) {
+        resolve2(value);
+      });
+    }
+    return new (P || (P = Promise))(function(resolve2, reject) {
+      function fulfilled(value) {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function rejected(value) {
+        try {
+          step(generator["throw"](value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function step(result) {
+        result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+      }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+  });
+  return `<h2>Spells \u{1FA84}</h2>
+<div><!-- HTML_TAG_START -->${(0, import_marked.default)(`
+Here are some boilerplate things I use to bootstrap new projects at the moment. Spells, if you will.
+
+- Check back later!
+
+`)}<!-- HTML_TAG_END -->
+
+</div>`;
+});
+var spells = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": Spells,
+  load: load$3
+});
+var css$1 = {
+  code: "#notes strong{color:#80d5ff}",
+  map: `{"version":3,"file":"notes.svelte","sources":["notes.svelte"],"sourcesContent":["<script lang='ts' context='module'>var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nexport function load({ fetch }) {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        return {\\r\\n            props: {}\\r\\n        };\\r\\n    });\\r\\n}\\r\\n<\/script>\\n\\n<script lang='ts'>var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { onMount } from 'svelte';\\r\\nimport marked from 'marked';\\r\\nonMount(() => {\\r\\n});\\r\\n<\/script>\\n\\n<h2>Notes \u{1F4DD}</h2>\\n<div id='notes'>\\n  \\n{@html marked(\`\\nHere are some things I wish I knew before I started... well, anything! ^_^ These range from tribal knowledge around programming paradigms to behavioral management (with regards to ADHD). Plus, whatever else comes to mind.\\n\\nThese are not maxims; they're things I remind myself of. I'm presenting them here in case they help other people as much as they help me. You may not agree, and that's totally valid! I am not an Oracle. Or Lucent. Nor do I have 9 plans. I'm just me.\\n\\nAlso, these are in no particular order. Eventually, they will be tagged and categorized. Everything is a work in progress. Oh! That reminds me!\\n\\n### Let's go! \u{1F680}\u{1F680}\\n\\n- **Clarity matters more than cleverness.**\\n  - [Code golf](https://en.wikipedia.org/wiki/Code_golf) in prod is an [anti-pattern](https://www.bmc.com/blogs/anti-patterns-vs-patterns/).\\n  - Speed of code matters more than compactness of code.\\n  - Expeditiously written, yet elegant code is a good goal.\\n\\n- **[TDD](https://en.wikipedia.org/wiki/Code_golf), [REPLs](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop), and [short dev cycles](https://en.wikipedia.org/wiki/Rapid_application_development) are dope. \u{1F525}\u{1F525}\u{1F525}**\\n\\n- **[You aren't gonna need it](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it).** Refactor when necessary. Don't [prematurely over-optimize](https://en.wikipedia.org/wiki/Program_optimization#When_to_optimize).\\n\\n- **Everything is a work in progress.** It's okay if something isn't done; few things truly are, and you probably aren't getting shot at, so... why stress so much? Be kinder to yourself.\\n\\n- **Perfection isn't real.** Get as close as you want, but don't do so to your detriment.\\n\\n- **[Execute](https://ask.metafilter.com/255091/Help-me-overcome-analysis-paralysis-and-be-more-process-based).**\\n\\n- **C# is discount Java.** Kidding \u{1F61C}. They're pretty similar, though.\\n\\n- **Try that thing you don't think you like.** You might learn something, or perhaps fall in love.\\n\\n- **Code explains the comments to the computer, rather than comments explaining code to the human.**\\n  - Comment-driven development is [not a myth](https://channel9.msdn.com/Blogs/MSDNSweden/Comment-Driven-Development-the-art-of-removal), but [a real thing that's quite powerful](https://mayaposch.wordpress.com/2017/04/09/on-the-merits-of-comment-driven-development/).\\n\\n- **There's really [no perfect paradigm](https://en.wikipedia.org/wiki/Comparison_of_multi-paradigm_programming_languages#Paradigm_summaries) \u2014 just the right tool at the right moment.**\\n  - **There can be [more than one 'right tool.'](https://www.rosettacode.org/wiki/Rosetta_Code)**\\n\\n- **[Functional programming](https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming) is just pipelining things and ETL on a small scale.**\\n\\n- **Avoid returning nulls and voids if you can. Be clear about errors. [Handle your errors](https://go.dev/blog/error-handling-and-go), Lilith.**\\n\\n- **You do not need to be a brilliant wizard to code. Just persistent! And voraciously, continually learning.**\\n  - You may need to be a little stubborn. Masochistic, even. (Just kidding! But only slightly. It's a labor of love. \u{1F499})\\n\\n- **[Object-oriented programming](https://en.wikipedia.org/wiki/Smalltalk#Object-oriented_programming) is really about [sending messages around](https://en.wikipedia.org/wiki/Smalltalk#Object-oriented_programming).**\\n  - Object methods are things you *request*, not functions you apply. \u{1F92F}\\n\\n- **[A factory pattern is a real thing](https://en.wikipedia.org/wiki/Factory_method_pattern), and surprisingly, not a joke.**\\n  - I'll stop riffing on OOP one day; it's powerful. (FP is still the future tho no cap)\\n\\n- **You know those square brace things in C#? [Those are attributes](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/attributes/).** And they're kinda neat. Don't think about it too much.\\n\\n- **[Impostor syndrome](https://en.wikipedia.org/wiki/Impostor_syndrome) does not go away; it just gets easier to deal with. \u{1F629}** In 5 years, I'll hopefully feel differently (I haven't in 20, though; sorry to report that).\\n\\n- **Whatever it is, it can probably wait.** Take some notes, save your place, and go do the other, more important thing.\\n\\n- **Stay mindful of the cost of context-switching.**\\n  - [We are single-threaded, context-switching animals](https://en.wikipedia.org/wiki/Continuous_partial_attention). We're great at throwing all of our brainpower at one thing at a time \u2014 but we're not so great at [juggling multiple things](https://en.wikipedia.org/wiki/Human_multitasking#The_brain's_role).\\n\\n- **[Always become a better asset to everyone around you](https://www.cracked.com/blog/6-harsh-truths-that-will-make-you-better-person).**\\n\\n\`)}\\n\\n  </div>\\n  \\n  <style lang='scss'>:global(#notes strong) {\\n  color: #80d5ff;\\n}</style>"],"names":[],"mappings":"AAkG6B,aAAa,AAAE,CAAC,AAC3C,KAAK,CAAE,OAAO,AAChB,CAAC"}`
+};
+var __awaiter$2 = function(thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function(resolve2) {
+      resolve2(value);
+    });
+  }
+  return new (P || (P = Promise))(function(resolve2, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function step(result) {
+      result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+function load$2({ fetch: fetch2 }) {
+  return __awaiter$2(this, void 0, void 0, function* () {
+    return { props: {} };
+  });
+}
+var Notes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  (function(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+      return value instanceof P ? value : new P(function(resolve2) {
+        resolve2(value);
+      });
+    }
+    return new (P || (P = Promise))(function(resolve2, reject) {
+      function fulfilled(value) {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function rejected(value) {
+        try {
+          step(generator["throw"](value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function step(result) {
+        result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+      }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+  });
+  $$result.css.add(css$1);
+  return `<h2>Notes \u{1F4DD}</h2>
+<div id="${"notes"}"><!-- HTML_TAG_START -->${(0, import_marked.default)(`
+Here are some things I wish I knew before I started... well, anything! ^_^ These range from tribal knowledge around programming paradigms to behavioral management (with regards to ADHD). Plus, whatever else comes to mind.
+
+These are not maxims; they're things I remind myself of. I'm presenting them here in case they help other people as much as they help me. You may not agree, and that's totally valid! I am not an Oracle. Or Lucent. Nor do I have 9 plans. I'm just me.
+
+Also, these are in no particular order. Eventually, they will be tagged and categorized. Everything is a work in progress. Oh! That reminds me!
+
+### Let's go! \u{1F680}\u{1F680}
+
+- **Clarity matters more than cleverness.**
+  - [Code golf](https://en.wikipedia.org/wiki/Code_golf) in prod is an [anti-pattern](https://www.bmc.com/blogs/anti-patterns-vs-patterns/).
+  - Speed of code matters more than compactness of code.
+  - Expeditiously written, yet elegant code is a good goal.
+
+- **[TDD](https://en.wikipedia.org/wiki/Code_golf), [REPLs](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop), and [short dev cycles](https://en.wikipedia.org/wiki/Rapid_application_development) are dope. \u{1F525}\u{1F525}\u{1F525}**
+
+- **[You aren't gonna need it](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it).** Refactor when necessary. Don't [prematurely over-optimize](https://en.wikipedia.org/wiki/Program_optimization#When_to_optimize).
+
+- **Everything is a work in progress.** It's okay if something isn't done; few things truly are, and you probably aren't getting shot at, so... why stress so much? Be kinder to yourself.
+
+- **Perfection isn't real.** Get as close as you want, but don't do so to your detriment.
+
+- **[Execute](https://ask.metafilter.com/255091/Help-me-overcome-analysis-paralysis-and-be-more-process-based).**
+
+- **C# is discount Java.** Kidding \u{1F61C}. They're pretty similar, though.
+
+- **Try that thing you don't think you like.** You might learn something, or perhaps fall in love.
+
+- **Code explains the comments to the computer, rather than comments explaining code to the human.**
+  - Comment-driven development is [not a myth](https://channel9.msdn.com/Blogs/MSDNSweden/Comment-Driven-Development-the-art-of-removal), but [a real thing that's quite powerful](https://mayaposch.wordpress.com/2017/04/09/on-the-merits-of-comment-driven-development/).
+
+- **There's really [no perfect paradigm](https://en.wikipedia.org/wiki/Comparison_of_multi-paradigm_programming_languages#Paradigm_summaries) \u2014 just the right tool at the right moment.**
+  - **There can be [more than one 'right tool.'](https://www.rosettacode.org/wiki/Rosetta_Code)**
+
+- **[Functional programming](https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming) is just pipelining things and ETL on a small scale.**
+
+- **Avoid returning nulls and voids if you can. Be clear about errors. [Handle your errors](https://go.dev/blog/error-handling-and-go), Lilith.**
+
+- **You do not need to be a brilliant wizard to code. Just persistent! And voraciously, continually learning.**
+  - You may need to be a little stubborn. Masochistic, even. (Just kidding! But only slightly. It's a labor of love. \u{1F499})
+
+- **[Object-oriented programming](https://en.wikipedia.org/wiki/Smalltalk#Object-oriented_programming) is really about [sending messages around](https://en.wikipedia.org/wiki/Smalltalk#Object-oriented_programming).**
+  - Object methods are things you *request*, not functions you apply. \u{1F92F}
+
+- **[A factory pattern is a real thing](https://en.wikipedia.org/wiki/Factory_method_pattern), and surprisingly, not a joke.**
+  - I'll stop riffing on OOP one day; it's powerful. (FP is still the future tho no cap)
+
+- **You know those square brace things in C#? [Those are attributes](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/attributes/).** And they're kinda neat. Don't think about it too much.
+
+- **[Impostor syndrome](https://en.wikipedia.org/wiki/Impostor_syndrome) does not go away; it just gets easier to deal with. \u{1F629}** In 5 years, I'll hopefully feel differently (I haven't in 20, though; sorry to report that).
+
+- **Whatever it is, it can probably wait.** Take some notes, save your place, and go do the other, more important thing.
+
+- **Stay mindful of the cost of context-switching.**
+  - [We are single-threaded, context-switching animals](https://en.wikipedia.org/wiki/Continuous_partial_attention). We're great at throwing all of our brainpower at one thing at a time \u2014 but we're not so great at [juggling multiple things](https://en.wikipedia.org/wiki/Human_multitasking#The_brain's_role).
+
+- **[Always become a better asset to everyone around you](https://www.cracked.com/blog/6-harsh-truths-that-will-make-you-better-person).**
+
+`)}<!-- HTML_TAG_END -->
+
+  </div>`;
+});
+var notes = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": Notes,
+  load: load$2
+});
+var __awaiter$1 = function(thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function(resolve2) {
+      resolve2(value);
+    });
+  }
+  return new (P || (P = Promise))(function(resolve2, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function step(result) {
+      result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+function load$1({ fetch: fetch2 }) {
+  return __awaiter$1(this, void 0, void 0, function* () {
+    return { props: {} };
+  });
+}
+var Back = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  (function(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+      return value instanceof P ? value : new P(function(resolve2) {
+        resolve2(value);
+      });
+    }
+    return new (P || (P = Promise))(function(resolve2, reject) {
+      function fulfilled(value) {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function rejected(value) {
+        try {
+          step(generator["throw"](value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function step(result) {
+        result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+      }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+  });
+  return `<h2>Back Cover \u{1F4D5}</h2>
+<div><p>Hey, here are some acknowledgments :&gt;</p>
+  <p><!-- HTML_TAG_START -->${(0, import_marked.default)(`
+### Software
+
+This site is built with a mix of SvelteKit, Hugo, Markdown, and too many npm packages to list; check out the [source code over at GitHub](https://github.com/justlilith/grimoire/blob/main/package.json) to browse everything.
+`)}<!-- HTML_TAG_END --></p>
+</div>`;
+});
+var back = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": Back,
   load: load$1
 });
 var Test = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -5283,25 +5341,20 @@ var test = /* @__PURE__ */ Object.freeze({
   [Symbol.toStringTag]: "Module",
   "default": Test
 });
-var css$1 = {
-  code: ".work-images.svelte-14h8o37{height:50vh;overflow:scroll;scrollbar-width:none}img.svelte-14h8o37{width:100%;margin-bottom:20px}",
-  map: `{"version":3,"file":"Work.svelte","sources":["Work.svelte"],"sourcesContent":["<script lang='ts'>import marked from 'marked';\\r\\nimport { onMount } from 'svelte';\\r\\nimport * as Helpers from './ts/helpers';\\r\\nonMount(() => {\\r\\n    Helpers.addRainbowBackground('work-images');\\r\\n});\\r\\nexport let work;\\r\\n<\/script>\\n\\n<div>\\n  <!-- <h3>{work.title}</h3> -->\\n  {@html marked(work.description)}\\n  <div class='work-images'>\\n    {#each work[\\"imageURLs\\"] as url}\\n    <img src={url} alt={work.altText || \\"\\"}/>\\n    {/each}\\n    <!-- <img src={work[\\"imageURLs\\"]} alt=\\"\\"/> -->\\n  </div>\\n</div>\\n\\n<style lang='scss'>.work-images {\\n  height: 50vh;\\n  overflow: scroll;\\n  scrollbar-width: none;\\n}\\n\\nimg {\\n  width: 100%;\\n  margin-bottom: 20px;\\n}</style>"],"names":[],"mappings":"AAoBmB,YAAY,eAAC,CAAC,AAC/B,MAAM,CAAE,IAAI,CACZ,QAAQ,CAAE,MAAM,CAChB,eAAe,CAAE,IAAI,AACvB,CAAC,AAED,GAAG,eAAC,CAAC,AACH,KAAK,CAAE,IAAI,CACX,aAAa,CAAE,IAAI,AACrB,CAAC"}`
+var css = {
+  code: ".work-images.svelte-rapazw{height:50vh;overflow-y:scroll;scrollbar-width:none}img.svelte-rapazw{width:100%;margin-bottom:5px}.work.svelte-rapazw{padding-bottom:100px;border-bottom:thin solid #666}.work.svelte-rapazw:last-of-type{padding-bottom:100px;border-bottom:none}",
+  map: `{"version":3,"file":"Work.svelte","sources":["Work.svelte"],"sourcesContent":["<script lang='ts'>import marked from 'marked';\\r\\nimport { onMount } from 'svelte';\\r\\nimport * as Helpers from '$lib/ts/helpers';\\r\\nonMount(() => {\\r\\n    Helpers.addRainbowBackground('work-images');\\r\\n});\\r\\nexport let work;\\r\\n<\/script>\\n\\n<div class='work'>\\n  <!-- <h3>{work.title}</h3> -->\\n  {@html marked(work.description)}\\n  {#if work[\\"imageURLs\\"].length > 1}\\n  <div class='work-images'>\\n    {#each work[\\"imageURLs\\"] as url}\\n    <img src={url} alt={work.title}/>\\n    {/each}\\n  </div>\\n  {:else}\\n  <img class='work-image' src={work[\\"imageURLs\\"][0]} alt={work.title}/>\\n  {/if}\\n</div>\\n\\n<style lang='scss'>.work-images {\\n  height: 50vh;\\n  overflow-y: scroll;\\n  scrollbar-width: none;\\n}\\n\\nimg {\\n  width: 100%;\\n  margin-bottom: 5px;\\n}\\n\\n.work {\\n  padding-bottom: 100px;\\n  border-bottom: thin solid #666;\\n}\\n\\n.work:last-of-type {\\n  padding-bottom: 100px;\\n  border-bottom: none;\\n}</style>"],"names":[],"mappings":"AAuBmB,YAAY,cAAC,CAAC,AAC/B,MAAM,CAAE,IAAI,CACZ,UAAU,CAAE,MAAM,CAClB,eAAe,CAAE,IAAI,AACvB,CAAC,AAED,GAAG,cAAC,CAAC,AACH,KAAK,CAAE,IAAI,CACX,aAAa,CAAE,GAAG,AACpB,CAAC,AAED,KAAK,cAAC,CAAC,AACL,cAAc,CAAE,KAAK,CACrB,aAAa,CAAE,IAAI,CAAC,KAAK,CAAC,IAAI,AAChC,CAAC,AAED,mBAAK,aAAa,AAAC,CAAC,AAClB,cAAc,CAAE,KAAK,CACrB,aAAa,CAAE,IAAI,AACrB,CAAC"}`
 };
 var Work = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { work: work2 } = $$props;
   if ($$props.work === void 0 && $$bindings.work && work2 !== void 0)
     $$bindings.work(work2);
-  $$result.css.add(css$1);
-  return `<div>
+  $$result.css.add(css);
+  return `<div class="${"work svelte-rapazw"}">
   <!-- HTML_TAG_START -->${(0, import_marked.default)(work2.description)}<!-- HTML_TAG_END -->
-  <div class="${"work-images svelte-14h8o37"}">${each(work2["imageURLs"], (url) => `<img${add_attribute("src", url, 0)}${add_attribute("alt", work2.altText || "", 0)} class="${"svelte-14h8o37"}">`)}
-    </div>
+  ${work2["imageURLs"].length > 1 ? `<div class="${"work-images svelte-rapazw"}">${each(work2["imageURLs"], (url) => `<img${add_attribute("src", url, 0)}${add_attribute("alt", work2.title, 0)} class="${"svelte-rapazw"}">`)}</div>` : `<img class="${"work-image svelte-rapazw"}"${add_attribute("src", work2["imageURLs"][0], 0)}${add_attribute("alt", work2.title, 0)}>`}
 </div>`;
 });
-var css = {
-  code: "h2.svelte-1bg19v8{margin:0px;padding:0px;margin-top:35px;color:#0FF}",
-  map: `{"version":3,"file":"work.svelte","sources":["work.svelte"],"sourcesContent":["<script lang='ts' context='module'>var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nexport function load({ fetch }) {\\r\\n    return __awaiter(this, void 0, void 0, function* () {\\r\\n        const entriesResponse = yield fetch('/work/entries.json');\\r\\n        const workEntries = yield entriesResponse.json();\\r\\n        if (entriesResponse.ok) {\\r\\n            return {\\r\\n                props: {\\r\\n                    workEntries: workEntries.entries\\r\\n                }\\r\\n            };\\r\\n        }\\r\\n    });\\r\\n}\\r\\n<\/script>\\n\\n<script lang='ts'>var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport { onMount } from 'svelte';\\r\\nimport Menu from \\"../../components/Menu.svelte\\";\\r\\nimport Work from \\"../../components/Work.svelte\\";\\r\\nimport LogoStamp from \\"../../components/LogoStamp.svelte\\";\\r\\nexport let workEntries = [\\r\\n    {\\r\\n        title: \\"Loading. . .\\",\\r\\n        description: \\"lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish\\",\\r\\n        altText: \\"Test post pls ignore\\",\\r\\n        imageUrls: [\\"https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large\\"]\\r\\n    }\\r\\n];\\r\\nonMount(() => {\\r\\n    console.log(workEntries);\\r\\n});\\r\\n<\/script>\\n\\n<main>\\n  <aside>\\n    <LogoStamp></LogoStamp>\\n    <Menu></Menu>\\n  </aside>\\n  <article id='main'>\\n    <h2>Current and Past Work</h2>\\n    {#each workEntries as work}\\n    <Work {work}></Work>\\n    {/each}\\n  </article>\\n</main>\\n\\n<style lang='scss'>h2 {\\n  margin: 0px;\\n  padding: 0px;\\n  margin-top: 35px;\\n  color: #0FF;\\n}</style>"],"names":[],"mappings":"AA+DmB,EAAE,eAAC,CAAC,AACrB,MAAM,CAAE,GAAG,CACX,OAAO,CAAE,GAAG,CACZ,UAAU,CAAE,IAAI,CAChB,KAAK,CAAE,IAAI,AACb,CAAC"}`
-};
 var __awaiter = function(thisArg, _arguments, P, generator) {
   function adopt(value) {
     return value instanceof P ? value : new P(function(resolve2) {
@@ -5370,20 +5423,18 @@ var Work_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   });
   let { workEntries = [
     {
+      index: 0,
+      filename: null,
+      date: null,
       title: "Loading. . .",
       description: "lorem ipsum dolor sit amet lingua ignota lorna shore after the burial attack attack lorde zheani author and punisher grimes poppy billie eilish",
-      altText: "Test post pls ignore",
-      imageUrls: ["https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large"]
+      imageURLs: ["https://pbs.twimg.com/media/E_VzToeWEAIvNq0?format=jpg&name=large"]
     }
   ] } = $$props;
   if ($$props.workEntries === void 0 && $$bindings.workEntries && workEntries !== void 0)
     $$bindings.workEntries(workEntries);
-  $$result.css.add(css);
-  return `<main><aside>${validate_component(LogoStamp, "LogoStamp").$$render($$result, {}, {}, {})}
-    ${validate_component(Menu, "Menu").$$render($$result, {}, {}, {})}</aside>
-  <article id="${"main"}"><h2 class="${"svelte-1bg19v8"}">Current and Past Work</h2>
-    ${each(workEntries, (work2) => `${validate_component(Work, "Work").$$render($$result, { work: work2 }, {}, {})}`)}</article>
-</main>`;
+  return `<h2>Current and Past Work \u{1F4BC}</h2>
+${each(workEntries, (work2) => `${validate_component(Work, "Work").$$render($$result, { work: work2 }, {}, {})}`)}`;
 });
 var work = /* @__PURE__ */ Object.freeze({
   __proto__: null,
@@ -5395,10 +5446,10 @@ var work = /* @__PURE__ */ Object.freeze({
 // .svelte-kit/netlify/entry.js
 init();
 async function handler(event) {
-  const { path, httpMethod, headers, rawQuery, body: body2, isBase64Encoded } = event;
+  const { path, httpMethod, headers, rawQuery, body, isBase64Encoded } = event;
   const query = new URLSearchParams(rawQuery);
   const encoding = isBase64Encoded ? "base64" : headers["content-encoding"] || "utf-8";
-  const rawBody = typeof body2 === "string" ? Buffer.from(body2, encoding) : body2;
+  const rawBody = typeof body === "string" ? Buffer.from(body, encoding) : body;
   const rendered = await render({
     method: httpMethod,
     headers,
