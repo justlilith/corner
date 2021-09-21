@@ -1,0 +1,7 @@
+{
+  "index":6,
+  "filename":"6-all-set!.json",
+  "title":"All Set!",
+  "date":"Monday, September 20, 2021",
+  "body":"\n# All Set~\n\n\u003cdiv class='image-small'\u003e\n\n![Journal entry 6 splash image, of Shyoko from Happy Sugar Life, representing my current shock that this works at all!](images/journal/6-all-set!/6-splash.jpg)\n\n\u003c/div\u003e\n\nWell, everything seems to be working well. Welcome to the new version of my site. I've migrated the CMS and UI from Tumblr to a custom solution. Right now, this site is made via:\n\n- SvelteKit\n- Hugo\n- Marked\n- Netlify\n\nI write journal entries in Markdown, which is wrapped by Hugo into JSON. SvelteKit serves that JSON via a Netlify functions endpoint. Next, the static SvelteKit site rips the Markdown from the JSON, at which point marked renders it into HTML.\n\nSo, I write an entry, run Hugo, push to GitHub, and the site is updated (Netlify is the backend for everything and runs via repo triggers). ezpz. 💙"
+}

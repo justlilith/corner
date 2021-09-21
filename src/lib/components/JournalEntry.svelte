@@ -3,7 +3,7 @@
   export let content:JournalEntryT
 </script>
   
-  <div class='journalEntry'>
+  <div class='journal-entry'>
     <h3>{`Entry ${content.index} :: ${content.title}`}</h3>
     <h4 class='date'>{content.date}</h4>
     {@html marked(content.body)}
@@ -19,12 +19,12 @@
     font-size:1em;
     text-align: right;
   }
-  .journalEntry {
+  .journal-entry {
     padding-bottom: 100px;
     border-bottom: thin solid #666;
   }
 
-  .journalEntry:last-of-type {
+  .journal-entry:last-of-type {
     padding-bottom: 100px;
     border-bottom: none;
   }

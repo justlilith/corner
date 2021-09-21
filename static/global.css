@@ -27,6 +27,22 @@ a:visited {
   color: #999;
 }
 
+/* Journal stuff */
+
+.journal-entry li {
+  list-style-position: inside;
+}
+
+.image-small {
+  /* display: inline; */
+  float:left;
+  margin-bottom: 32px;
+  margin-right: 32px;
+}
+.image-small img {
+  width: 300px;
+  float: left;
+}
 
 
 
@@ -55,10 +71,10 @@ article#main {
   
   main {
     grid-template-areas: 'left right' 'footer footer';
-  /* grid-template-rows: auto 10%; */
-  grid-template-columns: 30% 70%;
+    /* grid-template-rows: auto 10%; */
+    grid-template-columns: 30% 70%;
   }
-
+  
   aside {
     grid-area: left;
   }
