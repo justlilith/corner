@@ -1,12 +1,89 @@
 <script lang='ts'>
+import { browser } from '$app/env';
+import { page } from '$app/stores';
+
+  import { onMount } from 'svelte'
   
+  export let currentPage
+  
+  let menuListPage:MenuLinkT[] = []
+
+  let menuList:MenuLinkT[] = [
+  { href:"/"
+  , target: ""
+  , title: "Journal 📜"
+  , active: null
+}
+, { href:"/work"
+, target: ""
+, title: "Current and Past Work 💼"
+, active: null
+}
+, { href:"https://twitter.com/imjustlilith"
+, target: "_blank"
+, title: "Tweets 🕊️ :: ↗️"
+, active: null
+}
+, { href:"https://tinyurl.com/LilithsResume"
+, target: "_blank"
+, title: "Resume :: ↗️"
+, active: null
+}
+, { href:"https://github.com/justlilith"
+, target: "_blank"
+, title: "GitHub :: ↗️"
+, active: null
+}
+, { href:"https://www.polywork.com/lilith"
+, target: "_blank"
+, title: "Polywork :: ↗️"
+, active: null
+}
+, { href:"https://www.linkedin.com/in/lilith-dev"
+, target: "_blank"
+, title: "LinkedIn :: ↗️"
+, active: null
+}
+, { href:"/spells"
+, target: ""
+, title: "Spells ✨"
+, active: null
+}
+, { href:"/notes"
+, target: ""
+, title: "Things I wish they'd told me 🥺"
+, active: null
+}
+, { href:"/back"
+, target: ""
+, title: "Back Cover 📕"
+, active: null
+}
+]
+
+onMount(()=> {
+  // console.log(currentPage)
+  menuListPage = menuList.map(item => {
+    item.href == currentPage.path ? item.active = true : item.active = false
+    return item
+  })
+})
 </script>
 
 <nav>
-  <ul>
-    <!-- <li>
-      <a href='/'>Front Cover</a>
-    </li> -->
+  <ul id='menu-list'>
+    {#if browser}
+    {#each menuListPage as menuItem}
+    <li id={menuItem?.active ? "active-menu-item" : null}>
+      <a href='{menuItem.href}' target={menuItem?.target ? menuItem.target : null}>{menuItem.title}</a>
+    </li>
+    {/each}
+    {/if}
+  </ul>
+</nav>
+
+<!-- <nav>
+  <ul id='menu-list'>
     <li>
       <a href='/'>Journal 📜</a>
     </li>
@@ -38,7 +115,10 @@
       <a href='back'>Back Cover 📕</a>
     </li>
   </ul>
-</nav>
+</nav> -->
+
+
+
 <style lang='scss'>
   nav {
     margin-top: 180px;
@@ -64,6 +144,21 @@
     color: white;
     text-decoration: none;
   }
+
+
+  #active-menu-item a {
+    color:hsl(200,100%,50%);
+  }
+  
+  li#active-menu-item {
+    color:white;
+    list-style-type: circle;
+  }
+
+  nav a:hover {
+    color: hsl(180,100%,50%) !important;
+  }
+
   
   @media (min-width: 666px) {
     nav {

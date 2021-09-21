@@ -15,7 +15,7 @@
   })
 </script>
 
-<h2>Spells 🪄</h2>
+<h2>Spells ✨</h2>
 <div>
 
 {@html marked(`

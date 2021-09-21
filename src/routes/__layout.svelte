@@ -4,13 +4,22 @@
   import LogoStamp from "$lib/components/LogoStamp.svelte";
   import * as Helpers from '$lib/ts/helpers'
   import Footer from '$lib/components/Footer.svelte';
-  
+  import { page } from '$app/stores'
+
+  let currentPage
+
+  page.subscribe((page) => {
+    currentPage = page
+  })
+
 </script>
 
 <main>
   <aside>
     <LogoStamp></LogoStamp>
-    <Menu></Menu>
+    {#key currentPage}
+    <Menu {currentPage}></Menu>
+    {/key}
   </aside>
   <article id='main'>
     <slot></slot>

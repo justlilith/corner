@@ -18,3 +18,10 @@ interface WorkEntryT {
 }
 
 type DirListT = string[]
+
+interface MenuLinkT {
+  href:string
+  target:string|null
+  title:string
+  active:boolean
+}

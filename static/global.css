@@ -26,6 +26,9 @@ a {
 a:visited {
   color: #999;
 }
+a:hover {
+  color: white;
+}
 
 /* Journal stuff */
 
