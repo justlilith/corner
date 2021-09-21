@@ -51,14 +51,19 @@ a:hover {
 
 main {
   display:grid;
-  grid-template-areas: 'top' 'bottom' 'footer';
-  grid-template-rows: auto auto 108px;
+  grid-template-areas: 'top' 'strip' 'bottom' 'footer';
+  grid-template-rows: auto 12px auto 108px;
   height:100vh;
 }
 
 aside {
   background-color: #000;
   grid-area: top;
+}
+
+#rainbow-strip {
+  grid-area: strip;
+  position:sticky;
 }
 
 article#main {
@@ -73,9 +78,9 @@ article#main {
 @media (min-width: 1000px) {
   
   main {
-    grid-template-areas: 'left right' 'footer footer';
-    /* grid-template-rows: auto 10%; */
-    grid-template-columns: 30% 70%;
+    grid-template-areas: 'left strip right' 'footer footer footer';
+    grid-template-rows: auto 108px;
+    grid-template-columns: 30% 0.25% 69.75%;
   }
   
   aside {

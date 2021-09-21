@@ -12,6 +12,10 @@
     currentPage = page
   })
 
+  onMount(()=> {
+    Helpers.addRainbowBackground('rainbow-strip')
+  })
+
 </script>
 
 <main>
@@ -21,6 +25,7 @@
     <Menu {currentPage}></Menu>
     {/key}
   </aside>
+  <div id='rainbow-strip' class='rainbow-strip'></div>
   <article id='main'>
     <slot></slot>
   </article>
