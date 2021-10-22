@@ -1,38 +1,29 @@
-# create-svelte
+# Lilith's Grimoire
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);
+## Overview
 
-## Creating a project
+This is where Lilith records her thoughts and work. It's a homepage with a few bells and whistles (choo choo!!).
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Usage
 
-```bash
-# create a new project in the current directory
-npm init svelte@next
+Browse, peruse, and hopefully walk away with something new. :>
 
-# create a new project in my-app
-npm init svelte@next my-app
-```
+## Dependencies
 
-> Note: the `@next` is temporary
+- SvelteKit
+- Hugo
+- Marked.js
 
-## Developing
+## Writing a journal entry
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+0. Generate a new journal entry with `hugo new --kind entry journal/entries/[entry-number]-[title].md`; write your journal in markdown below the "front matter" (the section with top and bottom delineation).
+1. Generate JSON for our `/journal` endpoint with `hugo`. The file will be generated in `src/lib/journal/entries`.
+2. Run `npm run build` to rebuild the site.
+3. Push to GitHub (or your repo host of choice) 🚀🚀
+    - Assuming you've set up a Netlify pipeline, your changes will be live soon.
 
-```bash
-npm run dev
+## Customizing the journal writing process
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+Hugo generates JSON based on Markdown. To modify the shape of the JSON, you'll need to edit `layouts\_default\single.journal.json`.
 
-## Building
-
-Before creating a production version of your app, install an [adapter](https://kit.svelte.dev/docs#adapters) for your target environment. Then:
-
-```bash
-npm run build
-```
-
-> You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
+For more information about Hugo templating, visit the [Hugo Templates documentation](https://gohugo.io/templates/). :>
