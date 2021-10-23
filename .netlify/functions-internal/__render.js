@@ -3491,7 +3491,7 @@ async function render_response({
   page_config,
   status,
   error: error2,
-  page
+  page: page2
 }) {
   const css2 = new Set(options2.entry.css);
   const js = new Set(options2.entry.js);
@@ -3524,7 +3524,7 @@ async function render_response({
         navigating: writable(null),
         session
       },
-      page,
+      page: page2,
       components: branch.map(({ node }) => node.module.default)
     };
     for (let i = 0; i < branch.length; i += 1) {
@@ -3566,7 +3566,7 @@ async function render_response({
 				session: ${try_serialize($session, (error3) => {
       throw new Error(`Failed to serialize session data: ${error3.message}`);
     })},
-				host: ${page && page.host ? s$1(page.host) : "location.host"},
+				host: ${page2 && page2.host ? s$1(page2.host) : "location.host"},
 				route: ${!!page_config.router},
 				spa: ${!page_config.ssr},
 				trailing_slash: ${s$1(options2.trailing_slash)},
@@ -3577,10 +3577,10 @@ async function render_response({
 						${(branch || []).map(({ node }) => `import(${s$1(node.entry)})`).join(",\n						")}
 					],
 					page: {
-						host: ${page && page.host ? s$1(page.host) : "location.host"}, // TODO this is redundant
-						path: ${s$1(page && page.path)},
-						query: new URLSearchParams(${page ? s$1(page.query.toString()) : ""}),
-						params: ${page && s$1(page.params)}
+						host: ${page2 && page2.host ? s$1(page2.host) : "location.host"}, // TODO this is redundant
+						path: ${s$1(page2 && page2.path)},
+						query: new URLSearchParams(${page2 ? s$1(page2.query.toString()) : ""}),
+						params: ${page2 && s$1(page2.params)}
 					}
 				}` : "null"}
 			});
@@ -3690,7 +3690,7 @@ async function load_node({
   options: options2,
   state,
   route,
-  page,
+  page: page2,
   node,
   $session,
   context,
@@ -3705,7 +3705,7 @@ async function load_node({
   const fetched = [];
   let set_cookie_headers = [];
   let loaded;
-  const page_proxy = new Proxy(page, {
+  const page_proxy = new Proxy(page2, {
     get: (target, prop, receiver) => {
       if (prop === "query" && prerender_enabled) {
         throw new Error("Cannot access query on a page with prerendering enabled");
@@ -3747,7 +3747,7 @@ async function load_node({
         if (asset) {
           response = options2.read ? new Response(options2.read(asset.file), {
             headers: asset.type ? { "content-type": asset.type } : {}
-          }) : await fetch(`http://${page.host}/${asset.file}`, opts);
+          }) : await fetch(`http://${page2.host}/${asset.file}`, opts);
         } else if (resolved.startsWith("/") && !resolved.startsWith("//")) {
           const relative = resolved;
           const headers = {
@@ -3927,7 +3927,7 @@ function resolve(base2, path) {
 async function respond_with_error({ request, options: options2, state, $session, status, error: error2 }) {
   const default_layout = await options2.load_component(options2.manifest.layout);
   const default_error = await options2.load_component(options2.manifest.error);
-  const page = {
+  const page2 = {
     host: request.host,
     path: request.path,
     query: request.query,
@@ -3938,7 +3938,7 @@ async function respond_with_error({ request, options: options2, state, $session,
     options: options2,
     state,
     route: null,
-    page,
+    page: page2,
     node: default_layout,
     $session,
     context: {},
@@ -3953,7 +3953,7 @@ async function respond_with_error({ request, options: options2, state, $session,
       options: options2,
       state,
       route: null,
-      page,
+      page: page2,
       node: default_error,
       $session,
       context: loaded ? loaded.context : {},
@@ -3976,7 +3976,7 @@ async function respond_with_error({ request, options: options2, state, $session,
       status,
       error: error2,
       branch,
-      page
+      page: page2
     });
   } catch (err) {
     const error3 = coalesce_to_error(err);
@@ -4151,7 +4151,7 @@ async function render_page(request, route, match, options2, state) {
     };
   }
   const params = route.params(match);
-  const page = {
+  const page2 = {
     host: request.host,
     path: request.path,
     query: request.query,
@@ -4164,7 +4164,7 @@ async function render_page(request, route, match, options2, state) {
     state,
     $session,
     route,
-    page
+    page: page2
   });
   if (response) {
     return response;
@@ -4406,6 +4406,9 @@ function get_current_component() {
 function setContext(key, context) {
   get_current_component().$$.context.set(key, context);
 }
+function getContext(key) {
+  return get_current_component().$$.context.get(key);
+}
 Promise.resolve();
 var escaped = {
   '"': "&quot;",
@@ -4477,13 +4480,13 @@ function add_attribute(name, value, boolean) {
 }
 function afterUpdate() {
 }
-var css$6 = {
+var css$7 = {
   code: "#svelte-announcer.svelte-1j55zn5{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}",
   map: `{"version":3,"file":"root.svelte","sources":["root.svelte"],"sourcesContent":["<!-- This file is generated by @sveltejs/kit \u2014 do not edit it! -->\\n<script>\\n\\timport { setContext, afterUpdate, onMount } from 'svelte';\\n\\n\\t// stores\\n\\texport let stores;\\n\\texport let page;\\n\\n\\texport let components;\\n\\texport let props_0 = null;\\n\\texport let props_1 = null;\\n\\texport let props_2 = null;\\n\\n\\tsetContext('__svelte__', stores);\\n\\n\\t$: stores.page.set(page);\\n\\tafterUpdate(stores.page.notify);\\n\\n\\tlet mounted = false;\\n\\tlet navigated = false;\\n\\tlet title = null;\\n\\n\\tonMount(() => {\\n\\t\\tconst unsubscribe = stores.page.subscribe(() => {\\n\\t\\t\\tif (mounted) {\\n\\t\\t\\t\\tnavigated = true;\\n\\t\\t\\t\\ttitle = document.title || 'untitled page';\\n\\t\\t\\t}\\n\\t\\t});\\n\\n\\t\\tmounted = true;\\n\\t\\treturn unsubscribe;\\n\\t});\\n<\/script>\\n\\n<svelte:component this={components[0]} {...(props_0 || {})}>\\n\\t{#if components[1]}\\n\\t\\t<svelte:component this={components[1]} {...(props_1 || {})}>\\n\\t\\t\\t{#if components[2]}\\n\\t\\t\\t\\t<svelte:component this={components[2]} {...(props_2 || {})}/>\\n\\t\\t\\t{/if}\\n\\t\\t</svelte:component>\\n\\t{/if}\\n</svelte:component>\\n\\n{#if mounted}\\n\\t<div id=\\"svelte-announcer\\" aria-live=\\"assertive\\" aria-atomic=\\"true\\">\\n\\t\\t{#if navigated}\\n\\t\\t\\t{title}\\n\\t\\t{/if}\\n\\t</div>\\n{/if}\\n\\n<style>\\n\\t#svelte-announcer {\\n\\t\\tposition: absolute;\\n\\t\\tleft: 0;\\n\\t\\ttop: 0;\\n\\t\\tclip: rect(0 0 0 0);\\n\\t\\tclip-path: inset(50%);\\n\\t\\toverflow: hidden;\\n\\t\\twhite-space: nowrap;\\n\\t\\twidth: 1px;\\n\\t\\theight: 1px;\\n\\t}\\n</style>"],"names":[],"mappings":"AAsDC,iBAAiB,eAAC,CAAC,AAClB,QAAQ,CAAE,QAAQ,CAClB,IAAI,CAAE,CAAC,CACP,GAAG,CAAE,CAAC,CACN,IAAI,CAAE,KAAK,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CACnB,SAAS,CAAE,MAAM,GAAG,CAAC,CACrB,QAAQ,CAAE,MAAM,CAChB,WAAW,CAAE,MAAM,CACnB,KAAK,CAAE,GAAG,CACV,MAAM,CAAE,GAAG,AACZ,CAAC"}`
 };
 var Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { stores } = $$props;
-  let { page } = $$props;
+  let { page: page2 } = $$props;
   let { components } = $$props;
   let { props_0 = null } = $$props;
   let { props_1 = null } = $$props;
@@ -4492,8 +4495,8 @@ var Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   afterUpdate(stores.page.notify);
   if ($$props.stores === void 0 && $$bindings.stores && stores !== void 0)
     $$bindings.stores(stores);
-  if ($$props.page === void 0 && $$bindings.page && page !== void 0)
-    $$bindings.page(page);
+  if ($$props.page === void 0 && $$bindings.page && page2 !== void 0)
+    $$bindings.page(page2);
   if ($$props.components === void 0 && $$bindings.components && components !== void 0)
     $$bindings.components(components);
   if ($$props.props_0 === void 0 && $$bindings.props_0 && props_0 !== void 0)
@@ -4502,9 +4505,9 @@ var Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     $$bindings.props_1(props_1);
   if ($$props.props_2 === void 0 && $$bindings.props_2 && props_2 !== void 0)
     $$bindings.props_2(props_2);
-  $$result.css.add(css$6);
+  $$result.css.add(css$7);
   {
-    stores.page.set(page);
+    stores.page.set(page2);
   }
   return `
 
@@ -4570,9 +4573,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-8db04004.js",
+      file: assets + "/_app/start-d93846bc.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-8db04004.js", assets + "/_app/chunks/vendor-7de1e3e2.js"]
+      js: [assets + "/_app/start-d93846bc.js", assets + "/_app/chunks/vendor-f9401e75.js"]
     },
     fetched: void 0,
     floc: false,
@@ -4602,7 +4605,7 @@ function init(settings = default_settings) {
 var d = (s2) => s2.replace(/%23/g, "#").replace(/%3[Bb]/g, ";").replace(/%2[Cc]/g, ",").replace(/%2[Ff]/g, "/").replace(/%3[Ff]/g, "?").replace(/%3[Aa]/g, ":").replace(/%40/g, "@").replace(/%26/g, "&").replace(/%3[Dd]/g, "=").replace(/%2[Bb]/g, "+").replace(/%24/g, "$");
 var empty = () => ({});
 var manifest = {
-  assets: [{ "file": "favicon.png", "size": 1571, "type": "image/png" }, { "file": "global.css", "size": 1413, "type": "text/css" }, { "file": "images/journal/6-all-set!/6-splash.jpg", "size": 86095, "type": "image/jpeg" }, { "file": "images/work/a-softer-space/a-softer-space-1.jpg", "size": 39794, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-1.webp", "size": 1565154, "type": "image/webp" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-10.jpg", "size": 266734, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-11.jpg", "size": 251670, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-2.jpg", "size": 191512, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-3.jpg", "size": 185178, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-4.jpg", "size": 142523, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-6.webp", "size": 218174, "type": "image/webp" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-7.jpg", "size": 50068, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-8.jpg", "size": 87575, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-9.jpg", "size": 271254, "type": "image/jpeg" }, { "file": "images/work/polyref/polyref-1.jpg", "size": 165137, "type": "image/jpeg" }, { "file": "images/work/spkn/spkn-1.png", "size": 310718, "type": "image/png" }, { "file": "images/work/spkn/spkn-2.png", "size": 887009, "type": "image/png" }, { "file": "images/work/tiltr/tiltr-1.jpg", "size": 139519, "type": "image/jpeg" }, { "file": "images/work/tiltr/tiltr-2.jpg", "size": 83091, "type": "image/jpeg" }, { "file": "images/work/tiltr/tiltr-3.jpg", "size": 177571, "type": "image/jpeg" }, { "file": "images/work/walkrates/walkrates-1.jpg", "size": 157242, "type": "image/jpeg" }, { "file": "images/work/walkrates/walkrates-2.jpg", "size": 345001, "type": "image/jpeg" }, { "file": "images/work/walkrates/walkrates-3.jpg", "size": 38866, "type": "image/jpeg" }, { "file": "oembed.json", "size": 260, "type": "application/json" }, { "file": "preview.jpg", "size": 62045, "type": "image/jpeg" }, { "file": "test.json", "size": 38, "type": "application/json" }],
+  assets: [{ "file": "favicon.png", "size": 1571, "type": "image/png" }, { "file": "global.css", "size": 1954, "type": "text/css" }, { "file": "images/articles/fedis/fedis-01.jpg", "size": 24111, "type": "image/jpeg" }, { "file": "images/articles/fedis/fedis-02.jpg", "size": 28791, "type": "image/jpeg" }, { "file": "images/journal/6-all-set!/6-splash.jpg", "size": 86095, "type": "image/jpeg" }, { "file": "images/work/a-softer-space/a-softer-space-1.jpg", "size": 39794, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-1.webp", "size": 1565154, "type": "image/webp" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-10.jpg", "size": 266734, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-11.jpg", "size": 251670, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-2.jpg", "size": 191512, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-3.jpg", "size": 185178, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-4.jpg", "size": 142523, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-6.webp", "size": 218174, "type": "image/webp" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-7.jpg", "size": 50068, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-8.jpg", "size": 87575, "type": "image/jpeg" }, { "file": "images/work/eagle-wetsuits/eagle-wetsuits-9.jpg", "size": 271254, "type": "image/jpeg" }, { "file": "images/work/polyref/polyref-1.jpg", "size": 165137, "type": "image/jpeg" }, { "file": "images/work/spkn/spkn-1.png", "size": 310718, "type": "image/png" }, { "file": "images/work/spkn/spkn-2.png", "size": 887009, "type": "image/png" }, { "file": "images/work/tiltr/tiltr-1.jpg", "size": 139519, "type": "image/jpeg" }, { "file": "images/work/tiltr/tiltr-2.jpg", "size": 83091, "type": "image/jpeg" }, { "file": "images/work/tiltr/tiltr-3.jpg", "size": 177571, "type": "image/jpeg" }, { "file": "images/work/walkrates/walkrates-1.jpg", "size": 157242, "type": "image/jpeg" }, { "file": "images/work/walkrates/walkrates-2.jpg", "size": 345001, "type": "image/jpeg" }, { "file": "images/work/walkrates/walkrates-3.jpg", "size": 38866, "type": "image/jpeg" }, { "file": "oembed.json", "size": 260, "type": "application/json" }, { "file": "preview.jpg", "size": 62045, "type": "image/jpeg" }, { "file": "test.json", "size": 38, "type": "application/json" }],
   layout: "src/routes/__layout.svelte",
   error: ".svelte-kit/build/components/error.svelte",
   routes: [
@@ -4611,6 +4614,20 @@ var manifest = {
       pattern: /^\/$/,
       params: empty,
       a: ["src/routes/__layout.svelte", "src/routes/index.svelte"],
+      b: [".svelte-kit/build/components/error.svelte"]
+    },
+    {
+      type: "page",
+      pattern: /^\/articles\/f-sharp-api-advent\/?$/,
+      params: empty,
+      a: ["src/routes/__layout.svelte", "src/routes/articles/f-sharp-api-advent.svelte"],
+      b: [".svelte-kit/build/components/error.svelte"]
+    },
+    {
+      type: "page",
+      pattern: /^\/articles\/fsharp-advent-api\/?$/,
+      params: empty,
+      a: ["src/routes/__layout.svelte", "src/routes/articles/fsharp-advent-api.svelte"],
       b: [".svelte-kit/build/components/error.svelte"]
     },
     {
@@ -4705,6 +4722,12 @@ var module_lookup = {
   "src/routes/index.svelte": () => Promise.resolve().then(function() {
     return index;
   }),
+  "src/routes/articles/f-sharp-api-advent.svelte": () => Promise.resolve().then(function() {
+    return fSharpApiAdvent;
+  }),
+  "src/routes/articles/fsharp-advent-api.svelte": () => Promise.resolve().then(function() {
+    return fsharpAdventApi;
+  }),
   "src/routes/template.svelte": () => Promise.resolve().then(function() {
     return template;
   }),
@@ -4724,7 +4747,7 @@ var module_lookup = {
     return work;
   })
 };
-var metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-2bf3720c.js", "css": ["assets/pages/__layout.svelte-94b80772.css"], "js": ["pages/__layout.svelte-2bf3720c.js", "chunks/vendor-7de1e3e2.js", "chunks/helpers-edd2a2c9.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-be43ccc5.js", "css": [], "js": ["error.svelte-be43ccc5.js", "chunks/vendor-7de1e3e2.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-0b58206d.js", "css": ["assets/pages/index.svelte-eb8661f6.css"], "js": ["pages/index.svelte-0b58206d.js", "chunks/vendor-7de1e3e2.js"], "styles": [] }, "src/routes/template.svelte": { "entry": "pages/template.svelte-261c15d7.js", "css": [], "js": ["pages/template.svelte-261c15d7.js", "chunks/vendor-7de1e3e2.js"], "styles": [] }, "src/routes/spells.svelte": { "entry": "pages/spells.svelte-6ea2d8ba.js", "css": [], "js": ["pages/spells.svelte-6ea2d8ba.js", "chunks/vendor-7de1e3e2.js"], "styles": [] }, "src/routes/notes.svelte": { "entry": "pages/notes.svelte-ae0ee343.js", "css": ["assets/pages/notes.svelte-4e26c676.css"], "js": ["pages/notes.svelte-ae0ee343.js", "chunks/vendor-7de1e3e2.js"], "styles": [] }, "src/routes/back.svelte": { "entry": "pages/back.svelte-9c9a3e1d.js", "css": [], "js": ["pages/back.svelte-9c9a3e1d.js", "chunks/vendor-7de1e3e2.js"], "styles": [] }, "src/routes/test.svelte": { "entry": "pages/test.svelte-a77fa583.js", "css": [], "js": ["pages/test.svelte-a77fa583.js", "chunks/vendor-7de1e3e2.js"], "styles": [] }, "src/routes/work.svelte": { "entry": "pages/work.svelte-27bbe1e1.js", "css": ["assets/pages/work.svelte-e7541bee.css"], "js": ["pages/work.svelte-27bbe1e1.js", "chunks/vendor-7de1e3e2.js", "chunks/helpers-edd2a2c9.js"], "styles": [] } };
+var metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-70552bfe.js", "css": ["assets/pages/__layout.svelte-02730435.css"], "js": ["pages/__layout.svelte-70552bfe.js", "chunks/vendor-f9401e75.js", "chunks/helpers-edd2a2c9.js"], "styles": [] }, ".svelte-kit/build/components/error.svelte": { "entry": "error.svelte-f5f70058.js", "css": [], "js": ["error.svelte-f5f70058.js", "chunks/vendor-f9401e75.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-43e976cd.js", "css": ["assets/pages/index.svelte-50ee9d5f.css"], "js": ["pages/index.svelte-43e976cd.js", "chunks/vendor-f9401e75.js"], "styles": [] }, "src/routes/articles/f-sharp-api-advent.svelte": { "entry": "pages/articles/f-sharp-api-advent.svelte-3096d40f.js", "css": [], "js": ["pages/articles/f-sharp-api-advent.svelte-3096d40f.js", "chunks/vendor-f9401e75.js"], "styles": [] }, "src/routes/articles/fsharp-advent-api.svelte": { "entry": "pages/articles/fsharp-advent-api.svelte-cda79258.js", "css": ["assets/pages/articles/fsharp-advent-api.svelte-25082796.css"], "js": ["pages/articles/fsharp-advent-api.svelte-cda79258.js", "chunks/vendor-f9401e75.js"], "styles": [] }, "src/routes/template.svelte": { "entry": "pages/template.svelte-d85fc384.js", "css": [], "js": ["pages/template.svelte-d85fc384.js", "chunks/vendor-f9401e75.js"], "styles": [] }, "src/routes/spells.svelte": { "entry": "pages/spells.svelte-c112ab40.js", "css": [], "js": ["pages/spells.svelte-c112ab40.js", "chunks/vendor-f9401e75.js"], "styles": [] }, "src/routes/notes.svelte": { "entry": "pages/notes.svelte-df49fa66.js", "css": ["assets/pages/notes.svelte-4e26c676.css"], "js": ["pages/notes.svelte-df49fa66.js", "chunks/vendor-f9401e75.js"], "styles": [] }, "src/routes/back.svelte": { "entry": "pages/back.svelte-cf04ef2a.js", "css": [], "js": ["pages/back.svelte-cf04ef2a.js", "chunks/vendor-f9401e75.js"], "styles": [] }, "src/routes/test.svelte": { "entry": "pages/test.svelte-cea23b7e.js", "css": [], "js": ["pages/test.svelte-cea23b7e.js", "chunks/vendor-f9401e75.js"], "styles": [] }, "src/routes/work.svelte": { "entry": "pages/work.svelte-dd6659e1.js", "css": ["assets/pages/work.svelte-e7541bee.css"], "js": ["pages/work.svelte-dd6659e1.js", "chunks/vendor-f9401e75.js", "chunks/helpers-edd2a2c9.js"], "styles": [] } };
 async function load_component(file) {
   const { entry, css: css2, js, styles } = metadata_lookup[file];
   return {
@@ -4798,46 +4821,69 @@ var _slug__json = /* @__PURE__ */ Object.freeze({
   [Symbol.toStringTag]: "Module",
   get
 });
-var css$5 = {
-  code: "nav.svelte-1qmmk9t.svelte-1qmmk9t{margin-top:180px;padding-top:24px;padding-bottom:24px;padding-right:6vw;top:0vh;position:sticky;background-color:#000}ul.svelte-1qmmk9t.svelte-1qmmk9t{margin:0px;padding:0px;left:0px}nav.svelte-1qmmk9t li.svelte-1qmmk9t{padding-bottom:5px;padding-top:5px;list-style:none;text-align:right}nav.svelte-1qmmk9t a.svelte-1qmmk9t{color:white;text-decoration:none}@media(min-width: 666px){nav.svelte-1qmmk9t.svelte-1qmmk9t{margin-top:120px}}@media(min-width: 1000px){nav.svelte-1qmmk9t.svelte-1qmmk9t{margin-top:180px;padding-top:6vh;background-color:#000;padding-right:32px}}@media(min-width: 1800px){nav.svelte-1qmmk9t.svelte-1qmmk9t{margin-top:120px}}",
-  map: `{"version":3,"file":"Menu.svelte","sources":["Menu.svelte"],"sourcesContent":["<script lang='ts'><\/script>\\n\\n<nav>\\n  <ul>\\n    <!-- <li>\\n      <a href='/'>Front Cover</a>\\n    </li> -->\\n    <li>\\n      <a href='/'>Journal \u{1F4DC}</a>\\n    </li>\\n    <li>\\n      <a href='/work'>Current and Past Work \u{1F4BC}</a>\\n    </li>\\n    <li>\\n      <a href='https://twitter.com/imjustlilith' target=_blank>Tweets \u{1F54A}\uFE0F :: \u2197\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='https://tinyurl.com/LilithsResume' target=_blank>Resume :: \u2197\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='https://github.com/justlilith' target=_blank>GitHub :: \u2197\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='https://www.polywork.com/lilith' target=_blank>Polywork :: \u2197\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='https://www.linkedin.com/in/lilith-dev' target=_blank>LinkedIn :: \u2197\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='spells'>Spells \u{1FA84}</a>\\n    </li>\\n    <li>\\n      <a href='notes'>Things I wish they'd told me \u{1F97A}</a>\\n    </li>\\n    <li>\\n      <a href='back'>Back Cover \u{1F4D5}</a>\\n    </li>\\n  </ul>\\n</nav>\\n<style lang='scss'>nav {\\n  margin-top: 180px;\\n  padding-top: 24px;\\n  padding-bottom: 24px;\\n  padding-right: 6vw;\\n  top: 0vh;\\n  position: sticky;\\n  background-color: #000;\\n}\\n\\nul {\\n  margin: 0px;\\n  padding: 0px;\\n  left: 0px;\\n}\\n\\nnav li {\\n  padding-bottom: 5px;\\n  padding-top: 5px;\\n  list-style: none;\\n  text-align: right;\\n}\\n\\nnav a {\\n  color: white;\\n  text-decoration: none;\\n}\\n\\n@media (min-width: 666px) {\\n  nav {\\n    margin-top: 120px;\\n  }\\n}\\n@media (min-width: 1000px) {\\n  nav {\\n    margin-top: 180px;\\n    padding-top: 6vh;\\n    background-color: #000;\\n    padding-right: 32px;\\n  }\\n}\\n@media (min-width: 1800px) {\\n  nav {\\n    margin-top: 120px;\\n  }\\n}</style>"],"names":[],"mappings":"AAuCmB,GAAG,8BAAC,CAAC,AACtB,UAAU,CAAE,KAAK,CACjB,WAAW,CAAE,IAAI,CACjB,cAAc,CAAE,IAAI,CACpB,aAAa,CAAE,GAAG,CAClB,GAAG,CAAE,GAAG,CACR,QAAQ,CAAE,MAAM,CAChB,gBAAgB,CAAE,IAAI,AACxB,CAAC,AAED,EAAE,8BAAC,CAAC,AACF,MAAM,CAAE,GAAG,CACX,OAAO,CAAE,GAAG,CACZ,IAAI,CAAE,GAAG,AACX,CAAC,AAED,kBAAG,CAAC,EAAE,eAAC,CAAC,AACN,cAAc,CAAE,GAAG,CACnB,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,IAAI,CAChB,UAAU,CAAE,KAAK,AACnB,CAAC,AAED,kBAAG,CAAC,CAAC,eAAC,CAAC,AACL,KAAK,CAAE,KAAK,CACZ,eAAe,CAAE,IAAI,AACvB,CAAC,AAED,MAAM,AAAC,YAAY,KAAK,CAAC,AAAC,CAAC,AACzB,GAAG,8BAAC,CAAC,AACH,UAAU,CAAE,KAAK,AACnB,CAAC,AACH,CAAC,AACD,MAAM,AAAC,YAAY,MAAM,CAAC,AAAC,CAAC,AAC1B,GAAG,8BAAC,CAAC,AACH,UAAU,CAAE,KAAK,CACjB,WAAW,CAAE,GAAG,CAChB,gBAAgB,CAAE,IAAI,CACtB,aAAa,CAAE,IAAI,AACrB,CAAC,AACH,CAAC,AACD,MAAM,AAAC,YAAY,MAAM,CAAC,AAAC,CAAC,AAC1B,GAAG,8BAAC,CAAC,AACH,UAAU,CAAE,KAAK,AACnB,CAAC,AACH,CAAC"}`
+var getStores = () => {
+  const stores = getContext("__svelte__");
+  return {
+    page: {
+      subscribe: stores.page.subscribe
+    },
+    navigating: {
+      subscribe: stores.navigating.subscribe
+    },
+    get preloading() {
+      console.error("stores.preloading is deprecated; use stores.navigating instead");
+      return {
+        subscribe: stores.navigating.subscribe
+      };
+    },
+    session: stores.session
+  };
+};
+var page = {
+  subscribe(fn) {
+    const store = getStores().page;
+    return store.subscribe(fn);
+  }
+};
+var css$6 = {
+  code: "nav.svelte-w5ql52.svelte-w5ql52{margin-top:180px;padding-top:24px;padding-bottom:24px;padding-right:6vw;top:0vh;position:sticky;background-color:#000}ul.svelte-w5ql52.svelte-w5ql52{margin:0px;padding:0px;left:0px}nav.svelte-w5ql52 li.svelte-w5ql52{padding-bottom:5px;padding-top:5px;list-style:none;text-align:right}nav.svelte-w5ql52 a.svelte-w5ql52{color:white;text-decoration:none}#active-menu-item.svelte-w5ql52 a.svelte-w5ql52{color:#00aaff}li#active-menu-item.svelte-w5ql52.svelte-w5ql52{color:white;list-style-type:circle}nav.svelte-w5ql52 a.svelte-w5ql52:hover{color:aqua !important}@media(min-width: 666px){nav.svelte-w5ql52.svelte-w5ql52{margin-top:120px}}@media(min-width: 1000px){nav.svelte-w5ql52.svelte-w5ql52{margin-top:180px;padding-top:6vh;background-color:#000;padding-right:32px}}@media(min-width: 1800px){nav.svelte-w5ql52.svelte-w5ql52{margin-top:120px}}",
+  map: `{"version":3,"file":"Menu.svelte","sources":["Menu.svelte"],"sourcesContent":["<script lang='ts'>import { browser } from '$app/env';\\r\\nimport '$app/stores';\\r\\nimport { onMount } from 'svelte';\\r\\nexport let currentPage;\\r\\nlet menuListPage = [];\\r\\nlet menuList = [\\r\\n    { href: \\"/\\",\\r\\n        target: \\"\\",\\r\\n        title: \\"Journal \u{1F4DC}\\",\\r\\n        active: null\\r\\n    },\\r\\n    { href: \\"/work\\",\\r\\n        target: \\"\\",\\r\\n        title: \\"Current and Past Work \u{1F4BC}\\",\\r\\n        active: null\\r\\n    },\\r\\n    { href: \\"https://twitter.com/imjustlilith\\",\\r\\n        target: \\"_blank\\",\\r\\n        title: \\"Tweets \u{1F54A}\uFE0F :: \u2197\uFE0F\\",\\r\\n        active: null\\r\\n    },\\r\\n    { href: \\"https://tinyurl.com/LilithsResume\\",\\r\\n        target: \\"_blank\\",\\r\\n        title: \\"Resume :: \u2197\uFE0F\\",\\r\\n        active: null\\r\\n    },\\r\\n    { href: \\"https://github.com/justlilith\\",\\r\\n        target: \\"_blank\\",\\r\\n        title: \\"GitHub :: \u2197\uFE0F\\",\\r\\n        active: null\\r\\n    },\\r\\n    { href: \\"https://www.polywork.com/lilith\\",\\r\\n        target: \\"_blank\\",\\r\\n        title: \\"Polywork :: \u2197\uFE0F\\",\\r\\n        active: null\\r\\n    },\\r\\n    { href: \\"https://www.linkedin.com/in/lilith-dev\\",\\r\\n        target: \\"_blank\\",\\r\\n        title: \\"LinkedIn :: \u2197\uFE0F\\",\\r\\n        active: null\\r\\n    },\\r\\n    { href: \\"/spells\\",\\r\\n        target: \\"\\",\\r\\n        title: \\"Spells \u2728\\",\\r\\n        active: null\\r\\n    },\\r\\n    { href: \\"/notes\\",\\r\\n        target: \\"\\",\\r\\n        title: \\"Things I wish they'd told me \u{1F97A}\\",\\r\\n        active: null\\r\\n    },\\r\\n    { href: \\"/back\\",\\r\\n        target: \\"\\",\\r\\n        title: \\"Back Cover \u{1F4D5}\\",\\r\\n        active: null\\r\\n    }\\r\\n];\\r\\nonMount(() => {\\r\\n    // console.log(currentPage)\\r\\n    menuListPage = menuList.map(item => {\\r\\n        item.href == currentPage.path ? item.active = true : item.active = false;\\r\\n        return item;\\r\\n    });\\r\\n});\\r\\n<\/script>\\n\\n<nav>\\n  <ul id='menu-list'>\\n    {#if browser}\\n    {#each menuListPage as menuItem}\\n    <li id={menuItem?.active ? \\"active-menu-item\\" : null}>\\n      <a href='{menuItem.href}' target={menuItem?.target ? menuItem.target : null}>{menuItem.title}</a>\\n    </li>\\n    {/each}\\n    {/if}\\n  </ul>\\n</nav>\\n\\n<!-- <nav>\\n  <ul id='menu-list'>\\n    <li>\\n      <a href='/'>Journal \u{1F4DC}</a>\\n    </li>\\n    <li>\\n      <a href='/work'>Current and Past Work \u{1F4BC}</a>\\n    </li>\\n    <li>\\n      <a href='https://twitter.com/imjustlilith' target=_blank>Tweets \u{1F54A}\uFE0F :: \u2197\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='https://tinyurl.com/LilithsResume' target=_blank>Resume :: \u2197\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='https://github.com/justlilith' target=_blank>GitHub :: \u2197\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='https://www.polywork.com/lilith' target=_blank>Polywork :: \u2197\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='https://www.linkedin.com/in/lilith-dev' target=_blank>LinkedIn :: \u2197\uFE0F</a>\\n    </li>\\n    <li>\\n      <a href='spells'>Spells \u{1FA84}</a>\\n    </li>\\n    <li>\\n      <a href='notes'>Things I wish they'd told me \u{1F97A}</a>\\n    </li>\\n    <li>\\n      <a href='back'>Back Cover \u{1F4D5}</a>\\n    </li>\\n  </ul>\\n</nav> -->\\n\\n\\n\\n<style lang='scss'>nav {\\n  margin-top: 180px;\\n  padding-top: 24px;\\n  padding-bottom: 24px;\\n  padding-right: 6vw;\\n  top: 0vh;\\n  position: sticky;\\n  background-color: #000;\\n}\\n\\nul {\\n  margin: 0px;\\n  padding: 0px;\\n  left: 0px;\\n}\\n\\nnav li {\\n  padding-bottom: 5px;\\n  padding-top: 5px;\\n  list-style: none;\\n  text-align: right;\\n}\\n\\nnav a {\\n  color: white;\\n  text-decoration: none;\\n}\\n\\n#active-menu-item a {\\n  color: #00aaff;\\n}\\n\\nli#active-menu-item {\\n  color: white;\\n  list-style-type: circle;\\n}\\n\\nnav a:hover {\\n  color: aqua !important;\\n}\\n\\n@media (min-width: 666px) {\\n  nav {\\n    margin-top: 120px;\\n  }\\n}\\n@media (min-width: 1000px) {\\n  nav {\\n    margin-top: 180px;\\n    padding-top: 6vh;\\n    background-color: #000;\\n    padding-right: 32px;\\n  }\\n}\\n@media (min-width: 1800px) {\\n  nav {\\n    margin-top: 120px;\\n  }\\n}</style>"],"names":[],"mappings":"AAmHmB,GAAG,4BAAC,CAAC,AACtB,UAAU,CAAE,KAAK,CACjB,WAAW,CAAE,IAAI,CACjB,cAAc,CAAE,IAAI,CACpB,aAAa,CAAE,GAAG,CAClB,GAAG,CAAE,GAAG,CACR,QAAQ,CAAE,MAAM,CAChB,gBAAgB,CAAE,IAAI,AACxB,CAAC,AAED,EAAE,4BAAC,CAAC,AACF,MAAM,CAAE,GAAG,CACX,OAAO,CAAE,GAAG,CACZ,IAAI,CAAE,GAAG,AACX,CAAC,AAED,iBAAG,CAAC,EAAE,cAAC,CAAC,AACN,cAAc,CAAE,GAAG,CACnB,WAAW,CAAE,GAAG,CAChB,UAAU,CAAE,IAAI,CAChB,UAAU,CAAE,KAAK,AACnB,CAAC,AAED,iBAAG,CAAC,CAAC,cAAC,CAAC,AACL,KAAK,CAAE,KAAK,CACZ,eAAe,CAAE,IAAI,AACvB,CAAC,AAED,+BAAiB,CAAC,CAAC,cAAC,CAAC,AACnB,KAAK,CAAE,OAAO,AAChB,CAAC,AAED,EAAE,iBAAiB,4BAAC,CAAC,AACnB,KAAK,CAAE,KAAK,CACZ,eAAe,CAAE,MAAM,AACzB,CAAC,AAED,iBAAG,CAAC,eAAC,MAAM,AAAC,CAAC,AACX,KAAK,CAAE,IAAI,CAAC,UAAU,AACxB,CAAC,AAED,MAAM,AAAC,YAAY,KAAK,CAAC,AAAC,CAAC,AACzB,GAAG,4BAAC,CAAC,AACH,UAAU,CAAE,KAAK,AACnB,CAAC,AACH,CAAC,AACD,MAAM,AAAC,YAAY,MAAM,CAAC,AAAC,CAAC,AAC1B,GAAG,4BAAC,CAAC,AACH,UAAU,CAAE,KAAK,CACjB,WAAW,CAAE,GAAG,CAChB,gBAAgB,CAAE,IAAI,CACtB,aAAa,CAAE,IAAI,AACrB,CAAC,AACH,CAAC,AACD,MAAM,AAAC,YAAY,MAAM,CAAC,AAAC,CAAC,AAC1B,GAAG,4BAAC,CAAC,AACH,UAAU,CAAE,KAAK,AACnB,CAAC,AACH,CAAC"}`
 };
 var Menu = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$5);
-  return `<nav class="${"svelte-1qmmk9t"}"><ul class="${"svelte-1qmmk9t"}">
-    <li class="${"svelte-1qmmk9t"}"><a href="${"/"}" class="${"svelte-1qmmk9t"}">Journal \u{1F4DC}</a></li>
-    <li class="${"svelte-1qmmk9t"}"><a href="${"/work"}" class="${"svelte-1qmmk9t"}">Current and Past Work \u{1F4BC}</a></li>
-    <li class="${"svelte-1qmmk9t"}"><a href="${"https://twitter.com/imjustlilith"}" target="${"_blank"}" class="${"svelte-1qmmk9t"}">Tweets \u{1F54A}\uFE0F :: \u2197\uFE0F</a></li>
-    <li class="${"svelte-1qmmk9t"}"><a href="${"https://tinyurl.com/LilithsResume"}" target="${"_blank"}" class="${"svelte-1qmmk9t"}">Resume :: \u2197\uFE0F</a></li>
-    <li class="${"svelte-1qmmk9t"}"><a href="${"https://github.com/justlilith"}" target="${"_blank"}" class="${"svelte-1qmmk9t"}">GitHub :: \u2197\uFE0F</a></li>
-    <li class="${"svelte-1qmmk9t"}"><a href="${"https://www.polywork.com/lilith"}" target="${"_blank"}" class="${"svelte-1qmmk9t"}">Polywork :: \u2197\uFE0F</a></li>
-    <li class="${"svelte-1qmmk9t"}"><a href="${"https://www.linkedin.com/in/lilith-dev"}" target="${"_blank"}" class="${"svelte-1qmmk9t"}">LinkedIn :: \u2197\uFE0F</a></li>
-    <li class="${"svelte-1qmmk9t"}"><a href="${"spells"}" class="${"svelte-1qmmk9t"}">Spells \u{1FA84}</a></li>
-    <li class="${"svelte-1qmmk9t"}"><a href="${"notes"}" class="${"svelte-1qmmk9t"}">Things I wish they&#39;d told me \u{1F97A}</a></li>
-    <li class="${"svelte-1qmmk9t"}"><a href="${"back"}" class="${"svelte-1qmmk9t"}">Back Cover \u{1F4D5}</a></li></ul>
-</nav>`;
+  let { currentPage } = $$props;
+  if ($$props.currentPage === void 0 && $$bindings.currentPage && currentPage !== void 0)
+    $$bindings.currentPage(currentPage);
+  $$result.css.add(css$6);
+  return `<nav class="${"svelte-w5ql52"}"><ul id="${"menu-list"}" class="${"svelte-w5ql52"}">${``}</ul></nav>
+
+`;
 });
-var css$4 = {
+var css$5 = {
   code: 'h1.svelte-andzdl{color:#0FF;font-family:Garamond, "Times New Roman", Times, serif;font-size:4em;line-break:strict;max-width:333px;margin:0px;position:fixed;right:6vw;text-align:right;top:24px}h1.logo.svelte-andzdl{-webkit-text-fill-color:transparent;-webkit-background-clip:text}h1#logoStamp.svelte-andzdl{color:#0FF;-webkit-text-fill-color:#0FF}@media(min-width: 666px){h1.svelte-andzdl{max-width:100%}}@media(min-width: 1000px){h1.svelte-andzdl{margin:0px;max-width:333px;right:calc(70% + 32px);top:32px}}@media(min-width: 1800px){h1.svelte-andzdl{max-width:100%}}',
   map: `{"version":3,"file":"LogoStamp.svelte","sources":["LogoStamp.svelte"],"sourcesContent":["<script lang='ts'>import { onMount } from 'svelte';\\r\\nimport * as Helpers from '$lib/ts/helpers';\\r\\nonMount(() => {\\r\\n    document.getElementById('logoStamp').setAttribute('id', '');\\r\\n    Helpers.addRainbowBackground('logo');\\r\\n});\\r\\n<\/script>\\n\\n<h1 class='logo' id='logoStamp'>Lilith's Grimoire</h1>\\n\\n<style lang='scss'>h1 {\\n  color: #0FF;\\n  font-family: Garamond, \\"Times New Roman\\", Times, serif;\\n  font-size: 4em;\\n  line-break: strict;\\n  max-width: 333px;\\n  margin: 0px;\\n  position: fixed;\\n  right: 6vw;\\n  text-align: right;\\n  top: 24px;\\n}\\n\\nh1.logo {\\n  -webkit-text-fill-color: transparent;\\n  -webkit-background-clip: text;\\n}\\n\\nh1#logoStamp {\\n  color: #0FF;\\n  -webkit-text-fill-color: #0FF;\\n}\\n\\n@media (min-width: 666px) {\\n  h1 {\\n    max-width: 100%;\\n  }\\n}\\n@media (min-width: 1000px) {\\n  h1 {\\n    margin: 0px;\\n    max-width: 333px;\\n    right: calc(70% + 32px);\\n    top: 32px;\\n  }\\n}\\n@media (min-width: 1800px) {\\n  h1 {\\n    max-width: 100%;\\n  }\\n}</style>"],"names":[],"mappings":"AAUmB,EAAE,cAAC,CAAC,AACrB,KAAK,CAAE,IAAI,CACX,WAAW,CAAE,QAAQ,CAAC,CAAC,iBAAiB,CAAC,CAAC,KAAK,CAAC,CAAC,KAAK,CACtD,SAAS,CAAE,GAAG,CACd,UAAU,CAAE,MAAM,CAClB,SAAS,CAAE,KAAK,CAChB,MAAM,CAAE,GAAG,CACX,QAAQ,CAAE,KAAK,CACf,KAAK,CAAE,GAAG,CACV,UAAU,CAAE,KAAK,CACjB,GAAG,CAAE,IAAI,AACX,CAAC,AAED,EAAE,KAAK,cAAC,CAAC,AACP,uBAAuB,CAAE,WAAW,CACpC,uBAAuB,CAAE,IAAI,AAC/B,CAAC,AAED,EAAE,UAAU,cAAC,CAAC,AACZ,KAAK,CAAE,IAAI,CACX,uBAAuB,CAAE,IAAI,AAC/B,CAAC,AAED,MAAM,AAAC,YAAY,KAAK,CAAC,AAAC,CAAC,AACzB,EAAE,cAAC,CAAC,AACF,SAAS,CAAE,IAAI,AACjB,CAAC,AACH,CAAC,AACD,MAAM,AAAC,YAAY,MAAM,CAAC,AAAC,CAAC,AAC1B,EAAE,cAAC,CAAC,AACF,MAAM,CAAE,GAAG,CACX,SAAS,CAAE,KAAK,CAChB,KAAK,CAAE,KAAK,GAAG,CAAC,CAAC,CAAC,IAAI,CAAC,CACvB,GAAG,CAAE,IAAI,AACX,CAAC,AACH,CAAC,AACD,MAAM,AAAC,YAAY,MAAM,CAAC,AAAC,CAAC,AAC1B,EAAE,cAAC,CAAC,AACF,SAAS,CAAE,IAAI,AACjB,CAAC,AACH,CAAC"}`
 };
 var LogoStamp = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$4);
+  $$result.css.add(css$5);
   return `<h1 class="${"logo svelte-andzdl"}" id="${"logoStamp"}">Lilith&#39;s Grimoire</h1>`;
 });
-var css$3 = {
+var css$4 = {
   code: "footer.svelte-p1waf9{z-index:66;background-color:#000;color:white;grid-area:footer}",
   map: `{"version":3,"file":"Footer.svelte","sources":["Footer.svelte"],"sourcesContent":["<script lang='ts'>import { onMount } from 'svelte';\\r\\nimport '$lib/ts/helpers';\\r\\nonMount(() => {\\r\\n});\\r\\n<\/script>\\n\\n<footer>\\n  <p>Copyleft 2021 Lilith, but ask for details.</p>\\n  <p>\\n    Wanna email me? <a href=\\"mailto:hello@justlilith.com\\">hello\u{1F4CE}justlilith\u25FC\uFE0Fcom</a>. How about a phone call? <a href=\\"tel:+18329009040\\">832.900.9040</a>\\n  </p>\\n</footer>\\n\\n  \\n  <style lang='scss'>footer {\\n  z-index: 66;\\n  background-color: #000;\\n  color: white;\\n  grid-area: footer;\\n}</style>"],"names":[],"mappings":"AAcqB,MAAM,cAAC,CAAC,AAC3B,OAAO,CAAE,EAAE,CACX,gBAAgB,CAAE,IAAI,CACtB,KAAK,CAAE,KAAK,CACZ,SAAS,CAAE,MAAM,AACnB,CAAC"}`
 };
 var Footer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$3);
+  $$result.css.add(css$4);
   return `<footer class="${"svelte-p1waf9"}"><p>Copyleft 2021 Lilith, but ask for details.</p>
   <p>Wanna email me? <a href="${"mailto:hello@justlilith.com"}">hello\u{1F4CE}justlilith\u25FC\uFE0Fcom</a>. How about a phone call? <a href="${"tel:+18329009040"}">832.900.9040</a></p>
 </footer>`;
 });
 var _layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let currentPage;
+  page.subscribe((page2) => {
+    currentPage = page2;
+  });
   return `<main><aside>${validate_component(LogoStamp, "LogoStamp").$$render($$result, {}, {}, {})}
-    ${validate_component(Menu, "Menu").$$render($$result, {}, {}, {})}</aside>
+    ${validate_component(Menu, "Menu").$$render($$result, { currentPage }, {}, {})}</aside>
+  <div id="${"rainbow-strip"}" class="${"rainbow-strip"}"></div>
   <article id="${"main"}">${slots.default ? slots.default({}) : ``}</article>
   ${validate_component(Footer, "Footer").$$render($$result, {}, {}, {})}</main>`;
 });
@@ -4846,7 +4892,7 @@ var __layout = /* @__PURE__ */ Object.freeze({
   [Symbol.toStringTag]: "Module",
   "default": _layout
 });
-function load$6({ error: error2, status }) {
+function load$8({ error: error2, status }) {
   return { props: { error: error2, status } };
 }
 var Error$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -4869,24 +4915,52 @@ var error = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   "default": Error$1,
-  load: load$6
+  load: load$8
 });
-var css$2 = {
-  code: "h3.svelte-1nkk3bx{font-size:1.5em}h4.date.svelte-1nkk3bx{font-size:1em;text-align:right}.journal-entry.svelte-1nkk3bx{padding-bottom:100px;border-bottom:thin solid #666}.journal-entry.svelte-1nkk3bx:last-of-type{padding-bottom:100px;border-bottom:none}",
-  map: `{"version":3,"file":"JournalEntry.svelte","sources":["JournalEntry.svelte"],"sourcesContent":["<script lang='ts'>import marked from 'marked';\\r\\nexport let content;\\r\\n<\/script>\\n  \\n  <div class='journal-entry'>\\n    <h3>{\`Entry \${content.index} :: \${content.title}\`}</h3>\\n    <h4 class='date'>{content.date}</h4>\\n    {@html marked(content.body)}\\n    <p>Kindest,<br/>Lilith</p>\\n  </div>\\n\\n<style lang='scss'>h3 {\\n  font-size: 1.5em;\\n}\\n\\nh4.date {\\n  font-size: 1em;\\n  text-align: right;\\n}\\n\\n.journal-entry {\\n  padding-bottom: 100px;\\n  border-bottom: thin solid #666;\\n}\\n\\n.journal-entry:last-of-type {\\n  padding-bottom: 100px;\\n  border-bottom: none;\\n}</style>"],"names":[],"mappings":"AAWmB,EAAE,eAAC,CAAC,AACrB,SAAS,CAAE,KAAK,AAClB,CAAC,AAED,EAAE,KAAK,eAAC,CAAC,AACP,SAAS,CAAE,GAAG,CACd,UAAU,CAAE,KAAK,AACnB,CAAC,AAED,cAAc,eAAC,CAAC,AACd,cAAc,CAAE,KAAK,CACrB,aAAa,CAAE,IAAI,CAAC,KAAK,CAAC,IAAI,AAChC,CAAC,AAED,6BAAc,aAAa,AAAC,CAAC,AAC3B,cAAc,CAAE,KAAK,CACrB,aAAa,CAAE,IAAI,AACrB,CAAC"}`
+var css$3 = {
+  code: "h3.svelte-9v7x6r{font-size:1.5em}h4.date.svelte-9v7x6r{font-size:1em;text-align:right}.journal-entry.svelte-9v7x6r{padding-bottom:100px;border-bottom:thin solid #666}.journal-entry.svelte-9v7x6r:last-of-type{padding-bottom:100px;border-bottom:none}.info-level-1{color:red}.info-expanded{color:blue;margin:1em 0}",
+  map: `{"version":3,"file":"JournalEntry.svelte","sources":["JournalEntry.svelte"],"sourcesContent":["<script lang='ts'>var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\r\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\r\\n    return new (P || (P = Promise))(function (resolve, reject) {\\r\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\r\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\r\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\r\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\r\\n    });\\r\\n};\\r\\nimport '$app/env';\\r\\nimport marked from 'marked';\\r\\nimport { onMount } from 'svelte';\\r\\nexport let content;\\r\\nlet entry;\\r\\nonMount(() => __awaiter(void 0, void 0, void 0, function* () {\\r\\n    entry.addEventListener('click', event => expandItems(event));\\r\\n}));\\r\\nfunction expandItems(event) {\\r\\n    var _a;\\r\\n    // console.log(event)\\r\\n    const classList = [...(_a = event.target) === null || _a === void 0 ? void 0 : _a.classList];\\r\\n    if (classList === null || classList === void 0 ? void 0 : classList.includes(\\"info-level-1\\")) {\\r\\n        console.log(classList);\\r\\n        let target = event.target;\\r\\n        target.setAttribute(\\"class\\", \\"info-expanded\\");\\r\\n    }\\r\\n    else if (classList === null || classList === void 0 ? void 0 : classList.includes(\\"info-expanded\\")) {\\r\\n        console.log(classList);\\r\\n        let target = event.target;\\r\\n        target.setAttribute(\\"class\\", \\"info-level-1\\");\\r\\n    }\\r\\n}\\r\\n<\/script>\\n\\n<div class='journal-entry' bind:this={entry}>\\n  <h3>{\`Entry \${content.index} :: \${content.title}\`}</h3>\\n  <h4 class='date'>{content.date}</h4>\\n  {@html marked(content.body)}\\n  <p>Kindest,<br/>Lilith</p>\\n</div>\\n\\n<style lang='scss'>h3 {\\n  font-size: 1.5em;\\n}\\n\\nh4.date {\\n  font-size: 1em;\\n  text-align: right;\\n}\\n\\n.journal-entry {\\n  padding-bottom: 100px;\\n  border-bottom: thin solid #666;\\n}\\n\\n.journal-entry:last-of-type {\\n  padding-bottom: 100px;\\n  border-bottom: none;\\n}\\n\\n:global(.info-level-1) {\\n  color: red;\\n}\\n\\n:global(.info-expanded) {\\n  color: blue;\\n  margin: 1em 0;\\n}</style>"],"names":[],"mappings":"AAyCmB,EAAE,cAAC,CAAC,AACrB,SAAS,CAAE,KAAK,AAClB,CAAC,AAED,EAAE,KAAK,cAAC,CAAC,AACP,SAAS,CAAE,GAAG,CACd,UAAU,CAAE,KAAK,AACnB,CAAC,AAED,cAAc,cAAC,CAAC,AACd,cAAc,CAAE,KAAK,CACrB,aAAa,CAAE,IAAI,CAAC,KAAK,CAAC,IAAI,AAChC,CAAC,AAED,4BAAc,aAAa,AAAC,CAAC,AAC3B,cAAc,CAAE,KAAK,CACrB,aAAa,CAAE,IAAI,AACrB,CAAC,AAEO,aAAa,AAAE,CAAC,AACtB,KAAK,CAAE,GAAG,AACZ,CAAC,AAEO,cAAc,AAAE,CAAC,AACvB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,GAAG,CAAC,CAAC,AACf,CAAC"}`
 };
 var JournalEntry = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  (function(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+      return value instanceof P ? value : new P(function(resolve2) {
+        resolve2(value);
+      });
+    }
+    return new (P || (P = Promise))(function(resolve2, reject) {
+      function fulfilled(value) {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function rejected(value) {
+        try {
+          step(generator["throw"](value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function step(result) {
+        result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+      }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+  });
   let { content } = $$props;
+  let entry;
   if ($$props.content === void 0 && $$bindings.content && content !== void 0)
     $$bindings.content(content);
-  $$result.css.add(css$2);
-  return `<div class="${"journal-entry svelte-1nkk3bx"}"><h3 class="${"svelte-1nkk3bx"}">${escape(`Entry ${content.index} :: ${content.title}`)}</h3>
-    <h4 class="${"date svelte-1nkk3bx"}">${escape(content.date)}</h4>
-    <!-- HTML_TAG_START -->${(0, import_marked.default)(content.body)}<!-- HTML_TAG_END -->
-    <p>Kindest,<br>Lilith</p>
-  </div>`;
+  $$result.css.add(css$3);
+  return `<div class="${"journal-entry svelte-9v7x6r"}"${add_attribute("this", entry, 0)}><h3 class="${"svelte-9v7x6r"}">${escape(`Entry ${content.index} :: ${content.title}`)}</h3>
+  <h4 class="${"date svelte-9v7x6r"}">${escape(content.date)}</h4>
+  <!-- HTML_TAG_START -->${(0, import_marked.default)(content.body)}<!-- HTML_TAG_END -->
+  <p>Kindest,<br>Lilith</p>
+</div>`;
 });
-var __awaiter$5 = function(thisArg, _arguments, P, generator) {
+var __awaiter$7 = function(thisArg, _arguments, P, generator) {
   function adopt(value) {
     return value instanceof P ? value : new P(function(resolve2) {
       resolve2(value);
@@ -4913,13 +4987,13 @@ var __awaiter$5 = function(thisArg, _arguments, P, generator) {
     step((generator = generator.apply(thisArg, _arguments || [])).next());
   });
 };
-function load$5({ fetch: fetch2 }) {
-  return __awaiter$5(this, void 0, void 0, function* () {
+function load$7({ fetch: fetch2 }) {
+  return __awaiter$7(this, void 0, void 0, function* () {
     let contentList = [];
     const entriesResponse = yield fetch2("/journal/entries.json");
     const entriesBodyJson = yield entriesResponse.json();
     if (entriesResponse.ok) {
-      contentList = entriesBodyJson.dirList.map((entry) => __awaiter$5(this, void 0, void 0, function* () {
+      contentList = entriesBodyJson.dirList.map((entry) => __awaiter$7(this, void 0, void 0, function* () {
         let res = yield fetch2(`/journal/${entry}`);
         return yield res.json();
       }));
@@ -4978,6 +5052,216 @@ var index = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   "default": Routes,
+  load: load$7
+});
+var __awaiter$6 = function(thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function(resolve2) {
+      resolve2(value);
+    });
+  }
+  return new (P || (P = Promise))(function(resolve2, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function step(result) {
+      result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+function load$6({ fetch: fetch2 }) {
+  return __awaiter$6(this, void 0, void 0, function* () {
+    return { props: {} };
+  });
+}
+var F_sharp_api_advent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  (function(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+      return value instanceof P ? value : new P(function(resolve2) {
+        resolve2(value);
+      });
+    }
+    return new (P || (P = Promise))(function(resolve2, reject) {
+      function fulfilled(value) {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function rejected(value) {
+        try {
+          step(generator["throw"](value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function step(result) {
+        result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+      }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+  });
+  return `<h2>Spells \u2728</h2>
+<div><!-- HTML_TAG_START -->${(0, import_marked.default)(`
+So, you wanna learn F Sharp? And you wanna do so by building a key-value store, served via a .NET 6.0 minimal API? Then this is the perfect post for you ^_^
+
+Let us begin.
+
+`)}<!-- HTML_TAG_END -->
+
+</div>`;
+});
+var fSharpApiAdvent = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": F_sharp_api_advent,
+  load: load$6
+});
+var css$2 = {
+  code: ".expandable.svelte-1cizpig{margin:0}.expandable-label.svelte-1cizpig{background:black;color:#b3b3b3;border-left:medium solid cyan;padding-left:12px}.expandable-content.svelte-1cizpig{background:#333333;color:white;padding:12px}",
+  map: `{"version":3,"file":"Expandable.svelte","sources":["Expandable.svelte"],"sourcesContent":["<script lang='ts'>import { slide } from 'svelte/transition';\\r\\nimport { onMount } from 'svelte';\\r\\nlet visible = false;\\r\\nonMount(() => {\\r\\n});\\r\\n<\/script>\\n\\n<div class=\\"expandable\\">\\n  <div class=\\"expandable-label\\" on:click=\\"{()=> {visible = !visible}}\\">\\n    <slot name=\\"label\\"></slot>\\n  </div>\\n  {#if visible}\\n  <section class=\\"expandable-content\\" transition:slide>\\n    <slot name=\\"content\\"></slot>\\n  </section>\\n{/if}\\n</div>\\n\\n<style lang='scss'>.expandable {\\n  margin: 0;\\n}\\n\\n.expandable-label {\\n  background: black;\\n  color: #b3b3b3;\\n  border-left: medium solid cyan;\\n  padding-left: 12px;\\n}\\n\\n.expandable-content {\\n  background: #333333;\\n  color: white;\\n  padding: 12px;\\n}</style>"],"names":[],"mappings":"AAkBmB,WAAW,eAAC,CAAC,AAC9B,MAAM,CAAE,CAAC,AACX,CAAC,AAED,iBAAiB,eAAC,CAAC,AACjB,UAAU,CAAE,KAAK,CACjB,KAAK,CAAE,OAAO,CACd,WAAW,CAAE,MAAM,CAAC,KAAK,CAAC,IAAI,CAC9B,YAAY,CAAE,IAAI,AACpB,CAAC,AAED,mBAAmB,eAAC,CAAC,AACnB,UAAU,CAAE,OAAO,CACnB,KAAK,CAAE,KAAK,CACZ,OAAO,CAAE,IAAI,AACf,CAAC"}`
+};
+var Expandable = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  $$result.css.add(css$2);
+  return `<div class="${"expandable svelte-1cizpig"}"><div class="${"expandable-label svelte-1cizpig"}">${slots.label ? slots.label({}) : ``}</div>
+  ${``}
+</div>`;
+});
+var __awaiter$5 = function(thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function(resolve2) {
+      resolve2(value);
+    });
+  }
+  return new (P || (P = Promise))(function(resolve2, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function step(result) {
+      result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+function load$5({ fetch: fetch2 }) {
+  return __awaiter$5(this, void 0, void 0, function* () {
+    return { props: {} };
+  });
+}
+var Fsharp_advent_api = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  (function(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+      return value instanceof P ? value : new P(function(resolve2) {
+        resolve2(value);
+      });
+    }
+    return new (P || (P = Promise))(function(resolve2, reject) {
+      function fulfilled(value) {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function rejected(value) {
+        try {
+          step(generator["throw"](value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function step(result) {
+        result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+      }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+  });
+  return `<h2>Fedis</h2>
+<div><!-- HTML_TAG_START -->${(0, import_marked.default)(`So, you wanna learn F Sharp? And you wanna do so by building a key-value store, served via a .NET 6.0 minimal API? Then this is the perfect post for you ^_^`)}<!-- HTML_TAG_END -->
+  
+  <!-- HTML_TAG_START -->${(0, import_marked.default)(`By the time we finish this post, we'll have built a web API that's kinda like Redis, with F# (we'll call it Fedis). We'll be able to post key-value pairs written in JSON, or plain strings through url parameters. We'll also be able to lookup the value of keys in the store. Lastly, we'll make a couple endpoints for managing the store itself \u2014 querying all the data, and purging all the data.`)}<!-- HTML_TAG_END -->
+  <!-- HTML_TAG_START -->${(0, import_marked.default)(`This tutorial assumes a basic understanding of the command line/terminal, HTTP verbs, and JSON structuring. If you get lost along the way, pop open a footnote thingy, or use your search engine of choice for a bit more background.`)}<!-- HTML_TAG_END -->
+  <!-- HTML_TAG_START -->${(0, import_marked.default)(`If you get really lost and feel that this guide could use a bit more explaining, shoot me a DM on Twitter ([@imjustlilith](https://twitter.com/imjustlilith)) and I'll make this post better, while thanking you profusely.`)}<!-- HTML_TAG_END -->
+  
+  <!-- HTML_TAG_START -->${(0, import_marked.default)(`Let us begin.`)}<!-- HTML_TAG_END -->
+  
+  ${validate_component(Expandable, "Expandable").$$render($$result, {}, {}, {
+    content: () => `<div slot="${"content"}"><!-- HTML_TAG_START -->${(0, import_marked.default)(`Throughout this post, you'll find expandable, inline footnotes for greater context regarding the preceding text. So, if something looks interesting and you want more background, click on the footnote and find out more :>`)}<!-- HTML_TAG_END --></div>`,
+    label: () => `<div slot="${"label"}"><!-- HTML_TAG_START -->${(0, import_marked.default)(`But first, click me for an explanation of these footnote things!`)}<!-- HTML_TAG_END --></div>`
+  })}
+  
+  <!-- HTML_TAG_START -->${(0, import_marked.default)(`---`)}<!-- HTML_TAG_END -->
+  
+  
+  <!-- HTML_TAG_START -->${(0, import_marked.default)(`Let's start by installing .NET 6.0. Head on over to [Microsoft's web page for downloading .NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0) and choose the installer or binary appropriate for your system. Download it, install .NET, and crack open a terminal.`)}<!-- HTML_TAG_END -->
+  
+  ${validate_component(Expandable, "Expandable").$$render($$result, {}, {}, {
+    content: () => `<div slot="${"content"}"><!-- HTML_TAG_START -->${(0, import_marked.default)(`.NET is a software runtime. It lets you make apps that run on multiple kinds of devices. Microsoft made it some time ago and it (plus a strong community) keeps it up to date. F# is a programming language that runs via .NET. If you wanna play with F#, you'll need to install .NET.`)}<!-- HTML_TAG_END --></div>`,
+    label: () => `<div slot="${"label"}"><!-- HTML_TAG_START -->${(0, import_marked.default)(`What's .NET?`)}<!-- HTML_TAG_END --></div>`
+  })}
+  
+  <!-- HTML_TAG_START -->${(0, import_marked.default)(`In your terminal, choose a directory to hold your project (like \`/home/$username/0projects/fedis\`, or \`$username\\Documents\\0projects\\fedis\`). Go ahead and run`)}<!-- HTML_TAG_END -->
+  <div class="${"console"}"><!-- HTML_TAG_START -->${(0, import_marked.default)(`\`dotnet new web -lang F#\``)}<!-- HTML_TAG_END --></div>
+  <!-- HTML_TAG_START -->${(0, import_marked.default)(`That'll turn your directory into a project directory, plus initialize a new empty web server (\`Program.fs\`).`)}<!-- HTML_TAG_END -->
+  <!-- HTML_TAG_START -->${(0, import_marked.default)(`If you take a look at the directory structure, you'll see something like the following screenshot:`)}<!-- HTML_TAG_END -->
+  
+  <img src="${"/images/articles/fedis/fedis-01.jpg"}" alt="${"New F# project folder structure."}" title="${"New F# project folder structure."}">
+  
+  <!-- HTML_TAG_START -->${(0, import_marked.default)(`Next, open your editor of choice (for me, VS Code + Ionide). Go ahead and open \`Program.fs\`, and we'll explore a simple F# program.`)}<!-- HTML_TAG_END -->
+  
+  <img src="${"/images/articles/fedis/fedis-02.jpg"}" alt="${"New F# project code."}" title="${"New F# project code."}">
+  
+  <!-- HTML_TAG_START -->${(0, import_marked.default)(`Lines 1 to 3 start with \`open\`, which means they're [import declarations](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/import-declarations-the-open-keyword). These tell the F# compiler to use functions from other namespaces or modules. If you're coming from C#, they're like the \`using\` declarations.`)}<!-- HTML_TAG_END -->
+  
+  <!-- HTML_TAG_START -->${(0, import_marked.default)(`Line 5 is an example of an attribute. [A lot has been written elsewhere](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/attributes) about attributes, but the short version is that attributes give the compiler some extra information about what you're doing. In this example, we have the \`[<EntryPoint>]\` attribute, which tells the compiler where to start executing code when the program is run.`)}<!-- HTML_TAG_END -->
+    
+    <!-- HTML_TAG_START -->${(0, import_marked.default)(`Lines 6 onward contain our actual program \u2014 a small function. Let's take this apart, too.`)}<!-- HTML_TAG_END -->
+    <!-- HTML_TAG_START -->${(0, import_marked.default)(`Kinda like other languages, we start with a main function, named \`main\`.`)}<!-- HTML_TAG_END -->
+    <!-- HTML_TAG_START -->${(0, import_marked.default)(`\`let\` is the keyword that defines things: a function, a variable, you name it. Also like other languages, arguments to functions follow the function itself. Here, we define those neatly as \`args\`.`)}<!-- HTML_TAG_END -->
+    <!-- HTML_TAG_START -->${(0, import_marked.default)(`On line 7, we have an example of an object method: \`WebApplication.CreateBuilder(args)\`. And yes, it's using the same args we declared above.`)}<!-- HTML_TAG_END -->
+    <!-- HTML_TAG_START -->${(0, import_marked.default)(`We'll briefly skip over line 10 to talk about lines 12 and 14. Line 12 is a blocking call; that means that we won't get to line 14 until it's done. And what does it do? It runs our app. \`app.Run()\` is arguable the most important part of our API; when we start it up, it'll keep running, until we close it. And when we close it, line 14 is executed, which returns 0. (F# doesn't use the \`return\` that you may find in other languages.)`)}<!-- HTML_TAG_END -->
+    <!-- HTML_TAG_START -->${(0, import_marked.default)(`Now, let's talk about line 10, cause there's a lot to unpack there.`)}<!-- HTML_TAG_END -->
+
+    ${validate_component(Expandable, "Expandable").$$render($$result, {}, {}, {
+    content: () => `<div slot="${"content"}"><!-- HTML_TAG_START -->${(0, import_marked.default)(`F# doesn't need semicolons to delineate code blocks. Instead, it uses indentation (like Python). Like most functional languages, arguments to functions don't need to be encapsulated within round braces \u2014 generally speaking. That's because round braces identify arguments as being part of a structure called a tuple. And a tuple is just data joined together. Some tuples have more than two parts, but most just have two.`)}<!-- HTML_TAG_END -->
+        <!-- HTML_TAG_START -->${(0, import_marked.default)(`The other instances where we use round braces are when we're calling an object method (yes! You can use some OO stuff!) or where we're being very clear about what arguments are being passed to a function. Later in this guide, we will do that very thing >_0`)}<!-- HTML_TAG_END --></div>`,
+    label: () => `<div slot="${"label"}"><!-- HTML_TAG_START -->${(0, import_marked.default)(`Where are my semicolons? Sometimes I see round braces but not every time??`)}<!-- HTML_TAG_END --></div>`
+  })}
+    
+    <!-- HTML_TAG_START -->${(0, import_marked.default)(`---`)}<!-- HTML_TAG_END -->
+    
+    
+    
+  </div>`;
+});
+var fsharpAdventApi = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": Fsharp_advent_api,
   load: load$5
 });
 var __awaiter$4 = function(thisArg, _arguments, P, generator) {
@@ -5108,7 +5392,7 @@ var Spells = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
   });
-  return `<h2>Spells \u{1FA84}</h2>
+  return `<h2>Spells \u2728</h2>
 <div><!-- HTML_TAG_START -->${(0, import_marked.default)(`
 Here are some boilerplate things I use to bootstrap new projects at the moment. Spells, if you will.
 
