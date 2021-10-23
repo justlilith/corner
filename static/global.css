@@ -9,10 +9,10 @@ body, html {
 h2 {
   margin:0px;
   padding:0px;
-  margin-top:35px;
+  margin-top:15px;
   color:#FFF;
   font-size:2.5em;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
   font-family: Garamond, 'Times New Roman', Times, serif;
 }
 
@@ -73,6 +73,32 @@ article#main {
   grid-area: bottom;
   padding: 6vh 5vw;
   z-index: 66;
+}
+
+code {
+  font-size: 1em;
+  color: cyan;
+  font-family: 'Fira Sans', 'Lucida Console', 'Courier New', monospace;
+}
+
+.console {
+  background: hsl(180,100%,3%); 
+  /* margin: 0px 5%; */
+  padding:6px;
+}
+
+.console code::before {
+  content: "> ";
+  display: inline;
+}
+
+hr {
+  border-style: double;
+  border-width: medium;
+  color:cyan;
+  margin-top:32px;
+  margin-bottom:32px;
+  width: 25%;
 }
 
 @media (min-width: 1000px) {
