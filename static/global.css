@@ -16,12 +16,20 @@ h2 {
   font-family: Garamond, 'Times New Roman', Times, serif;
 }
 
+h3 {
+  padding:0px;
+  margin-top:50px;
+  color:#FFF;
+  font-size:1.5em;
+  font-family: Garamond, 'Times New Roman', Times, serif;
+}
+
 #main li {
   margin-bottom:32px;
 }
 
 a {
-  color: hsl(180, 100%, 50%)
+  color: hsl(180, 100%, 75%)
 }
 a:visited {
   color: #999;
@@ -45,6 +53,12 @@ a:hover {
 .image-small img {
   width: 300px;
   float: left;
+}
+
+img.centered {
+  margin: 0 auto 30px;
+  display:block;
+  max-width: 100%;
 }
 
 
@@ -81,6 +95,15 @@ code {
   font-family: 'Fira Sans', 'Lucida Console', 'Courier New', monospace;
 }
 
+code::before {
+  color: hsl(0,0%,50%);
+  content: "`";
+}
+code::after {
+  color: hsl(0,0%,50%);
+  content: "`";
+}
+
 .console {
   background: hsl(180,100%,3%); 
   /* margin: 0px 5%; */
@@ -89,6 +112,11 @@ code {
 
 .console code::before {
   content: "> ";
+  display: inline;
+}
+
+.console code::after {
+  content: none;
   display: inline;
 }
 
