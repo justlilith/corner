@@ -1,5 +1,5 @@
 ---
-title: "Entry 7 :: Fedis"
+title: "Fedis"
 date: 2021-12-02T20:05:30-06:00
 draft: false
 index: 7
