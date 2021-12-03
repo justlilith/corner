@@ -85,6 +85,7 @@ article#main {
   background-color: hsl(0, 0%, 10%);
   color: white;
   grid-area: bottom;
+  min-width: 0;
   padding: 6vh 5vw;
   z-index: 66;
 }

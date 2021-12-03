@@ -6,7 +6,7 @@ index: {{delimit (split .Name "-" | first 1) ""}}
 outputs: journal
 ---
 
-# {{ replace .Name "-" " " | title }}
+# {{ replace .Name "-" " " | title }} Blog Title Goes Here
 
 Content
 

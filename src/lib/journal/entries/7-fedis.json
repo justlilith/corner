@@ -1,0 +1,7 @@
+{
+  "index":7,
+  "filename":"7-fedis.json",
+  "title":"Entry 7 :: Fedis",
+  "date":"Thursday, December 2, 2021",
+  "body":"\r\n# Learn F# with Fedis?\r\n\r\n\u003cdiv class='image-small'\u003e\r\n\r\n![Journal entry 7 splash image, of Shyoko from Happy Sugar Life, representing my current shock that this works at all!](images/journal/7-fedis/7-splash.jpg)\r\n\r\n\u003c/div\u003e\r\n\r\nPsst! Have you heard of F#? Maybe Redis? Wanna quickly build a key-value database while learning F Sharp along the way? :D ✨\r\n\r\nThen head over to this post for the full write-up ^_^\r\n\r\n[Fedis](articles/fsharp-advent-api)\r\n\r\nMany thanks to [@sergey_tihon](https://twitter.com/sergey_tihon) over on Twitter for organizing this calendar, as well as granting me a spot!\r\n\r\nKindest,\r\nLilith"
+}

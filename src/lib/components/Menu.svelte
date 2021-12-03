@@ -19,6 +19,11 @@ import { page } from '$app/stores';
 , title: "Current and Past Work 💼"
 , active: null
 }
+, { href:"/articles"
+, target: ""
+, title: "Articles 📑"
+, active: null
+}
 , { href:"https://twitter.com/imjustlilith"
 , target: "_blank"
 , title: "Tweets 🕊️ :: ↗️"

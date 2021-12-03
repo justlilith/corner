@@ -367,6 +367,11 @@ module Endpoints =
       font-size: 0.85em;
       background: black;
       padding:12px;
+      overflow: auto;
+      max-width: 100%;
+    }
+    :global(pre) {
+      overflow: auto;
     }
     .smallcode :global(code::before)
     , .smallcode :global(code::after)
