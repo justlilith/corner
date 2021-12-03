@@ -21,6 +21,3 @@ Then head over to this post for the full write-up ^_^
 [Fedis](articles/fsharp-advent-api)
 
 Many thanks to [@sergey_tihon](https://twitter.com/sergey_tihon) over on Twitter for organizing this calendar, as well as granting me a spot!
-
-Kindest,
-Lilith
