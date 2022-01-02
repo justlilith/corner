@@ -2,6 +2,7 @@
   import marked from 'marked'
   import { onMount } from 'svelte';
   import * as Helpers from '$lib/ts/helpers'
+  import ScrollNotifier from '$lib/components/ScrollNotifier.svelte'
   
   onMount(()=> {
     Helpers.addRainbowBackground('work-images')
@@ -15,6 +16,7 @@
   {@html marked(work.description)}
   {#if work["imageURLs"].length > 1}
   <div class='work-images'>
+    <ScrollNotifier></ScrollNotifier>
     {#each work["imageURLs"] as url}
     <img src={url} alt={work.title}/>
     {/each}
@@ -29,6 +31,7 @@
     height:50vh;
     overflow-y: scroll;
     scrollbar-width: none;
+    position: relative;
   }
   
   img {
