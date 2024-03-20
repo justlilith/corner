@@ -9,7 +9,7 @@
 
 <script lang='ts'>
   import { onMount } from 'svelte'
-  import marked from 'marked'
+  import { marked } from 'marked'
   
   onMount(()=> {
   })

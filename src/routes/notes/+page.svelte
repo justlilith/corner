@@ -1,24 +1,21 @@
-<script lang='ts' context='module'>
-  export async function load({ fetch }) {
-    return {
-      props: {
-      }
-    }
-  }
+<script lang="ts" context="module">
+	export async function load({ fetch }) {
+		return {
+			props: {}
+		};
+	}
 </script>
 
-<script lang='ts'>
-  import { onMount } from 'svelte'
-  import marked from 'marked'
-  
-  onMount(()=> {
-  })
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { marked } from 'marked';
+
+	onMount(() => {});
 </script>
 
 <h2>Notes 📝</h2>
-<div id='notes'>
-  
-{@html marked(`
+<div id="notes">
+	{@html marked(`
 Here are some things I wish I knew before I started... well, anything! ^_^ These range from tribal knowledge around programming paradigms to behavioral management (with regards to ADHD). Plus, whatever else comes to mind.
 
 These are not maxims; they're things I remind myself of. I'm presenting them here in case they help other people as much as they help me. You may not agree, and that's totally valid! I am not an Oracle. Or Lucent. Nor do I have 9 plans. I'm just me.
@@ -79,11 +76,10 @@ Also, these are in no particular order. Eventually, they will be tagged and cate
 - **[More people love you than you think, Lilith](https://instagr.am/lilawhen).**
 
 `)}
+</div>
 
-  </div>
-  
-  <style lang='scss'>
-    :global(#notes strong) {
-      color: hsl(200,100%,75%);
-    }
-  </style>
+<style lang="scss">
+	:global(#notes strong) {
+		color: hsl(200, 100%, 75%);
+	}
+</style>

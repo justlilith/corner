@@ -9,9 +9,12 @@
   })
 </script>
 
-<h1 class='logo' id='logoStamp'>Lilith's Grimoire</h1>
+<h1 class='logo' id='logoStamp'><a href="/">Lilith's Grimoire</a></h1>
 
 <style lang='scss'>
+  a {
+    text-decoration: none;
+  }
   h1 {
     color:#0FF;
     font-family: Garamond, 'Times New Roman', Times, serif;

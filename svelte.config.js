@@ -9,9 +9,15 @@ const config = {
 	preprocess: preprocess(),
 	
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({
+			edge: true
+		}),
+		alias: {
+			"$lib": "src/lib",
+			"$lib/*": "src/lib/*"
+		},
 		// hydrate the <div id="svelte"> element in src/app.html
-		target: '#svelte',
+		// target: '#svelte',
 		// ssr:false
 		// vite: {
 		// 	plugins: [

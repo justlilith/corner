@@ -1,5 +1,5 @@
 <script lang='ts'>
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 import { page } from '$app/stores';
 
   import { onMount } from 'svelte'
@@ -9,7 +9,7 @@ import { page } from '$app/stores';
   let menuListPage:MenuLinkT[] = []
 
   let menuList:MenuLinkT[] = [
-  { href:"/"
+  { href:"/journal"
   , target: ""
   , title: "Journal 📜"
   , active: null

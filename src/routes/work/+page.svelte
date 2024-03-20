@@ -1,6 +1,6 @@
 <script lang='ts' context='module'>
   export async function load({ fetch }) {
-    const entriesResponse:Response = await fetch('/work/entries.json')
+    const entriesResponse:Response = await fetch('/api/work/entries.json')
     const workEntries = await entriesResponse.json()
     if (entriesResponse.ok) {
       return {

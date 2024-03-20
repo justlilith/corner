@@ -9,7 +9,7 @@
 
 <script lang='ts'>
   import { onMount } from 'svelte'
-  import marked from 'marked'
+  import { marked } from 'marked'
   
   onMount(()=> {
   })
@@ -20,7 +20,7 @@
   
   {@html marked(`Sometimes I write articles. Here is the current list:`)}
   
-  {@html marked(`- [Fedis](https://justlilith.com/articles/fsharp-advent-api)`)}
+  {@html marked(`- [Fedis](/articles/fsharp-advent-api)`)}
   
   </div>
   

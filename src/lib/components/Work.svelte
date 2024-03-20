@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import marked from 'marked'
+  import { marked } from 'marked'
   import { onMount } from 'svelte';
   import * as Helpers from '$lib/ts/helpers'
   import ScrollNotifier from '$lib/components/ScrollNotifier.svelte'

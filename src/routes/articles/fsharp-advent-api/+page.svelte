@@ -10,7 +10,7 @@
 <script lang='ts'>
   import { onMount } from 'svelte'
   import Expandable from '$lib/components/Expandable.svelte'
-  import marked from 'marked'
+  import { marked } from 'marked'
   
   onMount(()=> {
   })
