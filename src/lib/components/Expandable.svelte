@@ -15,7 +15,7 @@
     <button class="expandable-button"><slot name="label"></slot></button>
   </div>
   {#if visible}
-  <section class="expandable-content" transition:slide>
+  <section class="expandable-content" transition:slide|global>
     <slot name="content"></slot>
   </section>
 {/if}
