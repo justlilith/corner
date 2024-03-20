@@ -1,26 +1,3 @@
-<script lang="ts" context="module">
-	export async function load({ fetch }) {
-		let contentList = [];
-		let entryList: DirListT = [];
-		const entriesResponse: Response = await fetch('/api/journal/entries.json');
-		console.log(entriesResponse)
-		const entriesBodyJson = await entriesResponse.json();
-		if (entriesResponse.ok) {
-			contentList = entriesBodyJson.dirList.map(async (entry) => {
-				let res: Response = await fetch(`/api/journal/${entry}`);
-				return await res.json();
-			});
-
-			return {
-				props: {
-					entryList: entriesBodyJson.dirList,
-					contentList: (await Promise.all(contentList)).map((x) => x.article)
-				}
-			};
-		}
-	}
-</script>
-
 <script lang="ts">
 	import JournalEntry from '$lib/components/JournalEntry.svelte';
 	import { onMount } from 'svelte';
