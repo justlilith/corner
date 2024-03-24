@@ -1,5 +1,7 @@
 # Lilith's Grimoire
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/290b8dbe-863a-4b18-bf21-f54faf377eb8/deploy-status)](https://app.netlify.com/sites/jl-a500d3/deploys)
+
 ## Overview
 
 This is where Lilith records her thoughts and work. It's a homepage with a few bells and whistles (choo choo!!).
