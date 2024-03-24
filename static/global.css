@@ -1,42 +1,46 @@
-body, html {
-  padding:0;
-  margin:0;
+body,
+html {
+  padding: 0;
+  margin: 0;
   /* // width:100vh; */
   /* // height:100vw; */
   font-family: 'Ubuntu', 'Fira Sans', 'Open Sans', 'Lucida Sans', Helvetica, Verdana, sans-serif;
   background-color: black;
 }
 
-h2, h3 {
+h2,
+h3 {
   font-family: 'Montserrat', 'Open Sans', Helvetica, sans-serif;
 }
 
 h2 {
-  color:#FFF;
-  font-size:2.5em;
-  margin:0px;
-  margin-top:15px;
+  color: #FFF;
+  font-size: 2.5em;
+  margin: 0px;
+  margin-top: 15px;
   margin-bottom: 60px;
-  padding:0px;
+  padding: 0px;
 }
 
 h3 {
-  color:#FFF;
-  font-size:1.5em;
-  margin-top:50px;
-  padding:0px;
+  color: #FFF;
+  font-size: 1.5em;
+  margin-top: 50px;
+  padding: 0px;
 }
 
 #main li {
-  margin-bottom:32px;
+  margin-bottom: 32px;
 }
 
 a {
   color: hsl(180, 100%, 75%)
 }
+
 a:visited {
   color: #999;
 }
+
 a:hover {
   color: white;
 }
@@ -49,10 +53,11 @@ a:hover {
 
 .image-small {
   /* display: inline; */
-  float:left;
+  float: left;
   margin-bottom: 32px;
   margin-right: 32px;
 }
+
 .image-small img {
   width: 300px;
   float: left;
@@ -60,17 +65,17 @@ a:hover {
 
 img.centered {
   margin: 0 auto 30px;
-  display:block;
+  display: block;
   max-width: 100%;
 }
 
 
 
 main {
-  display:grid;
+  display: grid;
   grid-template-areas: 'top' 'strip' 'bottom' 'footer';
   grid-template-rows: auto 12px auto 108px;
-  height:100vh;
+  height: 100vh;
 }
 
 aside {
@@ -80,7 +85,7 @@ aside {
 
 #rainbow-strip {
   grid-area: strip;
-  position:sticky;
+  position: sticky;
 }
 
 article#main {
@@ -100,18 +105,19 @@ code {
 }
 
 code::before {
-  color: hsl(0,0%,50%);
+  color: hsl(0, 0%, 50%);
   content: "`";
 }
+
 code::after {
-  color: hsl(0,0%,50%);
+  color: hsl(0, 0%, 50%);
   content: "`";
 }
 
 .console {
-  background: hsl(180,100%,3%); 
+  background: hsl(180, 100%, 3%);
   /* margin: 0px 5%; */
-  padding:6px;
+  padding: 6px;
 }
 
 .console code::before {
@@ -127,24 +133,24 @@ code::after {
 hr {
   border-style: double;
   border-width: medium;
-  color:cyan;
-  margin-top:32px;
-  margin-bottom:32px;
+  color: cyan;
+  margin-top: 32px;
+  margin-bottom: 32px;
   width: 25%;
 }
 
 @media (min-width: 1000px) {
-  
+
   main {
     grid-template-areas: 'left strip right' 'footer footer footer';
     grid-template-rows: auto 108px;
     grid-template-columns: 30% 0.25% 69.75%;
   }
-  
+
   aside {
     grid-area: left;
   }
-  
+
   article#main {
     grid-area: right;
     padding-left: 32px;

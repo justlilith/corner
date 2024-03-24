@@ -7,6 +7,8 @@
 
 <p>Here are a few projects I've worked on.</p>
 
+<p>If you would like my assistance, please send me an email; I love to collaborate.</p>
+
 <hr />
 
 {#each data?.props?.workEntries as work}
