@@ -21,6 +21,7 @@ type DirListT = string[]
 
 interface MenuLinkT {
   href:string
+  rel?:string
   target:string|null
   title:string
   active:boolean

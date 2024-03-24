@@ -25,6 +25,7 @@ import { page } from '$app/stores';
 , active: null
 }
 , { href:"https://digipres.club/@justlilith"
+, rel: "me"
 , target: "_blank"
 , title: "Toots 🐘 :: ↗️"
 , active: null
@@ -74,7 +75,7 @@ onMount(()=> {
     {#if browser}
     {#each menuListPage as menuItem}
     <li id={menuItem?.active ? "active-menu-item" : null}>
-      <a href='{menuItem.href}' target={menuItem?.target ? menuItem.target : null}>{menuItem.title}</a>
+      <a rel='{menuItem?.rel}' href='{menuItem?.href}' target={menuItem?.target ? menuItem.target : null}>{menuItem?.title}</a>
     </li>
     {/each}
     {/if}
