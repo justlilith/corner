@@ -1,6 +1,6 @@
 import { default as fs } from 'fs'
 
-export async function get({ params }){
+export async function GET({ params }){
   const { slug } = params
   const article = JSON.parse(fs.readFileSync(`src/routes/work/entries/${slug}.json`,{encoding: 'utf8'}))
   // let article
