@@ -62,7 +62,6 @@ import { page } from '$app/stores';
 ]
 
 onMount(()=> {
-  // console.log(currentPage)
   menuListPage = menuList.map(item => {
     item.href == currentPage.path ? item.active = true : item.active = false
     return item

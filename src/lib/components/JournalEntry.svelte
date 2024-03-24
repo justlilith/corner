@@ -24,14 +24,11 @@
 	}
 
 	function expandItems(event: Event2) {
-		// console.log(event)
 		const classList = [...event.target?.classList];
 		if (classList?.includes('info-level-1')) {
-			console.log(classList);
 			let target: Element = event.target;
 			target.setAttribute('class', 'info-expanded');
 		} else if (classList?.includes('info-expanded')) {
-			console.log(classList);
 			let target: Element = event.target;
 			target.setAttribute('class', 'info-level-1');
 		}

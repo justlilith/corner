@@ -33,6 +33,7 @@
   h1.logo {
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
+    background-clip: text;
   }
 
   h1#logoStamp {

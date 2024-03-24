@@ -4,6 +4,11 @@
 </script>
 
 <h2>Current and Past Work 💼</h2>
+
+<p>Here are a few projects I've worked on.</p>
+
+<hr />
+
 {#each data?.props?.workEntries as work}
 <Work {work}></Work>
 {/each}

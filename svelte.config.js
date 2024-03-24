@@ -10,7 +10,8 @@ const config = {
 	
 	kit: {
 		adapter: adapter({
-			edge: true
+			edge: true,
+			// split: false
 		}),
 		alias: {
 			"$lib": "src/lib",

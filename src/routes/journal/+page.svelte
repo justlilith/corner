@@ -6,24 +6,21 @@
 
 	let sortedList = [];
 
-	onMount(()=> {
-		sortedList = [...contentList]?.sort((x, y) => y.index - x.index)
-		console.log(sortedList)
-	})
+	onMount(() => {
+		sortedList = [...contentList]?.sort((x, y) => y.index - x.index);
+	});
 </script>
 
 <h2>Journal 📜</h2>
-<!-- <nav id='sidebar'>
-  <ul>
-    {#each entries as entry}
-    <li><a href={`#${entry}`}>{entry}</a></li>
-    {/each}
-  </ul>
-</nav> -->
+
+<p>Here are a few thoughts, in somewhat long form.</p>
+
+<hr />
+
 <article>
-		{#each sortedList as content}
-			<JournalEntry {content}></JournalEntry>
-		{/each}
+	{#each sortedList as content}
+		<JournalEntry {content}></JournalEntry>
+	{/each}
 </article>
 
 <style lang="scss">

@@ -1,33 +1,16 @@
-<script lang="ts" context="module">
-	export async function load({ fetch }) {
-		let contentList = [];
-		const entriesResponse: Response = await fetch('/api/journal/entries.json');
-		const entriesBodyJson = await entriesResponse.json();
-		if (entriesResponse.ok) {
-			contentList = entriesBodyJson.dirList.map(async (entry) => {
-				let res: Response = await fetch(`/api/journal/${entry}`);
-				return await res.json();
-			});
-
-			return {
-				props: {
-					entryList: entriesBodyJson.dirList,
-					contentList: (await Promise.all(contentList)).map((x) => x.article)
-				}
-			};
-		}
-	}
-</script>
-
 <script lang="ts">
 	import JournalEntry from '$lib/components/JournalEntry.svelte';
-	export let contentList: JournalEntryT[];
+	export let data;
 
+	let contentList: JournalEntryT[] = data?.props?.contentList;
 </script>
 
-<svelte:head></svelte:head>
+<p>My name is Lilith. Welcome to one of my grimoires.</p>
+<p>This one mostly concerns software engineering and computer science.</p>
+<p>Thank you for visiting.</p>
+<hr />
 
-<h2>Journal 📜</h2>
+<h3>journal.slice(0,3):</h3>
 <!-- <nav id='sidebar'>
   <ul>
     {#each entries as entry}
@@ -37,7 +20,7 @@
 </nav> -->
 <article>
 	{#if contentList}
-		{#each contentList?.sort((x, y) => y.index - x.index) as content}
+		{#each [...contentList]?.sort((x, y) => y.index - x.index).slice(0,3) as content}
 			<JournalEntry {content}></JournalEntry>
 		{/each}
 	{/if}
