@@ -18,6 +18,7 @@
   h1 {
     color:#0FF;
     font-family: Garamond, 'Times New Roman', Times, serif;
+    font-family: 'Montserrat', 'Open Sans', Helvetica, sans-serif;
     font-size: 4em;
     line-break: strict;
     max-width: 333px;

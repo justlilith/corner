@@ -23,7 +23,7 @@ function addRainbowBackground(className:string):void {    // Defining some varia
     const stop2 = "hsl(" + stop2val + ",100%,50%)";
     const stop3 = "hsl(" + stop3val + ",100%,50%)";
     
-    const chaos = "linear-gradient(to right, " + stop1 + ", " + stop2 + ", " + stop3 + ")";
+    const chaos = "linear-gradient(to bottom, " + stop1 + ", " + stop2 + ", " + stop3 + ")";
     
     // document("#header").css("background", "linear-gradient(" + rotGrad + "deg, hsl(" + rotGrad + ", 100%, 30%) 0%, rgba(16,16,154,1) 51%, #0AF 100%)");
     elementList

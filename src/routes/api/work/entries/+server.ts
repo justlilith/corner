@@ -1,6 +1,7 @@
+import { json } from '@sveltejs/kit'
 import { default as fs } from 'fs'
 
-export async function get({ params }){
+export async function GET({ params }){
   const dirList:DirListT = fs.readdirSync('src/lib/work/entries')
   const entries:WorkEntryT[] = dirList.map(filename => {
     return JSON.parse(
@@ -8,9 +9,5 @@ export async function get({ params }){
       )
   })
 
-  return {
-    body: {
-      entries
-    }
-  }
+  return json(entries)
 }

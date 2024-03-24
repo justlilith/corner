@@ -24,6 +24,11 @@ import { page } from '$app/stores';
 , title: "Articles 📑"
 , active: null
 }
+, { href:"https://digipres.club/@justlilith"
+, target: "_blank"
+, title: "Toots 🐘 :: ↗️"
+, active: null
+}
 , { href:"https://twitter.com/imjustlilith"
 , target: "_blank"
 , title: "Tweets 🕊️ :: ↗️"
@@ -37,16 +42,6 @@ import { page } from '$app/stores';
 , { href:"https://github.com/justlilith"
 , target: "_blank"
 , title: "GitHub :: ↗️"
-, active: null
-}
-, { href:"https://www.polywork.com/lilith"
-, target: "_blank"
-, title: "Polywork :: ↗️"
-, active: null
-}
-, { href:"https://www.linkedin.com/in/lilith-dev"
-, target: "_blank"
-, title: "LinkedIn :: ↗️"
 , active: null
 }
 , { href:"/spells"
@@ -87,45 +82,9 @@ onMount(()=> {
   </ul>
 </nav>
 
-<!-- <nav>
-  <ul id='menu-list'>
-    <li>
-      <a href='/'>Journal 📜</a>
-    </li>
-    <li>
-      <a href='/work'>Current and Past Work 💼</a>
-    </li>
-    <li>
-      <a href='https://twitter.com/imjustlilith' target=_blank>Tweets 🕊️ :: ↗️</a>
-    </li>
-    <li>
-      <a href='https://tinyurl.com/LilithsResume' target=_blank>Resume :: ↗️</a>
-    </li>
-    <li>
-      <a href='https://github.com/justlilith' target=_blank>GitHub :: ↗️</a>
-    </li>
-    <li>
-      <a href='https://www.polywork.com/lilith' target=_blank>Polywork :: ↗️</a>
-    </li>
-    <li>
-      <a href='https://www.linkedin.com/in/lilith-dev' target=_blank>LinkedIn :: ↗️</a>
-    </li>
-    <li>
-      <a href='spells'>Spells 🪄</a>
-    </li>
-    <li>
-      <a href='notes'>Things I wish they'd told me 🥺</a>
-    </li>
-    <li>
-      <a href='back'>Back Cover 📕</a>
-    </li>
-  </ul>
-</nav> -->
-
-
-
 <style lang='scss'>
   nav {
+    font-family: 'Montserrat', 'Open Sans', Helvetica, sans-serif;
     margin-top: 180px;
     padding-top: 24px;
     padding-bottom: 24px;
