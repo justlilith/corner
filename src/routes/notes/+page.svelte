@@ -33,7 +33,7 @@ Also, these are in no particular order. Eventually, they will be tagged and cate
 
 - **[You aren't gonna need it](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it).** Refactor when necessary. Don't [prematurely over-optimize](https://en.wikipedia.org/wiki/Program_optimization#When_to_optimize).
 
-- **Everything is a work in progress.** It's okay if something isn't done; few things truly are, and you probably aren't getting shot at, so... why stress so much? Be kinder to yourself.
+- **Everything is a work in progress.** It's okay if something isn't done; few things truly are, so... why stress so much? Be kinder to yourself.
 
 - **Perfection isn't real.** Get as close as you want, but don't do so to your detriment.
 
