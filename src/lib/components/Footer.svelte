@@ -6,6 +6,7 @@
 
 <footer>
 	<p>Copyleft 2024 Lilith, but ask for details.</p>
+ <p>This site does not collect data.</p>
 	<p>Wanna email me? <a href="mailto:hello⚠️justlilith.com">hello⚠️justlilith🔵com</a>.</p>
 </footer>
 
