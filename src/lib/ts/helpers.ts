@@ -10,6 +10,8 @@ function addRainbowBackground(className:string):void {    // Defining some varia
   const rotSpd = 100;
   
   // This is what makes the rainbow gradient translate and rotate.
+
+  // we use text interpolation, the fun way -L6
   
   const manipGradient = (elementList) => { setInterval(function(){
     rotGrad = (rotGrad += rotInc) % 360;
@@ -17,13 +19,13 @@ function addRainbowBackground(className:string):void {    // Defining some varia
     stop2val = (stop2val += inc) % 360;
     stop3val = (stop3val += inc) % 360;
     
-    // Math is over. Now to concatenate.
+    // Math is over. Now to stringify.
     
-    const stop1 = "hsl(" + stop1val + ",100%,50%)";
-    const stop2 = "hsl(" + stop2val + ",100%,50%)";
-    const stop3 = "hsl(" + stop3val + ",100%,50%)";
+    const stop1 = `hsl(${stop1val},100%,50%)`;
+    const stop2 = `hsl(${stop2val},100%,50%)`;
+    const stop3 = `hsl(${stop3val},100%,50%)`;
     
-    const chaos = "linear-gradient(to bottom, " + stop1 + ", " + stop2 + ", " + stop3 + ")";
+    const chaos = `linear-gradient(to bottom, ${stop1}, ${stop2}, ${stop3})`;
     
     // document("#header").css("background", "linear-gradient(" + rotGrad + "deg, hsl(" + rotGrad + ", 100%, 30%) 0%, rgba(16,16,154,1) 51%, #0AF 100%)");
     elementList

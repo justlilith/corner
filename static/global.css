@@ -3,27 +3,28 @@ body, html {
   margin:0;
   /* // width:100vh; */
   /* // height:100vw; */
-  font-family: 'Ubuntu', 'Fira Sans', 'Lucida Sans', Helvetica, Verdana, sans-serif;
+  font-family: 'Ubuntu', 'Fira Sans', 'Open Sans', 'Lucida Sans', Helvetica, Verdana, sans-serif;
   background-color: black;
 }
 
-h2 {
-  margin:0px;
-  padding:0px;
-  margin-top:15px;
-  color:#FFF;
-  font-size:2.5em;
-  margin-bottom: 60px;
-  font-family: Garamond, 'Times New Roman', Times, serif;
+h2, h3 {
   font-family: 'Montserrat', 'Open Sans', Helvetica, sans-serif;
 }
 
-h3 {
+h2 {
+  color:#FFF;
+  font-size:2.5em;
+  margin:0px;
+  margin-top:15px;
+  margin-bottom: 60px;
   padding:0px;
-  margin-top:50px;
+}
+
+h3 {
   color:#FFF;
   font-size:1.5em;
-  font-family: Garamond, 'Times New Roman', Times, serif;
+  margin-top:50px;
+  padding:0px;
 }
 
 #main li {
