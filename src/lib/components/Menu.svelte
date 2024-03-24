@@ -51,7 +51,7 @@ import { page } from '$app/stores';
 }
 , { href:"/notes"
 , target: ""
-, title: "Things I wish they'd told me 🥺"
+, title: "Surprising notes 💌"
 , active: null
 }
 , { href:"/back"
