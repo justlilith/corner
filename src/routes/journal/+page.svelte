@@ -1,15 +1,16 @@
 <script lang="ts">
 	import JournalEntry from '$lib/components/JournalEntry.svelte';
 	import { onMount } from 'svelte';
-	// export let entries = 'ok'
-	export let contentList: JournalEntryT[];
+	export let data;
+	let contentList: JournalEntryT[] = data?.props?.contentList;
 
-	// onMount(()=> {
-	//   contentList = [...contentList].sort()
-	// })
+	let sortedList = [];
+
+	onMount(()=> {
+		sortedList = [...contentList]?.sort((x, y) => y.index - x.index)
+		console.log(sortedList)
+	})
 </script>
-
-<svelte:head></svelte:head>
 
 <h2>Journal 📜</h2>
 <!-- <nav id='sidebar'>
@@ -20,24 +21,10 @@
   </ul>
 </nav> -->
 <article>
-	{#if contentList}
-		{#each contentList?.sort((x, y) => y.index - x.index) as content}
+		{#each sortedList as content}
 			<JournalEntry {content}></JournalEntry>
 		{/each}
-	{/if}
 </article>
 
 <style lang="scss">
-	#sidebar {
-		// float:right;
-		position: sticky;
-		left: 30vw;
-		top: 0vh;
-		margin-top: 30vh;
-	}
-
-	p {
-		line-height: 175%;
-		font-size: 1em;
-	}
 </style>

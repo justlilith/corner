@@ -1,19 +1,21 @@
 export async function load({ fetch }) {
     let contentList = [];
-    let entryList: DirListT = [];
     const entriesResponse: Response = await fetch('/api/journal/entries');
-    const entriesBodyJson = await entriesResponse.json();
-    console.log(entriesBodyJson)
+    const entriesBodyJson = await entriesResponse.json() as { dirList: [] };
     if (entriesResponse.ok) {
-        contentList = entriesBodyJson.dirList.map(async (entry) => {
+        contentList = entriesBodyJson.dirList.map(async (entry: string) => {
             let res: Response = await fetch(`/api/journal/entry/${entry}`);
-            return await res.json();
+            const resJson = await res.json();
+            return resJson
         });
+
+        const articlePromises = await Promise.all(contentList)
+        console.log(articlePromises.map((x) => x.article))
 
         return {
             props: {
                 entryList: entriesBodyJson.dirList,
-                contentList: (await Promise.all(contentList)).map((x) => x.article)
+                contentList: articlePromises.map((x) => x.article)
             }
         };
     }

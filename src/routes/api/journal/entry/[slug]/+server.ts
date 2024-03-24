@@ -5,7 +5,7 @@ export async function GET({ params }) {
   const { slug } = params
   const article = JSON.parse(fs.readFileSync(`src/lib/journal/entries/${slug}`, { encoding: 'utf8' }))
 
-  return json(
-    article
-  )
+  return json({
+    article: article
+  })
 }
