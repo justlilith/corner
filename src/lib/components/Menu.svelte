@@ -35,11 +35,6 @@ import { page } from '$app/stores';
 , title: "Tweets 🕊️ :: ↗️"
 , active: null
 }
-, { href:"https://tinyurl.com/LilithsResume"
-, target: "_blank"
-, title: "Resume :: ↗️"
-, active: null
-}
 , { href:"https://github.com/justlilith"
 , target: "_blank"
 , title: "GitHub :: ↗️"
