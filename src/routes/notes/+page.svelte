@@ -73,8 +73,6 @@ Also, these are in no particular order. Eventually, they will be tagged and cate
 
 - **[Always become a better asset to everyone around you](https://www.cracked.com/blog/6-harsh-truths-that-will-make-you-better-person).**
 
-- **[More people love you than you think, Lilith](https://instagr.am/lilawhen).**
-
 `)}
 </div>
 
