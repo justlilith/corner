@@ -1,4 +1,4 @@
-# Lilith's Grimoire
+# Lilith's Corner
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/290b8dbe-863a-4b18-bf21-f54faf377eb8/deploy-status)](https://app.netlify.com/sites/jl-a500d3/deploys)
 

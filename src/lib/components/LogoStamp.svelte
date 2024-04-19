@@ -9,7 +9,7 @@
   })
 </script>
 
-<h1 class='logo' id='logoStamp'><a href="/">Lilith's Grimoire</a></h1>
+<h1 class='logo' id='logoStamp'><a href="/">Lilith's Corner</a></h1>
 
 <style lang='scss'>
   a {

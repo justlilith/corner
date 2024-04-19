@@ -3,9 +3,9 @@
   export let data;
 </script>
 
-<h2>Current and Past Work 💼</h2>
+<h2>Work Selection 💼</h2>
 
-<p>Here are a few projects I've worked on.</p>
+<p>I've worked on many projects through my career, within these industries: apparel, manufacturing, research and development, web design, and software. Here's a small selection of a few projects I love.</p>
 
 <p>If you would like my assistance, please send me an email; I love to collaborate.</p>
 
