@@ -6,15 +6,17 @@
 
 This is where Lilith records her thoughts and work. It's a homepage with a few bells and whistles (choo choo!!).
 
-## Usage
-
 Browse, peruse, and hopefully walk away with something new. :>
 
-## Dependencies
+## Development
 
-- SvelteKit
-- Hugo
-- Marked.js
+The corner is built with SvelteKit, so `npm run dev` starts a dev server, and `npm run build` builds the site for production.
+
+## Built with:
+
+- [SvelteKit](https://kit.svelte.dev/)
+- [Hugo](https://gohugo.io/) (for journaling)
+- [Marked.js](https://marked.js.org/) (for interpolation)
 
 ## Writing a journal entry
 
