@@ -16,7 +16,7 @@ import { page } from '$app/stores';
 }
 , { href:"/work"
 , target: ""
-, title: "Current and Past Work 💼"
+, title: "Work Selection 💼"
 , active: null
 }
 , { href:"/articles"
@@ -38,11 +38,6 @@ import { page } from '$app/stores';
 , { href:"https://github.com/justlilith"
 , target: "_blank"
 , title: "GitHub :: ↗️"
-, active: null
-}
-, { href:"/spells"
-, target: ""
-, title: "Spells ✨"
 , active: null
 }
 , { href:"/notes"

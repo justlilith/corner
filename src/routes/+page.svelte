@@ -5,8 +5,8 @@
 	let contentList: JournalEntryT[] = data?.props?.contentList;
 </script>
 
-<p>My name is Lilith. Welcome to one of my grimoires.</p>
-<p>This one mostly concerns software engineering and computer science.</p>
+<p>My name is Lilith. Welcome to a small slice of the Internet.</p>
+<p>This corner mostly concerns software engineering and computer science.</p>
 <p>Thank you for visiting.</p>
 <hr />
 

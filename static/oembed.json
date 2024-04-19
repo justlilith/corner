@@ -1,10 +1,7 @@
 {
 	"type": "photo",
 	"version": 1.0,
-	"title": "Lilith's Grimoire",
+	"title": "Lilith's Corner",
 	"author_name": "Lilith",
-	"author_url": "https://twitter.com/imjustlilith",
-	"thumbnail_url": "https://asofter.space/preview.jpg",
-	"thumbnail_width": 612,
-	"thumbnail_height": 612
+	"author_url": "https://twitter.com/imjustlilith"
 }

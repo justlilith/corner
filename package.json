@@ -1,6 +1,6 @@
 {
-  "name": "grimoire",
-  "version": "0.0.2",
+  "name": "corner",
+  "version": "0.0.3",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
