@@ -1,0 +1,11 @@
+{
+  "index":0,
+  "filename":"0-rhapsew.json",
+  "title":"Rhapsew",
+  "date":"Wednesday, January 19, 2022",
+  "description":"\n# Rhapsew\n\nRhapsew is a web-native, CAD-oriented patternmaking application for sewists and artists. It features a point-and-click user interface and cross-software SVG output (for input into other sewing, patternmaking, and CAD software).\n\nRhaosew is written with TypeScript and Imba, which allows the software to run in any modern browser.\n\nLive link: [Rhapsew](https://www.rhapsew.com/)\n\nGitHub: [justlilith/rhapsew](https://github.com/justlilith/rhapsew/)",
+  "imageURLs":[
+    "images/work/rhapsew/rhapsew-1.png",
+    "images/work/rhapsew/rhapsew-2.png"
+  ]
+}

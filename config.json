@@ -17,7 +17,7 @@
     , "404"
   ]
   , "outputFormats": {
-    "journalEntry": {
+    "journal": {
       "name": "journal"
       , "isPlainText": true
       , "isHTML": false
@@ -25,13 +25,13 @@
       , "notAlternative": true
       , "path": "lib"
     }
-    , "workEntry": {
+    , "work": {
       "isPlainText": true
       , "name": "work"
       , "isHTML": false
       , "mediaType": "text/json"
-      , "path": "lib"
       , "notAlternative": true
+      , "path": "lib"
     }
   }
   ,"uglyURLs": true

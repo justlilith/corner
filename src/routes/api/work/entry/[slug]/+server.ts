@@ -1,3 +1,4 @@
+import { json } from '@sveltejs/kit'
 import { default as fs } from 'fs'
 
 export async function GET({ params }){
@@ -10,9 +11,7 @@ export async function GET({ params }){
   // })
 
   
-  return {
-    body: {
+  return json({
       article
-    }
+    })
   }
-}

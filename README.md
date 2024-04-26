@@ -20,6 +20,8 @@ The corner is built with SvelteKit, so `npm run dev` starts a dev server, and `n
 
 ## Writing a journal entry
 
+Note: Make sure hugo is installed; otherwise, you'll have to add entries by hand.
+
 0. Generate a new journal entry with `hugo new --kind entry journal/entries/[entry-number]-[title].md`; write your journal in markdown below the "front matter" (the section with top and bottom delineation).
 1. Generate JSON for our `/journal` endpoint with `hugo`. The file will be generated in `src/lib/journal/entries`.
 2. Run `npm run build` to rebuild the site.
