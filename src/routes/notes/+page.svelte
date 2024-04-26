@@ -16,9 +16,9 @@
 <h2>Notes 📝</h2>
 <div id="notes">
 	{@html marked(`
-Here are some things I wish I knew before I started... well, anything! ^_^ These range from tribal knowledge around programming paradigms to behavioral management (with regards to ADHD). Plus, whatever else comes to mind.
+Here are some things I wish I knew before I started... well, anything! ^_^ These range from unspoken knowledge around programming paradigms to self-behavioral management. (Plus whatever else comes to mind.)
 
-These are not maxims; they're things I remind myself of. I'm presenting them here in case they help other people as much as they help me. You may not agree, and that's totally valid! I am not an Oracle. Or Lucent. Nor do I have 9 plans. I'm just me.
+These are not maxims; they're things I remind myself of. I'm presenting them here in case they help other people as much as they help me. You may not agree, and that's totally valid! I am not an Oracle. Or Lucent. [Nor do I have 9 plans](https://en.wikipedia.org/wiki/Plan_9_from_Bell_Labs). I'm just me, and I'm still figuring out what that means.
 
 Also, these are in no particular order. Eventually, they will be tagged and categorized. Everything is a work in progress. Oh! That reminds me!
 
@@ -49,29 +49,28 @@ Also, these are in no particular order. Eventually, they will be tagged and cate
 - **There's really [no perfect paradigm](https://en.wikipedia.org/wiki/Comparison_of_multi-paradigm_programming_languages#Paradigm_summaries) — just the right tool at the right moment.**
   - **There can be [more than one 'right tool.'](https://www.rosettacode.org/wiki/Rosetta_Code)**
 
-- **[Functional programming](https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming) is just pipelining things and ETL on a small scale.**
+- **[Functional programming](https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming) is largely pipelining and ETL on a small scale.**
 
-- **Avoid returning nulls and voids if you can. Be clear about errors. [Handle your errors](https://go.dev/blog/error-handling-and-go), Lilith.**
+- **Avoid returning nulls and voids if you can. Be clear about errors. [Or, "Handle your errors, Lilith!""](https://go.dev/blog/error-handling-and-go)**
 
-- **You do not need to be a brilliant wizard to code. Just persistent! And voraciously, continually learning.**
-  - You may need to be a little stubborn. Masochistic, even. (Just kidding! But only slightly. It's a labor of love. 💙)
+- **You do not need to be completely brilliant to code. But you do need to be persistent! And voraciously, continually learning.**
+  - You may need to be a little stubborn. It's a labor of love. 💙
 
 - **[Object-oriented programming](https://en.wikipedia.org/wiki/Smalltalk#Object-oriented_programming) is really about [sending messages around](https://en.wikipedia.org/wiki/Smalltalk#Object-oriented_programming).**
   - Object methods are things you *request*, not functions you apply. 🤯
 
-- **[A factory pattern is a real thing](https://en.wikipedia.org/wiki/Factory_method_pattern), and surprisingly, not a joke.**
-  - I'll stop riffing on OOP one day; it's powerful. (FP is still the future tho no cap)
+- **[A factory pattern is a real thing](https://en.wikipedia.org/wiki/Factory_method_pattern).**
 
-- **You know those square brace things in C#? [Those are attributes](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/attributes/).** And they're kinda neat. Don't think about it too much.
+- **You know those square brace things in C#? [Those are attributes](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/attributes/).** And they're kinda neat. Investigate them!
 
-- **[Impostor syndrome](https://en.wikipedia.org/wiki/Impostor_syndrome) does not go away; it just gets easier to deal with. 😩** In 5 years, I'll hopefully feel differently (I haven't in 20, though; sorry to report that).
+- **[Impostor syndrome](https://en.wikipedia.org/wiki/Impostor_syndrome) lessens over time; it also gets easier to deal with the more you learn and grow.**
 
-- **Whatever it is, it can probably wait.** Take some notes, save your place, and go do the other, more important thing.
+- **Whatever _it_ is, it can probably wait.** Take some notes, save your place, and go do the other, more important thing.
 
 - **Stay mindful of the cost of context-switching.**
   - [We are single-threaded, context-switching animals](https://en.wikipedia.org/wiki/Continuous_partial_attention). We're great at throwing all of our brainpower at one thing at a time — but we're not so great at [juggling multiple things](https://en.wikipedia.org/wiki/Human_multitasking#The_brain's_role).
 
-- **[Always become a better asset to everyone around you](https://www.cracked.com/blog/6-harsh-truths-that-will-make-you-better-person).**
+- **Always become a better asset to everyone around you.**
 
 `)}
 </div>

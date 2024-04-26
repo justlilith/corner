@@ -18,7 +18,7 @@
 <h2>Articles</h2>
 <div>
   
-  {@html marked(`Sometimes I write articles. Here is the current list:`)}
+  {@html marked(`Sometimes I write articles. Here is a small list:`)}
   
   {@html marked(`- [Fedis](/articles/fsharp-advent-api)`)}
   
